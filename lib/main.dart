@@ -17,10 +17,14 @@ class CoffeeShopApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Sora',
+      ),
       onGenerateRoute: AppRouter.onGenerateRoute,
-      initialRoute: AppStrings.signup,
+      initialRoute: AppStrings.home,
       debugShowCheckedModeBanner: false,
+
     );
   }
 }
