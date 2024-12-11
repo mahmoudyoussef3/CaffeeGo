@@ -19,6 +19,10 @@ class CoffeeShopApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            backgroundColor: Colors.white,
+            type: BottomNavigationBarType.fixed,
+          ),
           fontFamily: 'Sora',
           textSelectionTheme:
               const TextSelectionThemeData(cursorColor: Colors.white)),

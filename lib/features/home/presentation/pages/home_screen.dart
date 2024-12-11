@@ -1,7 +1,8 @@
-import 'package:coffe_app/core/utils/app_colors.dart';
+import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:coffe_app/features/home/presentation/widgets/build_banner_widget.dart';
+import 'package:coffe_app/features/home/presentation/widgets/build_promo.dart';
+import 'package:coffe_app/features/home/presentation/widgets/categories_toggle.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../data/models/coffe_card_model.dart';
 import '../widgets/coffe_card_widget.dart';
 
@@ -11,63 +12,44 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-          backgroundColor: Colors.white,
-          body: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          height: 300,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [
-                                Color(0xff000000),
-                                Color(0xff2D2D2D)
-                              ],
-                                  begin: Alignment.topRight,
-                                  end: Alignment.bottomLeft)),
-                          child: BuildBannerWidget(),
-                        ),
-                        const SizedBox(
-                          height: 100,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                          child: Container(
-                            height: 400,
-                            color: Colors.white,
-                            child: GridView.builder(
-                                itemCount: listCardModel.length,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 10,
-                                  childAspectRatio: 0.6,
-                                  crossAxisSpacing: 10,
-                                ),
-                                itemBuilder: (context, index) {
-                                  return CoffeCardWidget(
-                                      cardModel: listCardModel[index]);
-                                }),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+        child: Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            BuildPromo(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+              child: CategoriesToggle(),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Container(
+                height: 400,
+                color: Colors.white,
+                child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: listCardModel.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 0.6,
+                      crossAxisSpacing: 10,
+                    ),
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                          onTap: () => Navigator.pushNamed(
+                              context, AppStrings.itemDetails),
+                          child:
+                              CoffeCardWidget(cardModel: listCardModel[index]));
+                    }),
               ),
-              Positioned(
-                  left: 30,
-                  top: 220,
-                  child: Image.asset('assets/Images/Banner.png'))
-            ],
-          )),
-    );
+            ),
+          ],
+        ),
+      ),
+    ));
   }
 
   final List<CoffeCardModel> listCardModel = [

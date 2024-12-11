@@ -1,6 +1,7 @@
 import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BuildBannerWidget extends StatelessWidget {
   BuildBannerWidget({super.key});
@@ -17,9 +18,9 @@ class BuildBannerWidget extends StatelessWidget {
             'Hello,\nMahmoud Youssef.',
             style: TextStyle(
                 color: Colors.white,
-                fontSize: 28,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
-                height: 1.0,
+                height: 1.2,
                 fontFamily: 'Roboto'),
           ),
           const SizedBox(
@@ -42,34 +43,34 @@ class BuildBannerWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width * 3 / 4 - 30,
-                child: SearchBar(
-                  controller: _searchController,
-                  onChanged: (value) {
-                    _searchController.text = value;
-                    if (kDebugMode) {
-                      print(_searchController.text);
-                    }
-                  },
-                  textStyle: const WidgetStatePropertyAll(TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
+                  width: MediaQuery.of(context).size.width * 3 / 4 - 30,
+                  child: SearchBar(
+                    controller: _searchController,
+                    onChanged: (value) {
+                      _searchController.text = value;
+                      if (kDebugMode) {
+                        print(_searchController.text);
+                      }
+                    },
+                    textStyle: const WidgetStatePropertyAll(TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    )),
+                    hintStyle: const WidgetStatePropertyAll(
+                        TextStyle(color: Colors.white30)),
+                    elevation: const WidgetStatePropertyAll(0),
+                    shape: const WidgetStatePropertyAll(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)))),
+                    backgroundColor:
+                        const WidgetStatePropertyAll(Color(0xff2D2D2D)),
+                    hintText: 'Search coffee',
+                    leading: const Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
                   )),
-                  hintStyle: const WidgetStatePropertyAll(
-                      TextStyle(color: Colors.white30)),
-                  elevation: const WidgetStatePropertyAll(0),
-                  shape: const WidgetStatePropertyAll(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)))),
-                  backgroundColor:
-                      const WidgetStatePropertyAll(Color(0xff2D2D2D)),
-                  hintText: 'Search coffee',
-                  leading: const Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+              //  ),
               const SizedBox(
                 width: 12,
               ),
@@ -82,7 +83,8 @@ class BuildBannerWidget extends StatelessWidget {
                 ),
                 child: const Center(
                   child: Icon(
-                    Icons.filter_list,
+                   FontAwesomeIcons.sliders,
+                    size: 16,
                     color: Colors.white,
                   ),
                 ),

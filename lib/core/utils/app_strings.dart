@@ -5,6 +5,6 @@ class AppStrings {
   static const String signup = '/signup';
   static const String notification = '/notification';
   static const String cart = '/cart';
-  static const String fav = '/fav';
+  static const String managerScreen = '/manager';
   static const String itemDetails = '/itemDetails';
 }
