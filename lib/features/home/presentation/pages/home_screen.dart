@@ -1,5 +1,4 @@
 import 'package:coffe_app/core/utils/app_strings.dart';
-import 'package:coffe_app/features/home/presentation/widgets/build_banner_widget.dart';
 import 'package:coffe_app/features/home/presentation/widgets/build_promo.dart';
 import 'package:coffe_app/features/home/presentation/widgets/categories_toggle.dart';
 import 'package:flutter/material.dart';
