@@ -3,7 +3,6 @@ import 'package:coffe_app/features/home/presentation/cubit/coffee_cubit.dart';
 import 'package:coffe_app/features/home/presentation/widgets/categoies_container_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer/shimmer.dart';
 
 class CategoriesToggle extends StatefulWidget {
   const CategoriesToggle({super.key});

@@ -7,4 +7,8 @@ class DataRepo {
   Future<List<dynamic>> getAllCoffees() async {
     return coffeeDataSource.getCategories();
   }
+
+  Future<List<dynamic>> fetchCoffeeItems() async {
+    return coffeeDataSource.fetchCoffeeItems();
+  }
 }

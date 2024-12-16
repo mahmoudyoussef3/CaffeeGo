@@ -16,3 +16,8 @@ class CoffeeSuccess extends CoffeeState {
   CoffeeSuccess(this.myCategories);
   final List myCategories;
 }
+
+class FetchCoffeeItemsSuccess extends CoffeeState {
+  FetchCoffeeItemsSuccess(this.coffeeItems);
+  final List coffeeItems;
+}
