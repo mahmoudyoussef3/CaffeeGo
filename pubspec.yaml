@@ -20,6 +20,7 @@ dependencies:
   cloud_firestore: ^5.5.1
   flutter_svg: ^2.0.16
   font_awesome_flutter: ^10.8.0
+  shimmer: ^3.0.0
 
 
 dev_dependencies:
