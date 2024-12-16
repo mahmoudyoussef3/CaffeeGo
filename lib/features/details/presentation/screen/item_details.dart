@@ -1,6 +1,10 @@
 import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
+import '../../../home/data/models/coffe_item.dart';
+import '../widgets/add_to_cart_button.dart';
+import '../widgets/coffe_size_items.dart';
+
 class ItemDetails extends StatefulWidget {
   const ItemDetails({super.key});
 
@@ -10,9 +14,23 @@ class ItemDetails extends StatefulWidget {
 
 class _ItemDetailsState extends State<ItemDetails> {
   bool isExpanded = false;
+  int coffeeSize = 0;
+
 
   @override
   Widget build(BuildContext context) {
+    CoffeeItem? coffeeItem = ModalRoute.of(context)?.settings.arguments as CoffeeItem?;
+    if(coffeeItem == null){
+      return Scaffold(
+          body: Center(
+            child: Center(
+              child: Container(
+                child: Text("Error"),
+              ),
+            ),
+          )
+      );
+    }
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -23,7 +41,8 @@ class _ItemDetailsState extends State<ItemDetails> {
               right: 0,
               left: 0,
               child: Image.network(
-                'https://images.unsplash.com/photo-1664398602170-894a5f4bf43b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmxhY2slMjBjb2ZmZWUlMjBjdXB8ZW58MHx8MHx8fDA%3D',
+                "${coffeeItem.image}",
+                //'https://images.unsplash.com/photo-1664398602170-894a5f4bf43b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmxhY2slMjBjb2ZmZWUlMjBjdXB8ZW58MHx8MHx8fDA%3D',
                 fit: BoxFit.cover,
               ),
             ),
@@ -46,7 +65,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Caffe Mocha',
+                            '${coffeeItem.name}',
                             style: TextStyle(
                               letterSpacing: 2,
                               fontSize: 24,
@@ -78,7 +97,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                                 size: 16,
                               ),
                               Text(
-                                '4.8',
+                                ' ${coffeeItem.rate}',
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.white,
@@ -123,6 +142,17 @@ class _ItemDetailsState extends State<ItemDetails> {
                         buildTag(Icons.local_fire_department, 'Medium Roasted'),
                       ],
                     ),
+
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Coffee Size',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const CoffeeSizeItems(),
                     const SizedBox(height: 16),
                     const Text(
                       'About',
@@ -133,7 +163,8 @@ class _ItemDetailsState extends State<ItemDetails> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id ipsum vivamus velit lorem amet.',
+                     "${coffeeItem.description}",
+                     // 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id ipsum vivamus velit lorem amet.',
                       maxLines: isExpanded ? null : 2,
                       overflow: isExpanded
                           ? TextOverflow.visible
@@ -157,6 +188,8 @@ class _ItemDetailsState extends State<ItemDetails> {
                         ),
                       ),
                     ),
+
+                    Center(child: AddToCartButton()),
                   ],
                 ),
               ),
@@ -166,6 +199,8 @@ class _ItemDetailsState extends State<ItemDetails> {
       ),
     );
   }
+
+
 
   Widget buildTag(IconData icon, String label) {
     return Container(

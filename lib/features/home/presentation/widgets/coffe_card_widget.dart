@@ -1,3 +1,4 @@
+import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,7 +7,7 @@ import '../../data/models/coffe_card_model.dart';
 
 class CoffeCardWidget extends StatelessWidget {
   const CoffeCardWidget({super.key, required this.cardModel});
- final CoffeCardModel cardModel;
+ final CoffeeItem cardModel;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +34,7 @@ class CoffeCardWidget extends StatelessWidget {
                           height: 128,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: Image.asset(cardModel.image) .image,
+                            image: NetworkImage(cardModel.image),
                             fit: BoxFit.cover,
                           ),),
                         child:  Padding(
@@ -62,10 +63,10 @@ class CoffeCardWidget extends StatelessWidget {
                               Spacer(flex: 1,),
                               Text(cardModel.name,style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w600),),
                               Spacer(flex: 2,),
-                              Text(cardModel.description,style: TextStyle(color: Color(0xffA2A2A2),fontSize: 16,fontWeight: FontWeight.w600),),
+                              Text(cardModel.description.split(" ").take(3).join(" "),style: TextStyle(color: Color(0xffA2A2A2),fontSize: 16,fontWeight: FontWeight.w600),),
                               Spacer(flex: 3,),
                               Row(children: [
-                                Text("\$ ${cardModel.price}",style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w600),),
+                                Text(" \$55 ",style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w600),),
                                 Spacer(),
 
                                  CustomAddButton(onTap: () {
