@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:coffe_app/features/home/presentation/widgets/build_promo.dart';
 import 'package:coffe_app/features/home/presentation/widgets/categories_toggle.dart';
@@ -18,18 +19,29 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<CoffeeCubit>();
+    cubit.fetchCoffeeItems();
+    log("build home screen");
+
     return SafeArea(
         child: Scaffold(
+
             backgroundColor: Colors.white,
               body: BlocBuilder<CoffeeCubit, CoffeeState>(
                 builder: (context, state) {
+                  log(state.toString());
                   if (state is CoffeeLoading) {
-                    return const CircularProgressIndicator();
+                    log("CoffeeLoading home screen");
+
+                    return Center(child: const CircularProgressIndicator(color: AppColors.brownAppColor,));
                   }
                   if (state is CoffeeError) {
+                    log("CoffeeError home screen");
+
                     return Text(state.errorMessage.toString());
                   }
                   if (state is FetchCoffeeItemsSuccess) {
+                    log("FetchCoffeeItemsSuccess home screen");
+
                     return SingleChildScrollView(
                               child: Column(
                                 children: [
@@ -37,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 16.0, vertical: 12),
-                                    child: CategoriesToggle(),
+                                    child: Text("Categories",),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 24.0),

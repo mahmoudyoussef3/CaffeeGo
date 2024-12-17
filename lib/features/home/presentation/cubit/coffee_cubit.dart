@@ -21,12 +21,12 @@ class CoffeeCubit extends Cubit<CoffeeState> {
   }
 
   void fetchCoffeeItems() async {
-    emit(CoffeeLoading());
+    emit(CoffeeItemsLoading());
     try {
       coffeeItems = await dataRepo.fetchCoffeeItems();
       emit(FetchCoffeeItemsSuccess(coffeeItems));
     } on Exception catch (e) {
-      emit(CoffeeError(e.toString()));
+      emit(CoffeeItemsError(e.toString()));
     }
   }
 }

@@ -6,9 +6,14 @@ abstract class CoffeeState {}
 class CoffeeInitial extends CoffeeState {}
 
 class CoffeeLoading extends CoffeeState {}
+class CoffeeItemsLoading extends CoffeeState {}
 
 class CoffeeError extends CoffeeState {
   CoffeeError(this.errorMessage);
+  final String errorMessage;
+}
+class CoffeeItemsError extends CoffeeState {
+  CoffeeItemsError(this.errorMessage);
   final String errorMessage;
 }
 

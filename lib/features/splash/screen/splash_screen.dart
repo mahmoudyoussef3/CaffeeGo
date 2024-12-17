@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:coffe_app/core/utils/widgets/custom_auth_button.dart';
@@ -51,6 +53,7 @@ class SplashScreen extends StatelessWidget {
                 child: CustomAuthButton(
                   buttonText: 'Get Started',
                   onPressed: () {
+                    log("Get Started");
                     Navigator.pushNamed(context, AppStrings.home);
                   },
                 ),
