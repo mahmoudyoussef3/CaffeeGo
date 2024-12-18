@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/app_colors.dart';
+import '../widgets/toggle_buttons.dart';
 
 class OrderScreen extends StatelessWidget {
   const OrderScreen({super.key});
@@ -21,7 +22,7 @@ class OrderScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-
+                ToggleButtonsWidget(),
 
               ],
             ),

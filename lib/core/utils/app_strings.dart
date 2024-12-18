@@ -7,4 +7,5 @@ class AppStrings {
   static const String cart = '/cart';
   static const String managerScreen = '/manager';
   static const String itemDetails = '/itemDetails';
+  static const String order_screen = '/order';
 }
