@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:coffe_app/core/utils/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-FirebaseAuth auth = FirebaseAuth.instance;
-FirebaseFirestore firebaseData = FirebaseFirestore.instance;
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -23,132 +20,198 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _phoneNumberController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    _phoneNumberController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      backgroundColor: AppColors.greyAppColor,
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 100,
-                ),
-                const Center(
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                        color: AppColors.brownAppColor,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 46,
-                        letterSpacing: 5),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 5),
+                  Image.asset(
+                    'assets/images/app_img.png',
+                    height: 120,
                   ),
-                ),
-                const SizedBox(
-                  height: 32,
-                ),
-                buildTextFormField('First Name', _firstNameController),
-                const SizedBox(
-                  height: 18,
-                ),
-                buildTextFormField('Last Name', _lastNameController),
-                const SizedBox(
-                  height: 18,
-                ),
-                buildTextFormField('Email', _emailController),
-                const SizedBox(
-                  height: 18,
-                ),
-
-                buildTextFormField('Phone Number', _phoneNumberController),
-                const SizedBox(
-                  height: 18,
-                ),
-                buildTextFormField('Password', _passwordController),
-                const SizedBox(
-                  height: 18,
-                ),
-                buildTextFormField(
-                    'Confirm Password', _confirmPasswordController),
-                const SizedBox(
-                  height: 32,
-                ),
-                buildAuthButton('Register'),
-                //
-              ],
+                  const SizedBox(height: 0),
+                  // App Name
+                  const Text(
+                    'CaféGo',
+                    style: TextStyle(
+                      color: AppColors.brownAppColor,
+                      letterSpacing: 2,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 36,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  const Text(
+                    'Create Account',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 32,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.brownAppColor,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  CustomTextFormField(
+                    controller: _firstNameController,
+                    labelText: 'First Name',
+                    icon: Icons.person,
+                    hintText: 'Enter your first name',
+                    validator: (value) =>
+                        value!.isEmpty ? 'First name is required' : null,
+                  ),
+                  const SizedBox(height: 16),
+                  CustomTextFormField(
+                    controller: _lastNameController,
+                    labelText: 'Last Name',
+                    icon: Icons.person,
+                    hintText: 'Enter your last name',
+                    validator: (value) =>
+                        value!.isEmpty ? 'Last name is required' : null,
+                  ),
+                  const SizedBox(height: 16),
+                  CustomTextFormField(
+                    controller: _emailController,
+                    labelText: 'Email',
+                    icon: Icons.email,
+                    hintText: 'user.example@gmail.com',
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) => value!.isEmpty ||
+                            !RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                .hasMatch(value)
+                        ? 'Enter a valid email'
+                        : null,
+                  ),
+                  const SizedBox(height: 16),
+                  CustomTextFormField(
+                    controller: _phoneNumberController,
+                    labelText: 'Phone Number',
+                    icon: Icons.phone,
+                    hintText: 'Enter your phone number',
+                    keyboardType: TextInputType.phone,
+                    validator: (value) =>
+                        value!.isEmpty ? 'Phone number is required' : null,
+                  ),
+                  const SizedBox(height: 16),
+                  CustomTextFormField(
+                    controller: _passwordController,
+                    labelText: 'Password',
+                    icon: Icons.lock,
+                    hintText: 'Enter your password',
+                    obscureText: true,
+                    validator: (value) => value!.length < 6
+                        ? 'Password must be at least 6 characters'
+                        : null,
+                  ),
+                  const SizedBox(height: 16),
+                  CustomTextFormField(
+                    controller: _confirmPasswordController,
+                    labelText: 'Confirm Password',
+                    icon: Icons.lock,
+                    hintText: 'Confirm your password',
+                    obscureText: true,
+                    validator: (value) => value != _passwordController.text
+                        ? 'Passwords do not match'
+                        : null,
+                  ),
+                  const SizedBox(height: 32),
+                  _isLoading
+                      ? const CircularProgressIndicator(
+                          color: AppColors.brownAppColor,
+                        )
+                      : buildAuthButton('Register'),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    ));
-  }
-
-  Widget buildTextFormField(
-      String labelText, TextEditingController controller) {
-    return TextFormField(
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Field is required';
-        }
-        return null;
-      },
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: labelText,
-        border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16))),
       ),
     );
   }
 
   Widget buildAuthButton(String buttonText) {
     return ElevatedButton(
-      style: const ButtonStyle(
-          backgroundColor: WidgetStatePropertyAll(AppColors.brownAppColor)),
-      onPressed: () async {
-        if (_formKey.currentState!.validate()) {
-          try {
-            UserCredential userCredential = await FirebaseAuth.instance
-                .createUserWithEmailAndPassword(
-                    email: _emailController.text,
-                    password: _passwordController.text);
-            var user = userCredential.user;
-            firebaseData.collection('users').doc(user!.uid).set({
-              'firstName': _firstNameController.text,
-              'lastName': _lastNameController.text,
-              'email': _emailController.text,
-              'uid': user.uid,
-              'created_at': Timestamp.now(),
-              'phoneNumber': _phoneNumberController.text,
-            }).then(
-              (value) {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Account Created Successfully')));
-                Navigator.pushNamed(context, AppStrings.login);
-              },
-            );
-          } on FirebaseAuthException catch (e) {
-            if (e.code == 'weak-password') {
-              print('The password provided is too weak.');
-            } else if (e.code == 'email-already-in-use') {
-              print('The account already exists for that email.');
-            }
-          } catch (e) {
-            print(e);
-          }
-        }
-      },
+      onPressed: _isLoading
+          ? null
+          : () async {
+              if (_formKey.currentState!.validate()) {
+                setState(() {
+                  _isLoading = true;
+                });
+                try {
+                  UserCredential userCredential = await FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                          email: _emailController.text,
+                          password: _passwordController.text);
+                  var user = userCredential.user;
+                  await FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(user!.uid)
+                      .set({
+                    'firstName': _firstNameController.text,
+                    'lastName': _lastNameController.text,
+                    'email': _emailController.text,
+                    'uid': user.uid,
+                    'created_at': Timestamp.now(),
+                    'phoneNumber': _phoneNumberController.text,
+                    'userCart': []
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Account Created Successfully')));
+                  Navigator.pushNamed(context, AppStrings.login);
+                } on FirebaseAuthException catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(e.code == 'weak-password'
+                          ? 'The password provided is too weak.'
+                          : e.code == 'email-already-in-use'
+                              ? 'The account already exists for that email.'
+                              : 'Failed to register.')));
+                } catch (e) {
+                  print(e);
+                } finally {
+                  setState(() {
+                    _isLoading = false;
+                  });
+                }
+              }
+            },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.brownAppColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        minimumSize: const Size(double.infinity, 50),
+      ),
       child: Text(
         buttonText,
         style: const TextStyle(
-            color: AppColors.offWhiteAppColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-            letterSpacing: 2),
+          fontFamily: 'Poppins',
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

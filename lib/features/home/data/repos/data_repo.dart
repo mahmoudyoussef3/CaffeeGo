@@ -1,3 +1,5 @@
+import 'package:coffe_app/features/home/data/models/coffe_item.dart';
+
 import '../DataSource/firebase_coffe.dart';
 
 class DataRepo {
@@ -8,7 +10,7 @@ class DataRepo {
     return coffeeDataSource.getCategories();
   }
 
-  Future<List<dynamic>> fetchCoffeeItems() async {
+  Future<List<CoffeeItem>> fetchCoffeeItems() async {
     return coffeeDataSource.fetchCoffeeItems();
   }
 }

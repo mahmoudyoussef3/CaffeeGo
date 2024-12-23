@@ -1,5 +1,6 @@
 import 'package:coffe_app/config/routes.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
@@ -19,7 +20,7 @@ class CoffeeShopApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: Colors.white,
             type: BottomNavigationBarType.fixed,
           ),
@@ -27,7 +28,9 @@ class CoffeeShopApp extends StatelessWidget {
           textSelectionTheme:
               const TextSelectionThemeData(cursorColor: Colors.white)),
       onGenerateRoute: AppRouter.onGenerateRoute,
-      initialRoute: AppStrings.order_screen,
+      initialRoute: FirebaseAuth.instance.currentUser == null
+          ? AppStrings.splash
+          : AppStrings.home,
       debugShowCheckedModeBanner: false,
     );
   }

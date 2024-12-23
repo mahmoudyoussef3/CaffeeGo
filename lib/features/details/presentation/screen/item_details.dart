@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
+import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../home/data/models/coffe_item.dart';
 import '../widgets/add_to_cart_button.dart';
-import '../widgets/coffe_size_items.dart';
 
 class ItemDetails extends StatefulWidget {
   const ItemDetails({super.key});
@@ -16,191 +18,389 @@ class _ItemDetailsState extends State<ItemDetails> {
   bool isExpanded = false;
   int coffeeSize = 0;
 
-
   @override
   Widget build(BuildContext context) {
-    CoffeeItem? coffeeItem = ModalRoute.of(context)?.settings.arguments as CoffeeItem?;
-    if(coffeeItem == null){
-      return Scaffold(
+    CoffeeItem? coffeeItem =
+        ModalRoute.of(context)?.settings.arguments as CoffeeItem?;
+    if (coffeeItem == null) {
+      return const Scaffold(
           body: Center(
-            child: Center(
-              child: Container(
-                child: Text("Error"),
-              ),
-            ),
-          )
-      );
+        child: Center(
+          child: Text("Error"),
+        ),
+      ));
     }
+
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Stack(
-          children: [
-            Positioned(
-              height: MediaQuery.of(context).size.height / 2.5,
-              right: 0,
-              left: 0,
-              child: Image.network(
-                "${coffeeItem.image}",
-                //'https://images.unsplash.com/photo-1664398602170-894a5f4bf43b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmxhY2slMjBjb2ZmZWUlMjBjdXB8ZW58MHx8MHx8fDA%3D',
-                fit: BoxFit.cover,
-              ),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              top: MediaQuery.of(context).size.height / 3.6,
-              child: Container(
-                height: 80,
-                decoration: BoxDecoration(color: Colors.black26),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${coffeeItem.name}',
-                            style: TextStyle(
-                              letterSpacing: 2,
-                              fontSize: 24,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            ' Indonesia, Jakarta',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white70,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(6.0),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.star,
-                                color: Colors.white,
-                                size: 16,
-                              ),
-                              Text(
-                                ' ${coffeeItem.rate}',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: MediaQuery.of(context).size.height / 2.8,
-              left: 0,
-              right: 0,
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(32),
-                    topRight: Radius.circular(32),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        buildTag(Icons.coffee, 'Coffee'),
-                        const SizedBox(width: 8),
-                        buildTag(Icons.food_bank, 'Chocolate'),
-                        const SizedBox(width: 8),
-                        buildTag(Icons.local_fire_department, 'Medium Roasted'),
-                      ],
-                    ),
-
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Coffee Size',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    const CoffeeSizeItems(),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'About',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                     "${coffeeItem.description}",
-                     // 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id ipsum vivamus velit lorem amet.',
-                      maxLines: isExpanded ? null : 2,
-                      overflow: isExpanded
-                          ? TextOverflow.visible
-                          : TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: Colors.grey,
-                        fontSize: 14,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isExpanded = !isExpanded;
-                        });
-                      },
-                      child: Text(
-                        isExpanded ? 'Read Less' : 'Read More',
-                        style: const TextStyle(
-                          color: AppColors.brownAppColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-
-                    Center(child: AddToCartButton()),
-                  ],
-                ),
-              ),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          centerTitle: true,
+          title: const Text(
+            'Detail',
+            style: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.w600, fontSize: 22),
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.favorite_border),
+              onPressed: () {},
             ),
           ],
+          leading: IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(Icons.arrow_back_ios)),
+        ),
+        backgroundColor: Colors.white,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(32),
+                  child: Image.network(
+                    coffeeItem.image,
+                    height: 220,
+                    width: MediaQuery.of(context).size.width - 20,
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 18,
+              ),
+              Row(
+                children: [
+                  Text(
+                    maxLines: 1,
+                    coffeeItem.name,
+                    style: const TextStyle(
+                      letterSpacing: 2,
+                      fontSize: 24,
+                      overflow: TextOverflow.fade,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Spacer(),
+                  Row(children: [
+                    const Icon(
+                      Icons.star,
+                      color: Colors.yellow,
+                      size: 22,
+                    ),
+                    Text(
+                      ' ${coffeeItem.rate}',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ]),
+                ],
+              ),
+              const SizedBox(
+                height: 18,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  buildTag(Icons.coffee, 'Coffee'),
+                  const SizedBox(width: 8),
+                  buildTag(Icons.food_bank, 'Chocolate'),
+                  const SizedBox(width: 8),
+                  buildTag(Icons.local_fire_department, 'Medium Roasted'),
+                ],
+              ),
+              const SizedBox(height: 16),
+              const Divider(
+                indent: 30,
+                endIndent: 30,
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Description',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                coffeeItem.description,
+                maxLines: isExpanded ? null : 1,
+                overflow:
+                    isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Colors.grey,
+                  fontSize: 14,
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isExpanded = !isExpanded;
+                  });
+                },
+                child: Text(
+                  isExpanded ? 'Read Less' : 'Read More',
+                  style: const TextStyle(
+                    color: AppColors.brownAppColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              const Divider(
+                indent: 30,
+                endIndent: 30,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              const Text(
+                'Size',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              // const SizedBox(height: 16),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                      3,
+                      (index) => GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                coffeeSize = index;
+                              });
+                            },
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(35),
+                              ),
+                              elevation: 0,
+                              color: coffeeSize == index
+                                  ? AppColors.brownAppColor
+                                  : Colors.white,
+                              child: Container(
+                                height: 37,
+                                width: 85,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: coffeeSize == index
+                                        ? AppColors.offWhiteAppColor
+                                        : Colors.black26,
+                                  ),
+                                  color: coffeeSize == index
+                                      ? AppColors.brownAppColor
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Center(
+                                    child: Text(
+                                  coffeeSizeList[index],
+                                  style: TextStyle(
+                                      color: coffeeSize == index
+                                          ? Colors.white
+                                          : Colors.black),
+                                )),
+                              ),
+                            ),
+                          ))),
+              //  const CoffeeSizeItems(),
+              const Spacer(
+                flex: 2,
+              ),
+              Center(
+                  child: AddToCartButton(
+                price: coffeeItem.sizes[coffeeSizeList[coffeeSize]].toString(),
+                coffeeItem: coffeeItem,
+              )),
+              const Spacer(
+                flex: 1,
+              ),
+            ],
+          ),
         ),
       ),
     );
+
+    // Stack(
+    //   children: [
+    //     Positioned(
+    //       height: MediaQuery.of(context).size.height / 2.5,
+    //       right: 0,
+    //       left: 0,
+    //       child: Image.network(
+    //         coffeeItem.image,
+    //         fit: BoxFit.cover,
+    //       ),
+    //     ),
+    //     Positioned(
+    //       left: 0,
+    //       right: 0,
+    //       top: MediaQuery.of(context).size.height / 3.6,
+    //       child: Container(
+    //         height: 80,
+    //         decoration: const BoxDecoration(color: Colors.black26),
+    //         child: Padding(
+    //           padding:
+    //               const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+    //           child: Row(
+    //             crossAxisAlignment: CrossAxisAlignment.start,
+    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //             children: [
+    //               Column(
+    //                 mainAxisAlignment: MainAxisAlignment.start,
+    //                 crossAxisAlignment: CrossAxisAlignment.start,
+    //                 children: [
+    //                   SizedBox(
+    //                     width: MediaQuery.of(context).size.width * 3 / 4,
+    //                     child: Text(
+    //                       maxLines: 1,
+    //                       coffeeItem.name,
+    //                       style: const TextStyle(
+    //                         letterSpacing: 2,
+    //                         fontSize: 24,
+    //                         overflow: TextOverflow.fade,
+    //                         color: Colors.white,
+    //                         fontWeight: FontWeight.bold,
+    //                       ),
+    //                     ),
+    //                   ),
+    //                   const Text(
+    //                     ' Indonesia, Jakarta',
+    //                     style: TextStyle(
+    //                       fontSize: 16,
+    //                       color: Colors.white,
+    //                     ),
+    //                   ),
+    //                 ],
+    //               ),
+    //               Container(
+    //                 decoration: BoxDecoration(
+    //                   borderRadius: BorderRadius.circular(20),
+    //                   color: Colors.white70,
+    //                 ),
+    //                 child: Padding(
+    //                   padding: const EdgeInsets.all(6.0),
+    //                   child: Row(
+    //                     children: [
+    //                       const Icon(
+    //                         Icons.star,
+    //                         color: Colors.white,
+    //                         size: 16,
+    //                       ),
+    //                       Text(
+    //                         ' ${coffeeItem.rate}',
+    //                         style: const TextStyle(
+    //                           fontSize: 16,
+    //                           color: Colors.white,
+    //                           fontWeight: FontWeight.w500,
+    //                         ),
+    //                       ),
+    //                     ],
+    //                   ),
+    //                 ),
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //     Positioned(
+    //       top: MediaQuery.of(context).size.height / 2.8,
+    //       left: 0,
+    //       right: 0,
+    //       child: Container(
+    //         padding: const EdgeInsets.all(16),
+    //         decoration: const BoxDecoration(
+    //           color: Colors.white,
+    //           borderRadius: BorderRadius.only(
+    //             topLeft: Radius.circular(32),
+    //             topRight: Radius.circular(32),
+    //           ),
+    //         ),
+    //         child: Column(
+    //           crossAxisAlignment: CrossAxisAlignment.start,
+    //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    //           children: [
+    //             const SizedBox(
+    //               height: 16,
+    //             ),
+    //             Row(
+    //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //               children: [
+    //                 buildTag(Icons.coffee, 'Coffee'),
+    //                 const SizedBox(width: 8),
+    //                 buildTag(Icons.food_bank, 'Chocolate'),
+    //                 const SizedBox(width: 8),
+    //                 buildTag(Icons.local_fire_department, 'Medium Roasted'),
+    //               ],
+    //             ),
+    //             const SizedBox(height: 16),
+    //             const Text(
+    //               'About',
+    //               style: TextStyle(
+    //                 fontSize: 18,
+    //                 fontWeight: FontWeight.bold,
+    //               ),
+    //             ),
+    //             const SizedBox(height: 8),
+    //             Text(
+    //               coffeeItem.description,
+    //               maxLines: isExpanded ? null : 1,
+    //               overflow: isExpanded
+    //                   ? TextOverflow.visible
+    //                   : TextOverflow.ellipsis,
+    //               style: const TextStyle(
+    //                 color: Colors.grey,
+    //                 fontSize: 14,
+    //               ),
+    //             ),
+    //             GestureDetector(
+    //               onTap: () {
+    //                 setState(() {
+    //                   isExpanded = !isExpanded;
+    //                 });
+    //               },
+    //               child: Text(
+    //                 isExpanded ? 'Read Less' : 'Read More',
+    //                 style: const TextStyle(
+    //                   color: AppColors.brownAppColor,
+    //                   fontWeight: FontWeight.bold,
+    //                 ),
+    //               ),
+    //             ),
+    //             const SizedBox(
+    //               height: 24,
+    //             ),
+    //             const Text(
+    //               'Coffee Size',
+    //               style: TextStyle(
+    //                 fontSize: 18,
+    //                 fontWeight: FontWeight.bold,
+    //               ),
+    //             ),
+    //             const SizedBox(height: 16),
+    //             const CoffeeSizeItems(),
+    //             const SizedBox(height: 150),
+    //             const Center(child: AddToCartButton()),
+    //           ],
+    //         ),
+    //       ),
+    //     ),
+    //   ],
+    // ),
   }
-
-
 
   Widget buildTag(IconData icon, String label) {
     return Container(
@@ -224,4 +424,10 @@ class _ItemDetailsState extends State<ItemDetails> {
       ),
     );
   }
+
+  List<String> coffeeSizeList = [
+    "small",
+    "medium",
+    "large",
+  ];
 }

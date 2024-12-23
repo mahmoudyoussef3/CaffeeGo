@@ -1,12 +1,14 @@
+import 'package:flutter/foundation.dart';
+
 class CoffeeItem {
   final String id;
   final String name;
   final String description;
   final String image;
   final String category;
-  final double rate;
+  final String rate;
   final List<Ingredient> ingredients;
-  final Map<String, double> sizes; // New field for sizes
+  final Map<String, double> sizes;
 
   CoffeeItem({
     required this.id,
@@ -19,7 +21,6 @@ class CoffeeItem {
     required this.sizes,
   });
 
-  // Factory method to create a CoffeeItem from a Firestore document
   factory CoffeeItem.fromMap(Map<String, dynamic> data) {
     return CoffeeItem(
       id: data['id'] ?? '',
@@ -27,16 +28,29 @@ class CoffeeItem {
       description: data['description'] ?? '',
       image: data['image'] ?? '',
       category: data['category'] ?? '',
-      rate: (data['rate'] ?? 0.0).toDouble(),
+      rate: (data['rate'] ?? ''),
       ingredients: (data['ingredients'] as List<dynamic>?)
-          ?.map((ingredient) => Ingredient.fromMap(ingredient))
-          .toList() ??
+              ?.map((ingredient) => Ingredient.fromMap(ingredient))
+              .toList() ??
           [],
       sizes: (data['sizes'] as Map<String, dynamic>?)?.map(
             (key, value) => MapEntry(key, (value as num).toDouble()),
-      ) ??
-          {}, // Convert Firestore map to Map<String, double>
+          ) ??
+          {},
     );
+  }
+  toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'image': image,
+      'category': category,
+      'rate': category,
+      'ingredients':
+          ingredients.map((ingredient) => ingredient.toJson()).toList(),
+      'sizes': sizes.map((key, value) => MapEntry(key, value)),
+    };
   }
 }
 
@@ -49,11 +63,16 @@ class Ingredient {
     required this.image,
   });
 
-  // Factory method to create Ingredient from a map
   factory Ingredient.fromMap(Map<String, dynamic> data) {
     return Ingredient(
       name: data['name'] ?? '',
       image: data['image'] ?? '',
     );
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'image': image,
+    };
   }
 }

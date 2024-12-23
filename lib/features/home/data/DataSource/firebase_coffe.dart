@@ -15,17 +15,12 @@ class CoffeeDataSource {
     return categories;
   }
 
-
-
   Future<List<CoffeeItem>> fetchCoffeeItems() async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
     try {
-      // Reference to the coffee_items collection
       QuerySnapshot snapshot =
-      await _firestore.collection('coffee_items').get();
-
-      // Map the documents to CoffeeItem models
+          await _firestore.collection('coffee_items').get();
       List<CoffeeItem> coffeeItems = snapshot.docs.map((doc) {
         return CoffeeItem.fromMap(doc.data() as Map<String, dynamic>);
       }).toList();
@@ -36,7 +31,5 @@ class CoffeeDataSource {
       print('Error fetching coffee items: $e');
       return [];
     }
-
   }
-
 }

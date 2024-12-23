@@ -1,9 +1,10 @@
 import 'package:coffe_app/core/utils/app_colors.dart';
-import 'package:coffe_app/features/cart/screen/cart_screen.dart';
 import 'package:coffe_app/features/fav/screen/fav_screen.dart';
 import 'package:coffe_app/features/home/presentation/pages/home_screen.dart';
 import 'package:coffe_app/features/notification/screen/notification_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'features/cart/Presentation/screen/cart_screen.dart';
 
 class ManagerScreen extends StatefulWidget {
   const ManagerScreen({super.key});
@@ -36,7 +37,6 @@ class _ManagerScreenState extends State<ManagerScreen> {
                       indent: 40,
                       endIndent: 40,
                       height: 2,
-
                     )
                   ],
                 ),

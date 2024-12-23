@@ -10,7 +10,10 @@ class BuildBannerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(28.0),
+      padding: const EdgeInsets.only(
+        right: 28.0,
+        left: 28.0,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -83,7 +86,7 @@ class BuildBannerWidget extends StatelessWidget {
                 ),
                 child: const Center(
                   child: Icon(
-                   FontAwesomeIcons.sliders,
+                    FontAwesomeIcons.sliders,
                     size: 16,
                     color: Colors.white,
                   ),
