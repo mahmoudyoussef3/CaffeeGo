@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffe_app/features/cart/Data/repo/user_data_repo.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +15,8 @@ class UserDataCubit extends Cubit<UserDataState> {
     try {
       final List<CoffeeItem> userCartFirebase = await dataRepo.fetchCart();
       userCart = userCartFirebase;
+      print(userCart.length);
+
       emit(UserDataSuccess(userCart));
     } on Exception catch (e) {
       emit(UserDataError(e.toString()));
@@ -33,6 +34,21 @@ class UserDataCubit extends Cubit<UserDataState> {
     } catch (e) {
       print('Item failed');
       print(e.toString());
+      emit(UserDataError(e.toString()));
+    }
+  }
+
+  Future<void> deleteCart(CoffeeItem item) async {
+    try {
+      final currentState = state;
+      if (currentState is UserDataSuccess) {
+        userCart.remove(item);
+        await dataRepo.addToCart(userCart);
+        print('Item deleted successfully');
+        final updatedCart = List.from(currentState.userCart)..remove(item);
+        emit(UserDataSuccess(updatedCart));
+      }
+    } catch (e) {
       emit(UserDataError(e.toString()));
     }
   }

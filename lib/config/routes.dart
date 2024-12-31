@@ -29,7 +29,8 @@ class AppRouter {
           builder: (context) => MultiBlocProvider(providers: [
             BlocProvider(
                 create: (context) => CategoryCubit(
-                    DataRepo(coffeeDataSource: CoffeeDataSource()))),
+                    DataRepo(coffeeDataSource: CoffeeDataSource()),
+                    ItemsUseCse())),
             BlocProvider(
                 create: (context) => UserDataCubit(UserDataRepo(UserData()))),
             BlocProvider(
@@ -67,7 +68,8 @@ class AppRouter {
                 providers: [
                   BlocProvider(
                       create: (context) => CategoryCubit(
-                          DataRepo(coffeeDataSource: CoffeeDataSource()))),
+                          DataRepo(coffeeDataSource: CoffeeDataSource()),
+                          ItemsUseCse())),
                   BlocProvider(
                       create: (context) =>
                           UserDataCubit(UserDataRepo(UserData()))),
@@ -80,7 +82,7 @@ class AppRouter {
             });
 
       // case AppStrings.order_screen:
-        // return MaterialPageRoute(builder: (context) => OrderScreen());
+      // return MaterialPageRoute(builder: (context) => OrderScreen());
       default:
         return MaterialPageRoute(builder: (context) => LoginScreen());
     }

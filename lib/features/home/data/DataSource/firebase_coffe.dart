@@ -16,11 +16,10 @@ class CoffeeDataSource {
   }
 
   Future<List<CoffeeItem>> fetchCoffeeItems() async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    final FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
     try {
-      QuerySnapshot snapshot =
-          await _firestore.collection('coffee_items').get();
+      QuerySnapshot snapshot = await fireStore.collection('coffee_items').get();
       List<CoffeeItem> coffeeItems = snapshot.docs.map((doc) {
         return CoffeeItem.fromMap(doc.data() as Map<String, dynamic>);
       }).toList();

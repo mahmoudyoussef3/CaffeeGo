@@ -11,6 +11,6 @@ class UserDataRepo {
   }
 
   Future<void> addToCart(List<CoffeeItem> myCart) async {
-    await userData.addToCart(myCart);
+    await userData.updateCart(myCart);
   }
 }

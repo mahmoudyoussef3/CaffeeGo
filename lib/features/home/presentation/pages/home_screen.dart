@@ -2,7 +2,6 @@ import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import '../widgets/build_coffe-items_list.dart';
 import '../widgets/build_promo.dart';
 import '../widgets/categories_toggle.dart';
@@ -53,9 +52,6 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // const SizedBox(
-                  //   height: 6,
-                  // ),
                   InkWell(
                     onTap: () => Navigator.pushNamed(context, AppStrings.fav),
                     child: Container(
@@ -112,15 +108,15 @@ class HomeScreen extends StatelessWidget {
               elevation: 0,
             ),
             backgroundColor: Colors.white,
-            body: const SingleChildScrollView(
+            body: SingleChildScrollView(
               child: Column(
                 children: [
                   BuildPromo(),
-                  Padding(
+                  const Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+                          EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
                       child: CategoriesToggle()),
-                  BuildCoffeeItemsList()
+                  const BuildCoffeeItemsList(),
                 ],
               ),
             )));

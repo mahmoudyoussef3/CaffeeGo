@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart';
@@ -17,6 +18,17 @@ class ItemDetails extends StatefulWidget {
 class _ItemDetailsState extends State<ItemDetails> {
   bool isExpanded = false;
   int coffeeSize = 0;
+  double _opacity = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 100), () {
+      setState(() {
+        _opacity = 1.0;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +73,15 @@ class _ItemDetailsState extends State<ItemDetails> {
               Center(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(32),
-                  child: Image.network(
-                    coffeeItem.image,
-                    height: 220,
-                    width: MediaQuery.of(context).size.width - 20,
-                    fit: BoxFit.fitWidth,
+                  child: AnimatedOpacity(
+                    duration: const Duration(seconds: 1),
+                    opacity: _opacity,
+                    child: CachedNetworkImage(
+                      imageUrl: coffeeItem.image,
+                      height: 220,
+                      width: MediaQuery.of(context).size.width - 20,
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                 ),
               ),
@@ -74,15 +90,18 @@ class _ItemDetailsState extends State<ItemDetails> {
               ),
               Row(
                 children: [
-                  Text(
-                    maxLines: 1,
-                    coffeeItem.name,
-                    style: const TextStyle(
-                      letterSpacing: 2,
-                      fontSize: 24,
-                      overflow: TextOverflow.fade,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 3 / 4,
+                    child: Text(
+                      maxLines: 1,
+                      coffeeItem.name,
+                      style: const TextStyle(
+                        letterSpacing: 2,
+                        fontSize: 24,
+                        overflow: TextOverflow.ellipsis,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const Spacer(),

@@ -1,4 +1,5 @@
 import 'package:coffe_app/config/routes.dart';
+import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -25,8 +26,8 @@ class CoffeeShopApp extends StatelessWidget {
             type: BottomNavigationBarType.fixed,
           ),
           fontFamily: 'Sora',
-          textSelectionTheme:
-              const TextSelectionThemeData(cursorColor: Colors.white)),
+          textSelectionTheme: const TextSelectionThemeData(
+              cursorColor: AppColors.brownAppColor)),
       onGenerateRoute: AppRouter.onGenerateRoute,
       initialRoute: FirebaseAuth.instance.currentUser == null
           ? AppStrings.splash

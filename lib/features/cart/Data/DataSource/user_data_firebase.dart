@@ -22,7 +22,7 @@ class UserData {
     return myCart;
   }
 
-  Future<void> addToCart(List<CoffeeItem> cart) async {
+  Future<void> updateCart(List<CoffeeItem> cart) async {
     final cartData = cart.map((item) => item.toMap()).toList();
     DocumentReference docRef = FirebaseFirestore.instance
         .collection('users')

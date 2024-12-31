@@ -1,14 +1,19 @@
+import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart';
+import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/app_colors.dart';
 import 'custom_circular_button.dart';
 
-class CustomOrderItme extends StatefulWidget {
+class CustomOrderItem extends StatefulWidget {
+  const CustomOrderItem({super.key, required this.coffeeItem});
   @override
-  _CustomOrderItmeState createState() => _CustomOrderItmeState();
+  _CustomOrderItemState createState() => _CustomOrderItemState();
+  final CoffeeItem coffeeItem;
 }
 
-class _CustomOrderItmeState extends State<CustomOrderItme> {
-  int counter = 0;
+class _CustomOrderItemState extends State<CustomOrderItem> {
+  int counter = 1;
 
   void _increaseCounter() {
     setState(() {
@@ -18,47 +23,49 @@ class _CustomOrderItmeState extends State<CustomOrderItme> {
 
   void _decreaseCounter() {
     setState(() {
-      if (counter > 0) counter--;
+      if (counter > 1) counter--;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.greyAppColor,
-      width:double.infinity ,
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: AppColors.offWhiteAppColor,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      width: double.infinity,
+      height: 100,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // 1. Rounded Border Image
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              "assets/images/caffe_mocha.png", // Replace with your image URL
+            child: Image.network(
+              widget.coffeeItem.image,
               height: 80,
               width: 80,
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(width: 10), // Space between image and text section
-
-          // 2. Column for Name and Description
+          const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  "Coffee Latte", // Replace with your name
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                Text(
+                  widget.coffeeItem.name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
-                  "Rich and creamy espresso.", // Replace with your description
+                  "Price: ${widget.coffeeItem.sizes['medium']}",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey.shade700,
@@ -67,34 +74,38 @@ class _CustomOrderItmeState extends State<CustomOrderItme> {
               ],
             ),
           ),
-          SizedBox(width: 10),
-
-          // 3. Counter Section with Buttons
+          const SizedBox(width: 10),
           Row(
             children: [
-              // Decrease Button
               CircularButton(
                 icon: Icons.remove,
                 onPressed: _decreaseCounter,
               ),
-              SizedBox(width: 16),
-              // Counter Text
-              SizedBox(
-                width: 15,
-                child: Text(
-                  "$counter",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+              const SizedBox(width: 8),
+              Container(
+                width: 38,
+                height: 35,
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: AppColors.brownAppColor),
+                child: Center(
+                  child: Text(
+                    "$counter",
+                    style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 8),
               // Increase Button
               CircularButton(
                 icon: Icons.add,
                 onPressed: _increaseCounter,
               ),
+              const SizedBox(width: 8),
 
             ],
           ),

@@ -9,15 +9,15 @@ class BuildBannerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
+    return const Padding(
+      padding: EdgeInsets.only(
         right: 28.0,
         left: 28.0,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Hello,\nMahmoud Youssef.',
             style: TextStyle(
                 color: Colors.white,
@@ -26,10 +26,10 @@ class BuildBannerWidget extends StatelessWidget {
                 height: 1.2,
                 fontFamily: 'Roboto'),
           ),
-          const SizedBox(
+          SizedBox(
             height: 12,
           ),
-          const Text(
+          Text(
             'Ready to start your day with a perfect cup of coffee?',
             style: TextStyle(
                 fontSize: 16,
@@ -39,61 +39,59 @@ class BuildBannerWidget extends StatelessWidget {
                 fontFamily: 'Roboto',
                 color: Colors.white70),
           ),
-          const SizedBox(
-            height: 24,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                  width: MediaQuery.of(context).size.width * 3 / 4 - 30,
-                  child: SearchBar(
-                    controller: _searchController,
-                    onChanged: (value) {
-                      _searchController.text = value;
-                      if (kDebugMode) {
-                        print(_searchController.text);
-                      }
-                    },
-                    textStyle: const WidgetStatePropertyAll(TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    )),
-                    hintStyle: const WidgetStatePropertyAll(
-                        TextStyle(color: Colors.white30)),
-                    elevation: const WidgetStatePropertyAll(0),
-                    shape: const WidgetStatePropertyAll(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12)))),
-                    backgroundColor:
-                        const WidgetStatePropertyAll(Color(0xff2D2D2D)),
-                    hintText: 'Search coffee',
-                    leading: const Icon(
-                      Icons.search,
-                      color: Colors.white,
-                    ),
-                  )),
-              //  ),
-              const SizedBox(
-                width: 12,
-              ),
-              Container(
-                width: 50,
-                height: 55,
-                decoration: const BoxDecoration(
-                  color: AppColors.brownAppColor,
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                ),
-                child: const Center(
-                  child: Icon(
-                    FontAwesomeIcons.sliders,
-                    size: 16,
-                    color: Colors.white,
-                  ),
-                ),
-              )
-            ],
-          )
+
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     SizedBox(
+          //         width: MediaQuery.of(context).size.width * 3 / 4 - 30,
+          //         child: SearchBar(
+          //           controller: _searchController,
+          //           onChanged: (value) {
+          //             _searchController.text = value;
+          //             if (kDebugMode) {
+          //               print(_searchController.text);
+          //             }
+          //           },
+          //           textStyle: const WidgetStatePropertyAll(TextStyle(
+          //             color: Colors.white,
+          //             fontSize: 18,
+          //             fontWeight: FontWeight.w500,
+          //           )),
+          //           hintStyle: const WidgetStatePropertyAll(
+          //               TextStyle(color: Colors.white30)),
+          //           elevation: const WidgetStatePropertyAll(0),
+          //           shape: const WidgetStatePropertyAll(RoundedRectangleBorder(
+          //               borderRadius: BorderRadius.all(Radius.circular(12)))),
+          //           backgroundColor:
+          //               const WidgetStatePropertyAll(Color(0xff2D2D2D)),
+          //           hintText: 'Search coffee',
+          //           leading: const Icon(
+          //             Icons.search,
+          //             color: Colors.white,
+          //           ),
+          //         )),
+          //     //  ),
+          //     const SizedBox(
+          //       width: 12,
+          //     ),
+          //     Container(
+          //       width: 50,
+          //       height: 55,
+          //       decoration: const BoxDecoration(
+          //         color: AppColors.brownAppColor,
+          //         borderRadius: BorderRadius.all(Radius.circular(12)),
+          //       ),
+          //       child: const Center(
+          //         child: Icon(
+          //           FontAwesomeIcons.sliders,
+          //           size: 16,
+          //           color: Colors.white,
+          //         ),
+          //       ),
+          //     )
+          //   ],
+          // )
         ],
       ),
     );

@@ -6,12 +6,16 @@ class ItemsUseCse {
   DataRepo dataRepo = DataRepo(coffeeDataSource: CoffeeDataSource());
 
   Future<List<CoffeeItem>> getItems(String category) async {
-    List<CoffeeItem> myItems = (await dataRepo.fetchCoffeeItems())
-        .where(
-          (element) => element.category == category,
-        )
-        .toList();
-    print(myItems);
-    return myItems;
+    if (category == 'ALL') {
+      List<CoffeeItem> myItems = (await dataRepo.fetchCoffeeItems());
+      return myItems;
+    } else {
+      List<CoffeeItem> myItems = (await dataRepo.fetchCoffeeItems())
+          .where(
+            (element) => element.category == category,
+          )
+          .toList();
+      return myItems;
+    }
   }
 }

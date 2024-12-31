@@ -1,3 +1,4 @@
+import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,9 +25,25 @@ class AddToCartButton extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                context
-                    .read<UserDataCubit>()
-                    .addToCart(coffeeItem);
+                context.read<UserDataCubit>().addToCart(coffeeItem).then(
+                  (value) {
+                    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        action: SnackBarAction(
+                          label: "Cart",
+                          textColor: AppColors.secondaryBrownAppColor,
+                          onPressed: () =>
+                              Navigator.pushNamed(context, AppStrings.cart),
+                        ),
+                        backgroundColor: Colors.white,
+                        content: const Text(
+                          'Item added to Cart',
+                          style: TextStyle(
+                              color: AppColors.secondaryBrownAppColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500),
+                        )));
+                  },
+                );
               },
               child: Container(
                 width: MediaQuery.of(context).size.width * 3 / 4 - 60,

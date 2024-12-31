@@ -16,7 +16,6 @@ class CategoriesToggle extends StatefulWidget {
 
 class _CategoriesToggleState extends State<CategoriesToggle> {
   int selectedIndex = 0;
-
   @override
   void initState() {
     super.initState();
@@ -38,6 +37,7 @@ class _CategoriesToggleState extends State<CategoriesToggle> {
               return Text(state.errorMessage.toString());
             } else if (state is CategorySuccess) {
               var myCategories = state.myCategories;
+              print(myCategories);
               return Row(
                 children: List.generate(myCategories.length, (index) {
                   final isSelected = selectedIndex == index;
@@ -76,7 +76,7 @@ class _CategoriesToggleState extends State<CategoriesToggle> {
               );
             }
 
-            return SizedBox();
+            return const SizedBox.shrink();
           },
         ));
   }

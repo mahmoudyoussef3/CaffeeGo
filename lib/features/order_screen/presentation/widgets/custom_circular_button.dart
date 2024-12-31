@@ -5,10 +5,10 @@ class CircularButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const CircularButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class CircularButton extends StatelessWidget {
       child: Container(
         height: 35,
         width: 35,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.white,
         ),

@@ -1,10 +1,8 @@
 import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../core/utils/app_colors.dart';
 import '../../../order_screen/presentation/widgets/order_item.dart';
-import '../../../order_screen/presentation/widgets/toggle_buttons.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -22,106 +20,247 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: BlocBuilder<UserDataCubit, UserDataState>(
-      builder: (context, state) {
-        if (state is UserDataLoading) {
-          return const Center(child: CircularProgressIndicator());
-        }
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF8F5F2),
+        body: BlocBuilder<UserDataCubit, UserDataState>(
+          builder: (context, state) {
+            if (state is UserDataLoading) {
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: AppColors.brownAppColor,
+              ));
+            }
 
-        if (state is UserDataError) {
-          return const Center(child: Text('Failed to load user data'));
-        }
-        if (state is UserDataSuccess) {
-          final cartItems = state.userCart;
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Container(
-                    width: double.infinity,
-                    // height: 700,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ToggleButtonsWidget(),
-                        SizedBox(
-                          height: 24,
+            if (state is UserDataError) {
+              return const Center(
+                child: Text(
+                  'Failed to load user data',
+                  style: TextStyle(fontSize: 18, color: Colors.redAccent),
+                ),
+              );
+            }
+
+            if (state is UserDataSuccess) {
+              final cartItems = state.userCart;
+              if (cartItems.isEmpty) {
+                return const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.coffee,
+                        size: 100,
+                        color: AppColors.brownAppColor,
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'Your cart is empty!',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: AppColors.brownAppColor,
+                          fontWeight: FontWeight.w600,
                         ),
-                        Divider(
-                          thickness: 1,
-                          color: AppColors.offWhiteAppColor,
-                          endIndent: 30,
-                          indent: 30,
-                        ),
-                        SizedBox(
-                          height: 24,
-                        ),
-                        CustomOrderItme(),
-                      ],
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Start adding items to your cart.',
+                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                      ),
+                    ],
+                  ),
+                );
+              }
+
+              return Column(
+                children: [
+                  const Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
+                    child: Text(
+                      'Cart',
+                      style: TextStyle(
+                        color: AppColors.brownAppColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 28,
+                        letterSpacing: 1.5,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 500,
-                  child: ListView.builder(
+                  Expanded(
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) => const Divider(
+                        color: AppColors.brownAppColor,
+                        indent: 50,
+                        endIndent: 50,
+                      ),
                       itemCount: cartItems.length,
                       itemBuilder: (context, index) {
-                        final coffeeItem = cartItems[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 5.0),
-                          child: Card(
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
+                              horizontal: 16.0, vertical: 8.0),
+                          child: Dismissible(
+                            key: Key(cartItems[index].toString()),
+                            direction: DismissDirection.endToStart,
+                            onDismissed: (direction) async {
+                              await context
+                                  .read<UserDataCubit>()
+                                  .deleteCart(cartItems[index]);
+                              if (mounted) {
+                                context.read<UserDataCubit>().fetchUserCart();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Item removed successfully',
+                                      style: TextStyle(
+                                          color: AppColors.brownAppColor),
+                                    ),
+                                    backgroundColor: AppColors.offWhiteAppColor,
+                                  ),
+                                );
+                              }
+                            },
+                            background: Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Colors.red,
+                              ),
+                              alignment: Alignment.centerRight,
+                              child:
+                                  const Icon(Icons.delete, color: Colors.white),
                             ),
-                            child: ListTile(
-                              leading: ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.network(
-                                  coffeeItem.image,
-                                  fit: BoxFit.cover,
-                                  width: 60,
-                                  height: 60,
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      const Icon(Icons.broken_image,
-                                          color: Colors.grey),
-                                ),
-                              ),
-                              title: Text(
-                                coffeeItem.name,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 16),
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(coffeeItem.description,
-                                      maxLines: 2, overflow: TextOverflow.ellipsis),
-                                  Text('Price: ${coffeeItem.sizes.entries.first.value}',
-                                      style: TextStyle(color: Colors.green[700])),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Colors.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 5,
+                                    offset: Offset(0, 2),
+                                  ),
                                 ],
                               ),
-                              trailing: IconButton(
-                                icon: const Icon(Icons.delete, color: Colors.red),
-                                onPressed: () {
-                                  // Remove item from cart logic
-                                },
-                              ),
+                              child:
+                                  CustomOrderItem(coffeeItem: cartItems[index]),
                             ),
                           ),
                         );
-                      }),
-                ),
-              ],
-            ),
-          );
-        }
-        ;
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    height: 70,
+                    width: double.infinity,
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Colors.white, Colors.white],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 8,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return Container(
+                                  padding: const EdgeInsets.all(16),
+                                  height: 150,
+                                  child: const Center(
+                                    child: Text(
+                                      'Order Placed Successfully!',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.65,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: AppColors.brownAppColor,
+                            ),
+                            child: const Text(
+                              'Order Now',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Total',
+                                style: TextStyle(
+                                  color: AppColors.brownAppColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                '${totalPrice(cartItems)} \$',
+                                style: const TextStyle(
+                                  color: AppColors.brownAppColor,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              );
+            }
 
-        return const SizedBox.shrink();
-      },
-    ));
+            return const Center(
+              child: Text(
+                'Unknown state!',
+                style: TextStyle(fontSize: 18, color: Colors.black54),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  String totalPrice(List items) {
+    double sum = 0;
+    for (var item in items) {
+      sum += item.sizes['medium'];
+    }
+    return sum.toStringAsFixed(2);
   }
 }
