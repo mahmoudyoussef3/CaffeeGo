@@ -4,6 +4,10 @@ import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'features/home/data/models/hive/hive.dart';
+import 'features/home/data/models/hive/hive_item.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -11,6 +15,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // Initialize Hive
+  MyHive.initHive();
   runApp(const CoffeeShopApp());
 }
 
@@ -30,7 +36,7 @@ class CoffeeShopApp extends StatelessWidget {
               cursorColor: AppColors.brownAppColor)),
       onGenerateRoute: AppRouter.onGenerateRoute,
       initialRoute: FirebaseAuth.instance.currentUser == null
-          ? AppStrings.splash
+          ? AppStrings.home
           : AppStrings.home,
       debugShowCheckedModeBanner: false,
     );

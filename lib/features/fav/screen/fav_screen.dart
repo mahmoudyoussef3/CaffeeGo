@@ -1,36 +1,73 @@
+
+import 'dart:developer';
+
 import 'package:coffe_app/core/utils/app_strings.dart';
+import 'package:coffe_app/features/home/data/models/coffe_item.dart';
+import 'package:coffe_app/features/home/data/models/hive/hive.dart';
+import 'package:coffe_app/features/home/presentation/widgets/coffe_card_widget.dart';
 import 'package:flutter/material.dart';
 
-class FavScreen extends StatelessWidget {
+import '../../../core/utils/app_colors.dart';
+import '../../home/data/models/hive/hive_item.dart';
+
+class FavScreen extends StatefulWidget {
   const FavScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Favorite Screen'),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
+  State<FavScreen> createState() => _FavScreenState();
+}
 
-                Navigator.pushNamed(context, AppStrings.itemDetails);
-              },
-              child: Text('Go to Details'),
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
+class _FavScreenState extends State<FavScreen> {
+  @override
+  Widget build(BuildContext context) {
+
+    List<CoffeeItem> myItems = MyHive.getCoffeeItemList(MyHive.hiveBox);
+    return Scaffold(
+
+        appBar: AppBar(
+          centerTitle: true,
+          iconTheme: IconThemeData(
+            color: Colors.white, //change your color here
+          ),
+          title: const Text(
+            "Favourites",
+            style: TextStyle(color: AppColors.offWhiteAppColor),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.delete_rounded,
+                color: Colors.white,
+              ),
               onPressed: () {
-                // Navigate to the Home Screen
-                Navigator.pop(context);
+                MyHive.deleteAllFavourites();
+                log("delete all button pressed");
+                setState(() {
+
+                });
               },
-              child: Text('Go back to Home'),
-            ),
+            )
           ],
+          backgroundColor: AppColors.brownAppColor,
+          elevation: 0,
         ),
-      ),
+        backgroundColor: Colors.white,
+        body:myItems.isEmpty? const Center(child: Text("No Favourites",style: TextStyle(color: Colors.black))):   GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: myItems.length,
+                    gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 16,
+                      childAspectRatio: 0.68,
+                      crossAxisSpacing: 5,
+                    ),
+                    itemBuilder: (context, index) {
+                      return CoffeCardWidget(cardModel:myItems[index] ,);
+
+                    }),
     );
+
   }
 }
