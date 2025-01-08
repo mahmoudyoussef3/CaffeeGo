@@ -28,7 +28,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (context) => MultiBlocProvider(providers: [
             BlocProvider(
-                create: (context) => CategoryCubit(
+                create: (context,) => CategoryCubit(
                     DataRepo(coffeeDataSource: CoffeeDataSource()),
                     ItemsUseCse())),
             BlocProvider(
