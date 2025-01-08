@@ -38,6 +38,32 @@ class UserDataCubit extends Cubit<UserDataState> {
     }
   }
 
+  Future updateQuantity(String selectedSize, String id, int number) async {
+    UserDataLoading();
+    try {
+      await dataRepo.updateQuantity(selectedSize, id, number);
+      print('Item quantity updated successfully');
+      emit(UserDataSuccess(userCart));
+    } catch (e) {
+      print('Item updated failed');
+      print(e.toString());
+      emit(UserDataError(e.toString()));
+    }
+  }
+
+  // Future updateSelectedSize(String id, String selectedSize) async {
+  //   UserDataLoading();
+  //   try {
+  //     await dataRepo.updateSelectedSize(id, selectedSize);
+  //     print('Item selectedSize updated successfully');
+  //     emit(UserDataSuccess(userCart));
+  //   } catch (e) {
+  //     print('Item updated failed');
+  //     print(e.toString());
+  //     emit(UserDataError(e.toString()));
+  //   }
+  // }
+
   Future<void> deleteCart(CoffeeItem item) async {
     try {
       final currentState = state;
@@ -45,7 +71,8 @@ class UserDataCubit extends Cubit<UserDataState> {
         userCart.remove(item);
         await dataRepo.addToCart(userCart);
         print('Item deleted successfully');
-        final updatedCart = List.from(currentState.userCart)..remove(item);
+        final List<CoffeeItem> updatedCart = List.from(currentState.userCart)
+          ..remove(item);
         emit(UserDataSuccess(updatedCart));
       }
     } catch (e) {

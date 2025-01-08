@@ -1,7 +1,9 @@
 import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
+import 'package:coffe_app/features/home/presentation/cubit/category_cubit/category_cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/build_coffe-items_list.dart';
 import '../widgets/build_promo.dart';
 import '../widgets/categories_toggle.dart';
@@ -11,6 +13,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context
+        .read<CategoryCubit>()
+        .getUsername(FirebaseAuth.instance.currentUser!.uid);
     return SafeArea(
         child: Scaffold(
             drawer: Drawer(

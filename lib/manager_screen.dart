@@ -18,7 +18,9 @@ class _ManagerScreenState extends State<ManagerScreen> {
   List<Widget> myScreens = [
     HomeScreen(),
     FavScreen(),
-    CartScreen(),
+    // CartScreen(
+    //   itemQuantity: null,
+    // ),
     NotificationScreen()
   ];
 

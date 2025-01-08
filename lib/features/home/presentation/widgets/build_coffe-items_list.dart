@@ -3,6 +3,7 @@ import 'package:coffe_app/features/home/presentation/cubit/coffe_items/coffee_it
 import 'package:coffe_app/features/home/presentation/widgets/coffee_card_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import '../../../../core/utils/app_strings.dart';
 import 'coffe_card_widget.dart';
 
@@ -57,9 +58,7 @@ class _CoffeeItemsListState extends State<BuildCoffeeItemsList> {
             // height: MediaQuery.of(context).size.height - 300,
             // height: MediaQuery.of(context).size.height * 3 / 4,
             color: Colors.white,
-            child:
-
-                Padding(
+            child: Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
               child: SizedBox(
@@ -81,7 +80,7 @@ class _CoffeeItemsListState extends State<BuildCoffeeItemsList> {
                           onTap: () => Navigator.pushNamed(
                               context, AppStrings.itemDetails,
                               arguments: myItems[index]),
-                          child: CoffeCardWidget(cardModel: myItems[index]));
+                          child: CoffeeCardWidget(cardModel: myItems[index]));
                     }),
                 //   ),
                 // ],
@@ -91,4 +90,13 @@ class _CoffeeItemsListState extends State<BuildCoffeeItemsList> {
       return const SizedBox.shrink();
     });
   }
+  // void getPlayerId() async {
+  //   final deviceState = await OneSignal.User.getExternalId();
+  //   final playerId = deviceState?.;
+  //
+  //   if (playerId != null) {
+  //     print('Player ID: $playerId');
+  //     // Save this Player ID to your backend or use it as needed
+  //   }
+  // }
 }

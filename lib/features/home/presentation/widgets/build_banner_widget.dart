@@ -1,6 +1,8 @@
 import 'package:coffe_app/core/utils/app_colors.dart';
+import 'package:coffe_app/features/home/presentation/cubit/category_cubit/category_cubit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BuildBannerWidget extends StatelessWidget {
@@ -9,8 +11,8 @@ class BuildBannerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(
+    return Padding(
+      padding: const EdgeInsets.only(
         right: 28.0,
         left: 28.0,
       ),
@@ -18,18 +20,18 @@ class BuildBannerWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Hello,\nMahmoud Youssef.',
-            style: TextStyle(
+            "Hello, ${context.read<CategoryCubit>().userName}",
+            style: const TextStyle(
                 color: Colors.white,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 height: 1.2,
                 fontFamily: 'Roboto'),
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
-          Text(
+          const Text(
             'Ready to start your day with a perfect cup of coffee?',
             style: TextStyle(
                 fontSize: 16,

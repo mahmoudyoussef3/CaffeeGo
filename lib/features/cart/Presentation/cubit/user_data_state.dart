@@ -8,7 +8,7 @@ class UserDataInitial extends UserDataState {}
 class UserDataLoading extends UserDataState {}
 
 class UserDataSuccess extends UserDataState {
-  final List userCart;
+  final List<CoffeeItem> userCart;
 
   UserDataSuccess(this.userCart);
 }
@@ -20,7 +20,7 @@ class UserDataError extends UserDataState {
 }
 
 class UserDataCartUpdated extends UserDataState {
-  final List userCart;
+  final List<CoffeeItem> userCart;
 
   UserDataCartUpdated(this.userCart);
 }

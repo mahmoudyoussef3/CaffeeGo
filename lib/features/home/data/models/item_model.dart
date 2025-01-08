@@ -1,4 +1,4 @@
-
+/*
 
 class ItemModel{
   final String name;
@@ -6,4 +6,4 @@ class ItemModel{
   final String rate;
   final int price ;
   ItemModel({required this.name,required this.description,required this.rate,required this.price});
-}
+}*/

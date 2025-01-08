@@ -1,32 +1,20 @@
-import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/app_colors.dart';
 import 'custom_circular_button.dart';
 
-class CustomOrderItem extends StatefulWidget {
-  const CustomOrderItem({super.key, required this.coffeeItem});
-  @override
-  _CustomOrderItemState createState() => _CustomOrderItemState();
+
+class CustomOrderItem extends StatelessWidget {
+  const CustomOrderItem({
+    super.key,
+    required this.coffeeItem,
+    required this.onIncrease,
+    required this.onDecrease,
+  });
+
   final CoffeeItem coffeeItem;
-}
-
-class _CustomOrderItemState extends State<CustomOrderItem> {
-  int counter = 1;
-
-  void _increaseCounter() {
-    setState(() {
-      counter++;
-    });
-  }
-
-  void _decreaseCounter() {
-    setState(() {
-      if (counter > 1) counter--;
-    });
-  }
-
+  final VoidCallback onIncrease;
+  final VoidCallback onDecrease;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,7 +31,7 @@ class _CustomOrderItemState extends State<CustomOrderItem> {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.network(
-              widget.coffeeItem.image,
+              coffeeItem.image,
               height: 80,
               width: 80,
               fit: BoxFit.cover,
@@ -56,7 +44,7 @@ class _CustomOrderItemState extends State<CustomOrderItem> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  widget.coffeeItem.name,
+                  coffeeItem.name,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -65,7 +53,15 @@ class _CustomOrderItemState extends State<CustomOrderItem> {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  "Price: ${widget.coffeeItem.sizes['medium']}",
+                  "Price: ${coffeeItem.sizes[coffeeItem.selectedSize]}",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey.shade700,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  "Size: ${coffeeItem.selectedSize}",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey.shade700,
@@ -79,7 +75,7 @@ class _CustomOrderItemState extends State<CustomOrderItem> {
             children: [
               CircularButton(
                 icon: Icons.remove,
-                onPressed: _decreaseCounter,
+                onPressed: onDecrease,
               ),
               const SizedBox(width: 8),
               Container(
@@ -91,7 +87,7 @@ class _CustomOrderItemState extends State<CustomOrderItem> {
                     color: AppColors.brownAppColor),
                 child: Center(
                   child: Text(
-                    "$counter",
+                    "${coffeeItem.quantityInCart}",
                     style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -100,13 +96,11 @@ class _CustomOrderItemState extends State<CustomOrderItem> {
                 ),
               ),
               const SizedBox(width: 8),
-              // Increase Button
               CircularButton(
                 icon: Icons.add,
-                onPressed: _increaseCounter,
+                onPressed: onIncrease,
               ),
               const SizedBox(width: 8),
-
             ],
           ),
         ],

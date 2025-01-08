@@ -64,7 +64,7 @@ class _FavScreenState extends State<FavScreen> {
                       crossAxisSpacing: 5,
                     ),
                     itemBuilder: (context, index) {
-                      return CoffeCardWidget(cardModel:myItems[index] ,);
+                      return CoffeeCardWidget(cardModel:myItems[index] ,);
 
                     }),
     );

@@ -25,13 +25,16 @@ class HiveItemAdapter extends TypeAdapter<HiveItem> {
       rate: fields[5] as String,
       ingredients: (fields[6] as List).cast<HiveIngredient>(),
       sizes: (fields[7] as Map).cast<String, double>(),
+      uniqueId: fields[8] as String,
+      selectedSize: fields[10] as String,
+      quantityInCart: fields[9] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, HiveItem obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -47,7 +50,13 @@ class HiveItemAdapter extends TypeAdapter<HiveItem> {
       ..writeByte(6)
       ..write(obj.ingredients)
       ..writeByte(7)
-      ..write(obj.sizes);
+      ..write(obj.sizes)
+      ..writeByte(8)
+      ..write(obj.uniqueId)
+      ..writeByte(9)
+      ..write(obj.quantityInCart)
+      ..writeByte(10)
+      ..write(obj.selectedSize);
   }
 
   @override

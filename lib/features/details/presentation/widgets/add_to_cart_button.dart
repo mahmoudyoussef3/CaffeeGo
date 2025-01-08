@@ -25,9 +25,29 @@ class AddToCartButton extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                context.read<UserDataCubit>().addToCart(coffeeItem).then(
-                  (value) {
-                    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                print(coffeeItem.uniqueId);
+                print(coffeeItem.selectedSize);
+                final isItemInCart = context
+                    .read<UserDataCubit>()
+                    .userCart
+                    .any((item) => item.uniqueId == coffeeItem.uniqueId);
+                if (isItemInCart) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.white,
+                      content: Text(
+                        'Item already in cart.',
+                        style: TextStyle(
+                            color: AppColors.secondaryBrownAppColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  );
+                } else {
+                  context.read<UserDataCubit>().addToCart(coffeeItem).then((_) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
                         action: SnackBarAction(
                           label: "Cart",
                           textColor: AppColors.secondaryBrownAppColor,
@@ -38,12 +58,15 @@ class AddToCartButton extends StatelessWidget {
                         content: const Text(
                           'Item added to Cart',
                           style: TextStyle(
-                              color: AppColors.secondaryBrownAppColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500),
-                        )));
-                  },
-                );
+                            color: AppColors.secondaryBrownAppColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+                }
               },
               child: Container(
                 width: MediaQuery.of(context).size.width * 3 / 4 - 60,

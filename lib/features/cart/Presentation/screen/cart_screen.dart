@@ -1,11 +1,15 @@
 import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart';
+import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../order_screen/presentation/widgets/order_item.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({super.key});
+  const CartScreen({
+    super.key,
+  });
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -142,8 +146,37 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                 ],
                               ),
-                              child:
-                                  CustomOrderItem(coffeeItem: cartItems[index]),
+                              child: InkWell(
+                                onTap: () =>
+                                    print(cartItems[index].selectedSize),
+                                child: CustomOrderItem(
+                                  coffeeItem: cartItems[index],
+                                  onDecrease: () async {
+                                    setState(() {
+                                      cartItems[index].quantityInCart > 1
+                                          ? cartItems[index].quantityInCart--
+                                          : null;
+                                    });
+                                    await context
+                                        .read<UserDataCubit>()
+                                        .updateQuantity(
+                                            cartItems[index].selectedSize,
+                                            cartItems[index].id,
+                                            cartItems[index].quantityInCart);
+                                  },
+                                  onIncrease: () async {
+                                    setState(() {
+                                      cartItems[index].quantityInCart++;
+                                    });
+                                    await context
+                                        .read<UserDataCubit>()
+                                        .updateQuantity(
+                                            cartItems[index].selectedSize,
+                                            cartItems[index].id,
+                                            cartItems[index].quantityInCart);
+                                  },
+                                ),
+                              ),
                             ),
                           ),
                         );
@@ -181,22 +214,29 @@ class _CartScreenState extends State<CartScreen> {
                                 return Container(
                                   padding: const EdgeInsets.all(16),
                                   height: 150,
-                                  child: const Center(
-                                    child: Text(
-                                      'Order Placed Successfully!',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                          height: 120,
+                                          width: 150,
+                                          fit: BoxFit.cover,
+                                          'assets/images/card.svg'),
+                                      const SizedBox(
+                                        width: 15,
                                       ),
-                                    ),
+                                      Image.asset(
+                                          height: 120,
+                                          width: 150,
+                                          fit: BoxFit.cover,
+                                          'assets/images/3a0870c1369eb2bc105bd4838665defa.png')
+                                    ],
                                   ),
                                 );
                               },
                             );
                           },
                           child: Container(
-                            width: MediaQuery.of(context).size.width * 0.65,
+                            width: MediaQuery.of(context).size.width * 0.60,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
@@ -226,7 +266,9 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                               ),
                               Text(
-                                '${totalPrice(cartItems)} \$',
+                                '${totalPrice(
+                                  cartItems,
+                                )} \$',
                                 style: const TextStyle(
                                   color: AppColors.brownAppColor,
                                   fontSize: 24,
@@ -256,10 +298,10 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  String totalPrice(List items) {
+  String totalPrice(List<CoffeeItem> items) {
     double sum = 0;
     for (var item in items) {
-      sum += item.sizes['medium'];
+      sum += (item.sizes[item.selectedSize]! * item.quantityInCart);
     }
     return sum.toStringAsFixed(2);
   }

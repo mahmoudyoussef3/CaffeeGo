@@ -169,13 +169,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       .collection('users')
                       .doc(user!.uid)
                       .set({
-                    'firstName': _firstNameController.text,
-                    'lastName': _lastNameController.text,
+                    'displayName':
+                        _firstNameController.text + _lastNameController.text,
                     'email': _emailController.text,
                     'uid': user.uid,
                     'created_at': Timestamp.now(),
                     'phoneNumber': _phoneNumberController.text,
-                    'userCart': []
+                    'cart': []
                   });
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('Account Created Successfully')));

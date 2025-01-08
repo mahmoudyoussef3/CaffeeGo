@@ -1,11 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
-class CoffeCardWidget extends StatelessWidget {
-  const CoffeCardWidget({super.key, required this.cardModel});
+class CoffeeCardWidget extends StatelessWidget {
+  const CoffeeCardWidget({super.key, required this.cardModel});
   final CoffeeItem cardModel;
   @override
   Widget build(BuildContext context) {
@@ -26,50 +24,36 @@ class CoffeCardWidget extends StatelessWidget {
                 height: 240,
                 child: Column(
                   children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width / 2,
-                      height: 140,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        image: DecorationImage(
-                          image: CachedNetworkImageProvider(
-                            cardModel.image,
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 8, right: 8),
-                        child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/images/rate_icon.svg',
-                                height: 16.6,
-                                width: 16.6,
-                                allowDrawingOutsideViewBox: true,
-                              ),
-                              Text(
-                                " ${cardModel.rate}",
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ]),
-                      ),
-                    ),
                     Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Spacer(
-                              flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 2,
+                            height: 140,
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(12),
+                                  topLeft: Radius.circular(12)),
+                              child: CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                imageUrl: cardModel.image,
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                                fadeInDuration:
+                                    const Duration(milliseconds: 1000),
+                                fadeOutDuration:
+                                    const Duration(milliseconds: 1000),
+                              ),
                             ),
-                            Text(
+                          ),
+                          const Spacer(
+                            flex: 1,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5.0, vertical: 5),
+                            child: Text(
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               cardModel.name,
@@ -78,10 +62,14 @@ class CoffeCardWidget extends StatelessWidget {
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600),
                             ),
-                            const Spacer(
-                              flex: 2,
-                            ),
-                            Text(
+                          ),
+                          const Spacer(
+                            flex: 2,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 5.0),
+                            child: Text(
                               cardModel.description
                                   .split(" ")
                                   .take(3)
@@ -91,13 +79,17 @@ class CoffeCardWidget extends StatelessWidget {
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600),
                             ),
-                            const Spacer(
-                              flex: 3,
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Row(children: [
+                          ),
+                          const Spacer(
+                            flex: 3,
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 5.0),
+                            child: Row(children: [
                               Text(
                                 "\$${cardModel.sizes['medium']}",
                                 style: const TextStyle(
@@ -106,16 +98,22 @@ class CoffeCardWidget extends StatelessWidget {
                                     fontWeight: FontWeight.w600),
                               ),
                               const Spacer(),
-                              CustomAddButton(
-                                onTap: () {
-                                  if (kDebugMode) {
-                                    print("don`t press me again");
-                                  }
-                                },
-                              ),
+                              Row(children: [
+                                const Icon(
+                                  Icons.star,
+                                  color: Colors.yellow,
+                                ),
+                                Text(
+                                  " ${cardModel.rate}",
+                                  style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ]),
                             ]),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

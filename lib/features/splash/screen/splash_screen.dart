@@ -1,13 +1,29 @@
-import 'dart:developer';
+import 'dart:async';
+
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:coffe_app/core/utils/widgets/custom_auth_button.dart';
 
-import '../../payment/wallet_payment.dart';
-
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(const Duration(seconds: 2), (timer) {
+      Navigator.pushReplacementNamed(
+        context,
+        FirebaseAuth.instance.currentUser == null
+            ? AppStrings.login
+            : AppStrings.home,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +33,15 @@ class SplashScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              const SizedBox(
+                height: 46,
+              ),
               Image.asset(
                 'assets/images/Image Onboarding.png',
+              ),
+              const SizedBox(
+                height: 46,
               ),
               const Text(
                 'Fall in Love with\nCoffee in Blissful\nDelight!',
@@ -32,7 +53,7 @@ class SplashScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 26),
               const Text(
                 'Welcome to our cozy coffee corner, where\nevery cup is a delightful for you.',
                 textAlign: TextAlign.center,
@@ -43,19 +64,6 @@ class SplashScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 32),
-              SizedBox(
-                height: 60,
-                width: 300,
-                child: CustomAuthButton(
-                  buttonText: 'Get Started',
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppStrings.login);
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 60,
-              )
             ],
           ),
         ),

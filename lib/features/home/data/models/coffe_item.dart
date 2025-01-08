@@ -6,23 +6,30 @@ class CoffeeItem {
   final String description;
   final String image;
   final String category;
+  int quantityInCart;
+  String uniqueId;
+  String selectedSize;
   final String rate;
   final List<Ingredient> ingredients;
   final Map<String, double> sizes;
 
-  CoffeeItem({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.image,
-    required this.category,
-    required this.rate,
-    required this.ingredients,
-    required this.sizes,
-  });
+  CoffeeItem(
+      {required this.id,
+      required this.name,
+      required this.description,
+      required this.image,
+      required this.category,
+      required this.rate,
+      required this.ingredients,
+      required this.uniqueId,
+      required this.sizes,
+      required this.quantityInCart,
+      required this.selectedSize});
 
   factory CoffeeItem.fromMap(Map<String, dynamic> data) {
     return CoffeeItem(
+      quantityInCart: data['quantity'] ?? 1,
+      selectedSize: data['selectedSize'] ?? 'medium',
       id: data['id'] ?? '',
       name: data['name'] ?? '',
       description: data['description'] ?? '',
@@ -37,6 +44,7 @@ class CoffeeItem {
             (key, value) => MapEntry(key, (value as num).toDouble()),
           ) ??
           {},
+      uniqueId: data['uniqueId'] ?? '',
     );
   }
   toMap() {
@@ -50,6 +58,9 @@ class CoffeeItem {
       'ingredients':
           ingredients.map((ingredient) => ingredient.toJson()).toList(),
       'sizes': sizes.map((key, value) => MapEntry(key, value)),
+      'quantity': quantityInCart,
+      'selectedSize': selectedSize,
+      'uniqueId': uniqueId,
     };
   }
 }

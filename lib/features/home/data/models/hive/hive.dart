@@ -1,15 +1,10 @@
-
 import 'dart:developer';
-
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/adapters.dart';
-
-import '../coffe_item.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'hive_item.dart';
-
+import 'package:hive_flutter/adapters.dart';
+import '../coffe_item.dart';
 
 class MyHive {
-
   static late final Box<List<HiveItem>> hiveBox;
 
   static Future<void> initHive() async {
@@ -21,15 +16,14 @@ class MyHive {
     hiveBox = await Hive.openBox<List<HiveItem>>('hiveItemLists');
   }
 
-
 // Saving the CoffeeItem to Hive
-  static void saveSingleHiveItem(CoffeeItem coffeeItem,
-      Box<List<HiveItem>> hiveBox) async {
+  static void saveSingleHiveItem(
+      CoffeeItem coffeeItem, Box<List<HiveItem>> hiveBox) async {
     HiveItem item = convertToHiveItem(coffeeItem);
 
     // Retrieve the current list from Hive
-    List<HiveItem> currentList = hiveBox.get(
-        'hiveItemList', defaultValue: []) ?? [];
+    List<HiveItem> currentList =
+        hiveBox.get('hiveItemList', defaultValue: []) ?? [];
 
     // Add the new item to the list
     currentList.add(item);
@@ -44,8 +38,8 @@ class MyHive {
 // Retrieving the list of CoffeeItem from Hive
   static List<CoffeeItem> getCoffeeItemList(Box<List<HiveItem>> hiveBox) {
     // Retrieve the list of HiveItem from the box
-    List<HiveItem> hiveItemList = hiveBox.get(
-        'hiveItemList', defaultValue: []) ?? [];
+    List<HiveItem> hiveItemList =
+        hiveBox.get('hiveItemList', defaultValue: []) ?? [];
 
     log("hiveItemList length: ${hiveItemList.length}");
 
@@ -57,7 +51,6 @@ class MyHive {
     return convertToCoffeeItems(hiveItemList);
   }
 
-
   static HiveItem convertToHiveItem(CoffeeItem coffeeItem) {
     return HiveItem(
       id: coffeeItem.id,
@@ -67,13 +60,15 @@ class MyHive {
       category: coffeeItem.category,
       rate: coffeeItem.rate,
       ingredients: coffeeItem.ingredients
-          .map((ingredient) =>
-          HiveIngredient(
-            name: ingredient.name,
-            image: ingredient.image,
-          ))
+          .map((ingredient) => HiveIngredient(
+                name: ingredient.name,
+                image: ingredient.image,
+              ))
           .toList(),
       sizes: coffeeItem.sizes,
+      uniqueId: coffeeItem.uniqueId,
+      selectedSize: coffeeItem.selectedSize,
+      quantityInCart: coffeeItem.quantityInCart,
     );
   }
 
@@ -93,6 +88,9 @@ class MyHive {
           );
         }).toList(),
         sizes: hiveItem.sizes,
+        uniqueId: hiveItem.uniqueId,
+        quantityInCart: hiveItem.quantityInCart,
+        selectedSize: hiveItem.selectedSize,
       );
     }).toList();
   }
@@ -104,8 +102,8 @@ class MyHive {
 
   deleteSpecificItem(String id) async {
 // Retrieve the list of HiveItem
-    List<HiveItem> hiveItemList = hiveBox.get(
-        'hiveItemList', defaultValue: []) ?? [];
+    List<HiveItem> hiveItemList =
+        hiveBox.get('hiveItemList', defaultValue: []) ?? [];
 
 // Remove a specific item based on a condition
     hiveItemList.removeWhere((item) => item.id == id);
