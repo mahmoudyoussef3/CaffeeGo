@@ -22,7 +22,6 @@ class _CategoriesToggleState extends State<CategoriesToggle> {
     context.read<CategoryCubit>().fetchCoffeeCategories();
   }
 
-  PaymobWalletManager manager = PaymobWalletManager();
 
   @override
   Widget build(BuildContext context) {

@@ -1,13 +1,26 @@
 import 'package:coffe_app/core/utils/app_colors.dart';
+import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart';
+import 'package:coffe_app/features/home/presentation/cubit/UserData_cubit/user_data_cubit.dart';
 import 'package:coffe_app/features/home/presentation/cubit/category_cubit/category_cubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class BuildBannerWidget extends StatelessWidget {
-  BuildBannerWidget({super.key});
-  final TextEditingController _searchController = TextEditingController();
+class BuildBannerWidget extends StatefulWidget {
+  const BuildBannerWidget({super.key});
+
+  @override
+  State<BuildBannerWidget> createState() => _BuildBannerWidgetState();
+}
+
+class _BuildBannerWidgetState extends State<BuildBannerWidget> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<UserDataClassCubit>().getUsername();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +32,30 @@ class BuildBannerWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Hello, ${context.read<CategoryCubit>().userName}",
-            style: const TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                height: 1.2,
-                fontFamily: 'Roboto'),
+          BlocBuilder<UserDataClassCubit, UserDataClassState>(
+            builder: (context, state) {
+              if (state is UserDataClassLoading) {
+                return const Text('.....',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        height: 1.2,
+                        fontFamily: 'Roboto'));
+              }
+              if (state is UserDataClassLoaded) {
+                return Text(
+                  "Hello, ${state.userDataClass.firstName} ${state.userDataClass.lastName}",
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      height: 1.2,
+                      fontFamily: 'Roboto'),
+                );
+              }
+              return const SizedBox.shrink();
+            },
           ),
           const SizedBox(
             height: 12,
@@ -41,59 +70,6 @@ class BuildBannerWidget extends StatelessWidget {
                 fontFamily: 'Roboto',
                 color: Colors.white70),
           ),
-
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     SizedBox(
-          //         width: MediaQuery.of(context).size.width * 3 / 4 - 30,
-          //         child: SearchBar(
-          //           controller: _searchController,
-          //           onChanged: (value) {
-          //             _searchController.text = value;
-          //             if (kDebugMode) {
-          //               print(_searchController.text);
-          //             }
-          //           },
-          //           textStyle: const WidgetStatePropertyAll(TextStyle(
-          //             color: Colors.white,
-          //             fontSize: 18,
-          //             fontWeight: FontWeight.w500,
-          //           )),
-          //           hintStyle: const WidgetStatePropertyAll(
-          //               TextStyle(color: Colors.white30)),
-          //           elevation: const WidgetStatePropertyAll(0),
-          //           shape: const WidgetStatePropertyAll(RoundedRectangleBorder(
-          //               borderRadius: BorderRadius.all(Radius.circular(12)))),
-          //           backgroundColor:
-          //               const WidgetStatePropertyAll(Color(0xff2D2D2D)),
-          //           hintText: 'Search coffee',
-          //           leading: const Icon(
-          //             Icons.search,
-          //             color: Colors.white,
-          //           ),
-          //         )),
-          //     //  ),
-          //     const SizedBox(
-          //       width: 12,
-          //     ),
-          //     Container(
-          //       width: 50,
-          //       height: 55,
-          //       decoration: const BoxDecoration(
-          //         color: AppColors.brownAppColor,
-          //         borderRadius: BorderRadius.all(Radius.circular(12)),
-          //       ),
-          //       child: const Center(
-          //         child: Icon(
-          //           FontAwesomeIcons.sliders,
-          //           size: 16,
-          //           color: Colors.white,
-          //         ),
-          //       ),
-          //     )
-          //   ],
-          // )
         ],
       ),
     );

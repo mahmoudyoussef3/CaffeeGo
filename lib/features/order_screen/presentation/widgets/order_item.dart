@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/utils/app_colors.dart';
 import 'custom_circular_button.dart';
 
-
 class CustomOrderItem extends StatelessWidget {
   const CustomOrderItem({
     super.key,

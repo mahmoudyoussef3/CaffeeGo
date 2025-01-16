@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import '../../../../core/utils/app_strings.dart';
+import '../../../payment/wallet_payment.dart';
 import 'coffe_card_widget.dart';
 
 class BuildCoffeeItemsList extends StatefulWidget {
@@ -21,7 +22,6 @@ class _CoffeeItemsListState extends State<BuildCoffeeItemsList> {
   void initState() {
     super.initState();
     context.read<CoffeeItemsCubit>().fetchCoffeeItems();
-    //  context.read<CategoryCubit>().fetchCoffeeCategories();
   }
 
   @override
@@ -55,15 +55,11 @@ class _CoffeeItemsListState extends State<BuildCoffeeItemsList> {
       if (state is CoffeeItemsSuccess) {
         var myItems = state.items;
         return Container(
-            // height: MediaQuery.of(context).size.height - 300,
-            // height: MediaQuery.of(context).size.height * 3 / 4,
             color: Colors.white,
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
               child: SizedBox(
-                // height: MediaQuery.of(context).size.height * 2,
-                // width: MediaQuery.of(context).size.width - 60,
                 child: GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -77,26 +73,16 @@ class _CoffeeItemsListState extends State<BuildCoffeeItemsList> {
                     ),
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                          onTap: () => Navigator.pushNamed(
-                              context, AppStrings.itemDetails,
-                              arguments: myItems[index]),
+                          onTap: () {
+                            Navigator.pushNamed(context, AppStrings.itemDetails,
+                                arguments: myItems[index]);
+                          },
                           child: CoffeeCardWidget(cardModel: myItems[index]));
                     }),
-                //   ),
-                // ],
               ),
             ));
       }
       return const SizedBox.shrink();
     });
   }
-  // void getPlayerId() async {
-  //   final deviceState = await OneSignal.User.getExternalId();
-  //   final playerId = deviceState?.;
-  //
-  //   if (playerId != null) {
-  //     print('Player ID: $playerId');
-  //     // Save this Player ID to your backend or use it as needed
-  //   }
-  // }
 }

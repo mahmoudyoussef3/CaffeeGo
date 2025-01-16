@@ -6,8 +6,28 @@ plugins {
 }
 
 android {
-    compileSdk = 34
     namespace = "com.example.coffe_app"
+    compileSdk = 34
+
+    defaultConfig {
+        applicationId = "com.example.coffe_app"
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+        multiDexEnabled true
+        minSdkVersion 23
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            shrinkResources false
+        }
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -18,23 +38,15 @@ android {
         jvmTarget = "17"
     }
 
-    defaultConfig {
-        applicationId = "com.example.coffe_app"
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
-        multiDexEnabled true
-        minSdkVersion 23
-    }
-
-    buildTypes {
-        release {
-            signingConfig = signingConfigs.debug
-        }
+    viewBinding {
+        enabled = true
     }
 }
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    implementation 'androidx.multidex:multidex:2.0.1'
 }

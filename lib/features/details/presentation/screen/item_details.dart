@@ -89,7 +89,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                     opacity: _opacity,
                     child: CachedNetworkImage(
                       imageUrl: coffeeItem.image,
-                      height: 280,
+                      height: 240,
                       width: MediaQuery.of(context).size.width - 20,
                       fit: BoxFit.fitWidth,
                     ),
@@ -134,19 +134,10 @@ class _ItemDetailsState extends State<ItemDetails> {
                 ],
               ),
               const SizedBox(
-                height: 18,
+                height: 12,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  buildTag(Icons.coffee, 'Coffee'),
-                  const SizedBox(width: 8),
-                  buildTag(Icons.food_bank, 'Chocolate'),
-                  const SizedBox(width: 8),
-                  buildTag(Icons.local_fire_department, 'Medium Roasted'),
-                ],
-              ),
-              const SizedBox(height: 16),
+              buildTag(coffeeItem),
+              const SizedBox(height: 5),
               const Divider(
                 indent: 30,
                 endIndent: 30,
@@ -214,11 +205,6 @@ class _ItemDetailsState extends State<ItemDetails> {
                                 coffeeItem.uniqueId =
                                     coffeeItem.id + coffeeItem.selectedSize;
                               });
-                              //
-                              // context.read<UserDataCubit>().updateSelectedSize(
-                              //     coffeeItem.uniqueId,
-                              //     coffeeSizeList[coffeeSize]);
-                              // print("${coffeeItem.uniqueId} from onTap");
                             },
                             child: Card(
                               shape: RoundedRectangleBorder(
@@ -271,26 +257,39 @@ class _ItemDetailsState extends State<ItemDetails> {
     );
   }
 
-  Widget buildTag(IconData icon, String label) {
-    return Container(
-      height: 35,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Icon(
-            icon,
-            size: 16,
-            color: AppColors.brownAppColor,
-          ),
-          const SizedBox(width: 4),
-          Text(label),
-        ],
-      ),
+  Widget buildTag(CoffeeItem coffeeItem) {
+    return SizedBox(
+      height: 50,
+      child: ListView(scrollDirection: Axis.horizontal, children: [
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: coffeeItem.ingredients.map(
+              (e) {
+                return Container(
+                  height: 35,
+                  margin: const EdgeInsets.only(right: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Icon(
+                        Icons.local_drink,
+                        size: 16,
+                        color: AppColors.brownAppColor,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(e.name),
+                    ],
+                  ),
+                );
+              },
+            ).toList()),
+      ]),
     );
   }
 }

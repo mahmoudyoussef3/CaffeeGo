@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:coffe_app/features/home/presentation/cubit/category_cubit/category_cubit.dart';
 import 'package:coffe_app/features/home/presentation/cubit/coffe_items/coffee_items_cubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,12 +20,6 @@ class BuildPromo extends StatefulWidget {
 class _BuildPromoState extends State<BuildPromo> {
   final TextEditingController _searchController = TextEditingController();
   Timer? _debounce;
-
-  @override
-  void initState() {
-    super.initState();
-    //_searchController.addListener(_onSearchTextChanged);
-  }
 
   @override
   void dispose() {
@@ -69,8 +65,10 @@ class _BuildPromoState extends State<BuildPromo> {
                     child: SearchBar(
                       controller: _searchController,
                       onChanged: (value) {
-                       //  /// TODO: Add search functionality
-                        context.read<CoffeeItemsCubit>().fetchCoffeeItemsBySearch(_searchController.text);
+                        //  /// TODO: Add search functionality
+                        context
+                            .read<CoffeeItemsCubit>()
+                            .fetchCoffeeItemsBySearch(_searchController.text);
 
                         if (kDebugMode) {
                           print("Typing: $value");
@@ -80,7 +78,6 @@ class _BuildPromoState extends State<BuildPromo> {
                         // _performSearch(query);
                         if (kDebugMode) {
                           print("Submitted: $query");
-
                         }
                       },
                       textStyle: const WidgetStatePropertyAll(
@@ -100,16 +97,18 @@ class _BuildPromoState extends State<BuildPromo> {
                         ),
                       ),
                       backgroundColor:
-                      const WidgetStatePropertyAll(Colors.white),
+                          const WidgetStatePropertyAll(Colors.white),
                       hintText: 'Search coffee',
                       leading: InkWell(
                         onTap: () {
                           if (kDebugMode) {
                             print("${_searchController.text}");
-                            context.read<CoffeeItemsCubit>().fetchCoffeeItemsBySearch(_searchController.text);
-
-
-                          }},
+                            context
+                                .read<CoffeeItemsCubit>()
+                                .fetchCoffeeItemsBySearch(
+                                    _searchController.text);
+                          }
+                        },
                         child: const Icon(
                           Icons.search,
                           color: AppColors.brownAppColor,

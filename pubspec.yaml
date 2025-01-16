@@ -18,7 +18,7 @@ dependencies:
   firebase_core: ^3.8.1
   firebase_auth: ^5.3.4
   cloud_firestore: ^5.5.1
-  flutter_svg: ^2.0.16
+  flutter_svg: ^2.0.17
   font_awesome_flutter: ^10.8.0
   shimmer: ^3.0.0
   dio: ^5.7.0
@@ -28,7 +28,12 @@ dependencies:
   onesignal_flutter: ^3.2.9
   http: ^1.2.2
   uuid: ^4.5.1
-
+  webview_flutter: ^4.10.0
+  flutter_paymob: ^1.0.5
+  flutter_inappwebview: ^6.1.5
+  dotted_line: ^3.2.3
+  introduction_screen: ^3.1.14
+  shared_preferences: ^2.3.5
 
 dev_dependencies:
   build_runner: ^2.4.11
@@ -49,6 +54,9 @@ flutter:
   assets:
     - assets/images/
     - assets/images/Rectangle 1.svg
+    - assets/onboarding_imgs/
+    - assets/onboarding_imgs/
+    - assets/onboarding_imgs/unsplash_SCbq6uKCyMY.png
     - assets/images/app_img.png
 
   fonts:

@@ -1,8 +1,23 @@
 import 'dart:async';
-
+import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../Onboarding/screens/onboarding_screen.dart';
+
+class SharedPrefsHelper {
+  static Future<void> saveBool(String key, bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(key, value);
+  }
+
+  static Future<bool?> getBool(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(key);
+  }
+}
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,61 +28,69 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  void initState() {
-    super.initState();
-    Timer.periodic(const Duration(seconds: 2), (timer) {
-      Navigator.pushReplacementNamed(
-        context,
-        FirebaseAuth.instance.currentUser == null
-            ? AppStrings.login
-            : AppStrings.home,
-      );
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 46,
+        backgroundColor: Colors.black,
+        body: Stack(
+          alignment: Alignment.center,
+          children: [
+            Opacity(
+                opacity: 0.5,
+                child: Image.asset(
+                    'assets/onboarding_imgs/unsplash_SCbq6uKCyMY.png')),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Spacer(),
+                  Image.asset('assets/onboarding_imgs/coffeescript logo.png'),
+                  const Spacer(),
+                  InkWell(
+                    onTap: () async {
+                      if (await getBool()) {
+                        if (FirebaseAuth.instance.currentUser?.uid != null) {
+                          Navigator.pushReplacementNamed(
+                              context, AppStrings.home);
+                        } else {
+                          Navigator.pushReplacementNamed(
+                              context, AppStrings.login);
+                        }
+                      } else {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return const OnboardingScreen();
+                          },
+                        ));
+                      }
+                    },
+                    child: Container(
+                      height: 60,
+                      width: MediaQuery.of(context).size.width * 3 / 4,
+                      decoration: BoxDecoration(
+                        color: const Color(0xffCE9760),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Get Started',
+                          style: TextStyle(
+                              color: AppColors.secondaryBrownAppColor,
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              Image.asset(
-                'assets/images/Image Onboarding.png',
-              ),
-              const SizedBox(
-                height: 46,
-              ),
-              const Text(
-                'Fall in Love with\nCoffee in Blissful\nDelight!',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  letterSpacing: 3,
-                  color: Colors.white,
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 26),
-              const Text(
-                'Welcome to our cozy coffee corner, where\nevery cup is a delightful for you.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color(0xffA2A2A2),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 32),
-            ],
-          ),
-        ),
-      ),
-    );
+            )
+          ],
+        ));
+  }
+
+  Future<bool> getBool() async {
+    return await SharedPrefsHelper.getBool(AppStrings.introPagesViewed) ??
+        false;
   }
 }
