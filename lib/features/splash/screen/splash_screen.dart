@@ -3,6 +3,7 @@ import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Onboarding/screens/onboarding_screen.dart';
@@ -39,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Image.asset(
                     'assets/onboarding_imgs/unsplash_SCbq6uKCyMY.png')),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 30),
+              padding: EdgeInsets.symmetric(vertical: 30.h),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -65,18 +66,18 @@ class _SplashScreenState extends State<SplashScreen> {
                       }
                     },
                     child: Container(
-                      height: 60,
-                      width: MediaQuery.of(context).size.width * 3 / 4,
+                      height: 60.h,
+                      width: MediaQuery.of(context).size.width * 3 / 4.w,
                       decoration: BoxDecoration(
                         color: const Color(0xffCE9760),
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(16.r),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
                           'Get Started',
                           style: TextStyle(
                               color: AppColors.secondaryBrownAppColor,
-                              fontSize: 26,
+                              fontSize: 26.sp,
                               fontWeight: FontWeight.bold),
                         ),
                       ),

@@ -59,6 +59,7 @@
 // }
 import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -87,7 +88,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding:  EdgeInsets.symmetric(horizontal: 24.w),
       child: TextFormField(
         style: const TextStyle(color: Colors.white),
         controller: controller,
@@ -105,27 +106,27 @@ class CustomTextFormField extends StatelessWidget {
         decoration: InputDecoration(
           prefixIcon: Icon(icon, color: AppColors.brownAppColor),
           labelText: labelText,
-          labelStyle: const TextStyle(
-            fontSize: 16,
+          labelStyle:  TextStyle(
+            fontSize: 16.sp,
             color: Colors.white70,
           ),
           hintText: hintText,
           hintStyle: TextStyle(
-            fontSize: 14,
+            fontSize: 14.sp,
             color: Colors.grey[400],
           ),
           filled: true,
           fillColor: const Color(0xff16181C),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(10.r),
             borderSide: BorderSide.none,
           ),
           errorStyle: TextStyle(
             color: Colors.red[600],
-            fontSize: 12,
+            fontSize: 12.sp,
           ),
           contentPadding:
-              const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+               EdgeInsets.symmetric(horizontal: 16.w, vertical: 18.h),
         ),
       ),
     );

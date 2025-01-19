@@ -55,7 +55,7 @@
 //       log('Device User ID: ${value?.userId}');
 //     });
 //   }
-//
+
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(

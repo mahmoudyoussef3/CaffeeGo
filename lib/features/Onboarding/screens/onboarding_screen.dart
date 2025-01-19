@@ -3,6 +3,7 @@ import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:coffe_app/features/auth/RegisterScreen/presentation/screens/register_screen.dart';
 import 'package:coffe_app/features/auth/login_screen/presentation/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,6 +16,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final introKey = GlobalKey<IntroductionScreenState>();
+
   Future<void> _onIntroEnd(context) async {
     try {
       await saveIntroPagesViewed();
@@ -31,17 +33,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const pageDecoration = PageDecoration(
+    PageDecoration pageDecoration = PageDecoration(
       titleTextStyle: TextStyle(
-          fontSize: 32,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 2,
-          fontFamily: 'Poppins',
-          color: AppColors.offWhiteAppColor),
-      bodyPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+        fontSize: 32.sp,
+        fontWeight: FontWeight.bold,
+        letterSpacing: 2,
+        fontFamily: 'Poppins',
+        color: AppColors.offWhiteAppColor,
+      ),
+      bodyPadding: EdgeInsets.symmetric(horizontal: 16.0.w),
       bodyTextStyle: TextStyle(
         letterSpacing: 1.5,
-        fontSize: 14,
+        fontSize: 14.sp,
         color: AppColors.brownAppColor,
         fontWeight: FontWeight.w600,
         fontFamily: 'Poppins',
@@ -50,135 +53,154 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       fullScreen: true,
       imagePadding: EdgeInsets.zero,
     );
+
     return IntroductionScreen(
-        key: introKey,
-        globalBackgroundColor: Colors.black,
-        allowImplicitScrolling: true,
-        onDone: () => _onIntroEnd(context),
-        onSkip: () => _onIntroEnd(context),
-        skipOrBackFlex: 0,
-        nextFlex: 0,
-        showNextButton: true,
-        showBottomPart: true,
-        showSkipButton: true,
-        showDoneButton: true,
-        back: const Icon(Icons.arrow_back, color: AppColors.offWhiteAppColor),
-        skip: const Text('Skip',
-            style: TextStyle(
-                fontWeight: FontWeight.w600, color: AppColors.brownAppColor)),
-        next: const Icon(
-          Icons.arrow_forward,
-          color: AppColors.offWhiteAppColor,
+      key: introKey,
+      globalBackgroundColor: Colors.black,
+      allowImplicitScrolling: true,
+      onDone: () => _onIntroEnd(context),
+      onSkip: () => _onIntroEnd(context),
+      skipOrBackFlex: 0,
+      nextFlex: 0,
+      showNextButton: true,
+      showBottomPart: true,
+      showSkipButton: true,
+      showDoneButton: true,
+      back: const Icon(Icons.arrow_back, color: AppColors.offWhiteAppColor),
+      skip: const Text(
+        'Skip',
+        style: TextStyle(
+          fontWeight: FontWeight.w600,
+          color: AppColors.brownAppColor,
         ),
-        done: const Text('Done',
-            style: TextStyle(
-                fontWeight: FontWeight.w600, color: AppColors.brownAppColor)),
-        curve: Curves.fastLinearToSlowEaseIn,
-        controlsMargin: const EdgeInsets.all(16),
-        dotsDecorator: const DotsDecorator(
-          size: Size(10.0, 10.0),
-          color: Color(0xFFBDBDBD),
-          activeColor: AppColors.brownAppColor,
-          activeSize: Size(22.0, 10.0),
-          activeShape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(25.0)),
+      ),
+      next: const Icon(
+        Icons.arrow_forward,
+        color: AppColors.offWhiteAppColor,
+      ),
+      done: const Text(
+        'Done',
+        style: TextStyle(
+          fontWeight: FontWeight.w600,
+          color: AppColors.brownAppColor,
+        ),
+      ),
+      curve: Curves.fastLinearToSlowEaseIn,
+      controlsMargin: EdgeInsets.all(16.r),
+      dotsDecorator: DotsDecorator(
+        size: Size(10.0.w, 10.0.h),
+        color: const Color(0xFFBDBDBD),
+        activeColor: AppColors.brownAppColor,
+        activeSize: Size(22.0.w, 10.0.h),
+        activeShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25.0.r)),
+        ),
+      ),
+      dotsContainerDecorator: ShapeDecoration(
+        color: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8.0.r)),
+        ),
+      ),
+      autoScrollDuration: 3000,
+      infiniteAutoScroll: true,
+      pages: [
+        PageViewModel(
+          footer: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(),
+                Text(
+                  'Unlock bean\nsecrets',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 40.sp,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.8,
+                    fontFamily: 'Poppins',
+                    color: AppColors.offWhiteAppColor,
+                  ),
+                ),
+                SizedBox(height: 10.h),
+                Text(
+                  'Lorem ipsum dolor sit amet consectetur.\n Vestibulum eget blandit mattis.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    letterSpacing: 1.5,
+                    fontSize: 12.sp,
+                    color: AppColors.brownAppColor,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Poppins',
+                  ),
+                ),
+                const Spacer(),
+              ],
+            ),
+          ),
+          title: '',
+          body: '',
+          decoration: pageDecoration,
+          image: Opacity(
+            opacity: 0.5,
+            child: Image.asset(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                fit: BoxFit.contain,
+                'assets/onboarding_imgs/onboarding1.png'),
           ),
         ),
-        dotsContainerDecorator: const ShapeDecoration(
-          color: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        PageViewModel(
+          footer: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(),
+                Text(
+                  'Unlock bean\nsecrets',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 40.sp,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.8,
+                    fontFamily: 'Poppins',
+                    color: AppColors.offWhiteAppColor,
+                  ),
+                ),
+                SizedBox(height: 10.h),
+                Text(
+                  'Lorem ipsum dolor sit amet consectetur.\n Vestibulum eget blandit mattis.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    letterSpacing: 1.5,
+                    fontSize: 12.sp,
+                    color: AppColors.brownAppColor,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Poppins',
+                  ),
+                ),
+                const Spacer(),
+              ],
+            ),
+          ),
+          title: '',
+          body: '',
+          decoration: pageDecoration,
+          image: Opacity(
+            opacity: 0.5,
+            child: Image.asset(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                fit: BoxFit.contain,
+                'assets/onboarding_imgs/onboarding2.png'),
           ),
         ),
-        autoScrollDuration: 3000,
-        infiniteAutoScroll: true,
-        pages: [
-          PageViewModel(
-            footer: const Padding(
-              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 32),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Spacer(flex: 1),
-                  Text(
-                    'Unlock bean\nsecrets',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 42,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.8,
-                      fontFamily: 'Poppins',
-                      color: AppColors.offWhiteAppColor,
-                    ),
-                  ),
-                  SizedBox(height: 12),
-                  Text(
-                    'Lorem ipsum dolor sit amet consectetur.\n Vestibulum eget blandit mattis ',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      letterSpacing: 1.5,
-                      fontSize: 14,
-                      color: AppColors.brownAppColor,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Poppins',
-                    ),
-                  ),
-                  Spacer(flex: 3),
-                ],
-              ),
-            ),
-            title: '',
-            body: '',
-            decoration: pageDecoration,
-            image: Opacity(
-              opacity: 0.4,
-              child: Image.asset('assets/onboarding_imgs/onboarding1.png'),
-            ),
-          ),
-          PageViewModel(
-            decoration: pageDecoration,
-            footer: const Padding(
-              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 32),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Spacer(
-                    flex: 1,
-                  ),
-                  Text('Flavorful bean\njourney',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 42,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1.8,
-                          fontFamily: 'Poppins',
-                          color: AppColors.offWhiteAppColor)),
-                  SizedBox(height: 12),
-                  Text(
-                    textAlign: TextAlign.center,
-                    'Lorem ipsum dolor sit amet consectetur.\n Vestibulum eget blandit mattis ',
-                    style: TextStyle(
-                      letterSpacing: 1.5,
-                      fontSize: 14,
-                      color: AppColors.brownAppColor,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Poppins',
-                    ),
-                  ),
-                  Spacer(
-                    flex: 3,
-                  )
-                ],
-              ),
-            ),
-            title: '',
-            body: '',
-            image: Opacity(
-                opacity: 0.4,
-                child: Image.asset('assets/onboarding_imgs/onboarding2.png')),
-          ),
-          PageViewModel(
-            footer: Column(
+        PageViewModel(
+          footer: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Column(
               children: [
                 InkWell(
                   onTap: () {
@@ -189,62 +211,69 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ));
                   },
                   child: Container(
-                    height: 60,
-                    width: MediaQuery.of(context).size.width * 3 / 4,
+                    height: 60.h,
+                    width: MediaQuery.of(context).size.width * 0.75,
                     decoration: BoxDecoration(
                       color: const Color(0xffCE9760),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(16.r),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
                         'Register',
                         style: TextStyle(
-                            color: AppColors.secondaryBrownAppColor,
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold),
+                          color: AppColors.secondaryBrownAppColor,
+                          fontSize: 24.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 12,
-                ),
+                SizedBox(height: 12.h),
                 InkWell(
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
-                        return LoginScreen();
+                        return const LoginScreen();
                       },
                     ));
                   },
                   child: Container(
-                    height: 60,
-                    width: MediaQuery.of(context).size.width * 3 / 4,
+                    height: 60.h,
+                    width: MediaQuery.of(context).size.width * 0.75,
                     decoration: BoxDecoration(
                       border: Border.all(color: AppColors.brownAppColor),
                       color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(16.r),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
                         'Sign in',
                         style: TextStyle(
-                            color: AppColors.brownAppColor,
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold),
+                          color: AppColors.brownAppColor,
+                          fontSize: 24.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ],
             ),
-            decoration: pageDecoration,
-            title: '',
-            body: '',
-            image: Opacity(
-                opacity: 0.4,
-                child: Image.asset('assets/onboarding_imgs/onboarding3.png')),
-          )
-        ]);
+          ),
+          decoration: pageDecoration,
+          title: '',
+          body: '',
+          image: Opacity(
+            opacity: 0.5,
+            child: Image.asset(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                fit: BoxFit.contain,
+                'assets/onboarding_imgs/onboarding3.png'),
+          ),
+        ),
+      ],
+    );
   }
 }

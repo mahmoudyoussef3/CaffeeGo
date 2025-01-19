@@ -1,13 +1,8 @@
-import 'dart:developer';
-
-import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:coffe_app/features/home/data/models/hive/hive.dart';
 import 'package:coffe_app/features/home/presentation/widgets/coffe_card_widget.dart';
 import 'package:flutter/material.dart';
-
 import '../../../core/utils/app_colors.dart';
-import '../../home/data/models/hive/hive_item.dart';
 
 class FavScreen extends StatefulWidget {
   const FavScreen({super.key});
@@ -66,7 +61,7 @@ class _FavScreenState extends State<FavScreen> {
                         letterSpacing: 1.5,
                       ),
                     ),
-                    SizedBox(height: 12,),
+                    const SizedBox(height: 12),
                     Expanded(
                       child: GridView.builder(
                           shrinkWrap: true,
