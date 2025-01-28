@@ -73,8 +73,8 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (context) => const OnboardingScreen());
 
-      case AppStrings.orderHistory:
-        return MaterialPageRoute(builder: (context) => const OrderScreen());
+      // case AppStrings.orderHistory:
+      //   return MaterialPageRoute(builder: (context) => const OrderScreen(qrData: '',));
       case AppStrings.itemDetails:
         final CoffeeItem? args = settings.arguments as CoffeeItem?;
         log("${args!.description}  ======  item details");

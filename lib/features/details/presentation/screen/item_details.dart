@@ -33,7 +33,7 @@ class _ItemDetailsState extends State<ItemDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final List<CoffeeItem> myFavList = MyHive.getCoffeeItemList(MyHive.hiveBox);
+    // final List<CoffeeItem> myFavList = MyHive.getCoffeeItemList(MyHive.hiveBox);
 
     CoffeeItem? coffeeItem =
         ModalRoute.of(context)?.settings.arguments as CoffeeItem?;
@@ -67,17 +67,17 @@ class _ItemDetailsState extends State<ItemDetails> {
                 Icons.favorite_border,
               ),
               onPressed: () {
-                log("favourite button pressed");
-
-                if (!myFavList.any(
-                  (element) => element.name == coffeeItem.name,
-                )) {
-                  MyHive.saveSingleHiveItem(coffeeItem, MyHive.hiveBox);
-
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text('This item already in the favourites')));
-                }
+                // log("favourite button pressed");
+                //
+                // if (!myFavList.any(
+                //   (element) => element.name == coffeeItem.name,
+                // )) {
+                //   MyHive.saveSingleHiveItem(coffeeItem, MyHive.hiveBox);
+                //
+                // } else {
+                //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                //       content: Text('This item already in the favourites')));
+                // }
               },
             ),
           ],
