@@ -7,6 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../splash/shared_pref_helper.dart';
+
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
@@ -20,6 +22,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Future<void> _onIntroEnd(context) async {
     try {
       await saveIntroPagesViewed();
+
       await Navigator.of(context).pushReplacementNamed(AppStrings.login);
     } catch (e) {
       debugPrint('Error navigating to login: $e');
@@ -27,8 +30,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Future<void> saveIntroPagesViewed() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(AppStrings.introPagesViewed, true);
+    await SharedPrefsHelper.saveBool(AppStrings.introPagesViewed);
   }
 
   @override

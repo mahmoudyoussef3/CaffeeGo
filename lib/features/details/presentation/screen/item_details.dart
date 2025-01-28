@@ -33,6 +33,8 @@ class _ItemDetailsState extends State<ItemDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final List<CoffeeItem> myFavList = MyHive.getCoffeeItemList(MyHive.hiveBox);
+
     CoffeeItem? coffeeItem =
         ModalRoute.of(context)?.settings.arguments as CoffeeItem?;
     if (coffeeItem == null) {
@@ -66,8 +68,16 @@ class _ItemDetailsState extends State<ItemDetails> {
               ),
               onPressed: () {
                 log("favourite button pressed");
-                MyHive.saveSingleHiveItem(coffeeItem, MyHive.hiveBox);
-                MyHive.getCoffeeItemList(MyHive.hiveBox);
+
+                if (!myFavList.any(
+                  (element) => element.name == coffeeItem.name,
+                )) {
+                  MyHive.saveSingleHiveItem(coffeeItem, MyHive.hiveBox);
+
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('This item already in the favourites')));
+                }
               },
             ),
           ],

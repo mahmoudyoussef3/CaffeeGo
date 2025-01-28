@@ -4,13 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../CommonWidgets/custom_text_form_field.dart';
 
 class RegisterTextFields extends StatelessWidget {
-  RegisterTextFields({super.key});
+  RegisterTextFields({super.key, required this.fullName, required this.emailController, required this.passwordController, required this.confirmPasswordController});
 
-  final TextEditingController _fullName = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final TextEditingController fullName ;
+  final TextEditingController emailController ;
+  final TextEditingController passwordController;
+  final TextEditingController confirmPasswordController ;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class RegisterTextFields extends StatelessWidget {
       children: [
          SizedBox(height: 30.h),
         CustomTextFormField(
-          controller: _fullName,
+          controller: fullName,
           labelText: 'Full Name',
           icon: Icons.person,
           hintText: 'Enter your full name',
@@ -26,7 +25,7 @@ class RegisterTextFields extends StatelessWidget {
         ),
          SizedBox(height: 12.h),
         CustomTextFormField(
-          controller: _emailController,
+          controller: emailController,
           labelText: 'E-mail Address',
           icon: Icons.email,
           hintText: 'user.example@gmail.com',
@@ -39,7 +38,7 @@ class RegisterTextFields extends StatelessWidget {
         ),
          SizedBox(height: 12.h),
         CustomTextFormField(
-          controller: _passwordController,
+          controller: passwordController,
           labelText: 'Password',
           icon: Icons.lock,
           hintText: 'Enter your password',
@@ -50,12 +49,12 @@ class RegisterTextFields extends StatelessWidget {
         ),
          SizedBox(height: 12.h),
         CustomTextFormField(
-          controller: _confirmPasswordController,
+          controller: confirmPasswordController,
           labelText: 'Confirm Password',
           icon: Icons.lock,
           hintText: 'Confirm your password',
           obscureText: true,
-          validator: (value) => value != _passwordController.text
+          validator: (value) => value != passwordController.text
               ? 'Passwords do not match'
               : null,
         ),

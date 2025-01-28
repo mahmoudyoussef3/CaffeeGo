@@ -2,6 +2,7 @@ import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../home/data/models/coffe_item.dart';
 
@@ -14,7 +15,7 @@ class AddToCartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 60,
+        height: 60.h,
         width: 345,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -45,18 +46,12 @@ class AddToCartButton extends StatelessWidget {
                     ),
                   );
                 } else {
-                  context.read<UserDataCubit>().addToCart(coffeeItem).then((_) {
+                  if (coffeeItem.uniqueId.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        action: SnackBarAction(
-                          label: "Cart",
-                          textColor: AppColors.secondaryBrownAppColor,
-                          onPressed: () =>
-                              Navigator.pushNamed(context, AppStrings.cart),
-                        ),
                         backgroundColor: Colors.white,
-                        content: const Text(
-                          'Item added to Cart',
+                        content: Text(
+                          'Please select a size.',
                           style: TextStyle(
                             color: AppColors.secondaryBrownAppColor,
                             fontSize: 18,
@@ -65,7 +60,33 @@ class AddToCartButton extends StatelessWidget {
                         ),
                       ),
                     );
-                  });
+                    return;
+                  } else {
+                    context
+                        .read<UserDataCubit>()
+                        .addToCart(coffeeItem)
+                        .then((_) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          action: SnackBarAction(
+                            label: "Cart",
+                            textColor: AppColors.secondaryBrownAppColor,
+                            onPressed: () =>
+                                Navigator.pushNamed(context, AppStrings.cart),
+                          ),
+                          backgroundColor: Colors.white,
+                          content: const Text(
+                            'Item added to Cart',
+                            style: TextStyle(
+                              color: AppColors.secondaryBrownAppColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      );
+                    });
+                  }
                 }
               },
               child: Container(
@@ -109,32 +130,9 @@ class AddToCartButton extends StatelessWidget {
                       fontWeight: FontWeight.w800,
                       fontSize: 24),
                 ),
-                const SizedBox(
-                  height: 5,
-                )
               ],
             )
           ],
-        )
-
-        // const Center(
-        //   child: Row(
-        //     children: [
-        //       Text("Add To Cart",
-        //           style: TextStyle(color: Colors.white, fontSize: 18)),
-        //       Spacer(),
-        //       Text(
-        //         "|",
-        //         style: TextStyle(color: Colors.white, fontSize: 16),
-        //       ),
-        //       Spacer(),
-        //       Text(
-        //         "12 \$",
-        //         style: TextStyle(color: Colors.white, fontSize: 16),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        );
+        ));
   }
 }

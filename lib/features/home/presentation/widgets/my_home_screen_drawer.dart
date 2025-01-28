@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
@@ -67,11 +68,31 @@ class MyHomeScreenDrawer extends StatelessWidget {
               ),
             ),
           ),
+          InkWell(
+            onTap: () => Navigator.pushNamed(context, AppStrings.orderHistory),
+            child: Container(
+              margin: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  color: AppColors.brownAppColor,
+                  borderRadius: BorderRadius.circular(12)),
+              child: const ListTile(
+                leading: Icon(
+                  Icons.coffee,
+                  color: AppColors.offWhiteAppColor,
+                ),
+                title: Text(
+                  'Orders',
+                  style: TextStyle(color: AppColors.offWhiteAppColor),
+                ),
+              ),
+            ),
+          ),
           const Spacer(),
           const Divider(color: AppColors.greyAppColor),
           InkWell(
             onTap: () async {
               await FirebaseAuth.instance.signOut();
+              await GoogleSignIn().signOut();
               Navigator.pushNamed(context, AppStrings.login);
             },
             child: Container(

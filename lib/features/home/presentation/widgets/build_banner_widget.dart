@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BuildBannerWidget extends StatefulWidget {
@@ -44,14 +45,25 @@ class _BuildBannerWidgetState extends State<BuildBannerWidget> {
                         fontFamily: 'Roboto'));
               }
               if (state is UserDataClassLoaded) {
-                return Text(
-                  "Hello, ${state.userDataClass.firstName} ${state.userDataClass.lastName}",
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      height: 1.2,
-                      fontFamily: 'Roboto'),
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Hello, ${state.userDataClass.firstName}",
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          height: 1.2,
+                          fontFamily: 'Roboto'),
+                    ),
+                    CircleAvatar(
+                      radius: 20.r,
+                      backgroundImage: NetworkImage(FirebaseAuth
+                              .instance.currentUser!.photoURL ??
+                          'https://c1.klipartz.com/pngpicture/314/450/sticker-png-circle-user-profile-avatar-computer-program-symbol-oval.png'),
+                    ),
+                  ],
                 );
               }
               return const SizedBox.shrink();

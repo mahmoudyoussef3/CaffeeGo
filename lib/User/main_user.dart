@@ -75,7 +75,7 @@ class CoffeeShopApp extends StatelessWidget {
             textSelectionTheme: const TextSelectionThemeData(
                 cursorColor: AppColors.brownAppColor)),
         onGenerateRoute: AppRouter.onGenerateRoute,
-        initialRoute: AppStrings.onBoarding,
+        initialRoute: AppStrings.splash,
         debugShowCheckedModeBanner: false,
       ),
     );

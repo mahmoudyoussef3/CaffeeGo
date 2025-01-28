@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../CommonWidgets/custom_text_form_field.dart';
 
 class LoginTextFields extends StatelessWidget {
-  LoginTextFields({super.key});
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  const LoginTextFields({super.key,required this.emailController,required this.passwordController});
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class LoginTextFields extends StatelessWidget {
       children: [
         CustomTextFormField(
           labelText: 'E-mail Address',
-          controller: _emailController,
+          controller: emailController,
           icon: Icons.email,
           hintText: 'Enter your email',
           keyboardType: TextInputType.emailAddress,
@@ -32,7 +32,7 @@ class LoginTextFields extends StatelessWidget {
          SizedBox(height: 18.h),
         CustomTextFormField(
           labelText: 'Password',
-          controller: _passwordController,
+          controller: passwordController,
           icon: Icons.lock,
           hintText: 'Enter your password',
           obscureText: true,

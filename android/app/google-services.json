@@ -12,7 +12,20 @@
           "package_name": "com.example.coffe_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "190939424592-lperk3as7phd97esev0rnkebqu5rsibp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.coffe_app",
+            "certificate_hash": "896cf7ca79993d99f7c9b9cb46bd0e66ac27b9b1"
+          }
+        },
+        {
+          "client_id": "190939424592-fhdk2gvf2n8chblfde943tpcdra7rh1e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCwj32itRJ1Kw20N4qjvRvprPlNN9Yhccs"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190939424592-fhdk2gvf2n8chblfde943tpcdra7rh1e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "190939424592-hgogllionvumr73bf72ie0svmkcpnqgj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.coffeApp"
+              }
+            }
+          ]
         }
       }
     }

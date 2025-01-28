@@ -71,7 +71,6 @@ class PaymentCubit extends Cubit<PaymentState> {
         'delivery_needed': "true",
         'amount_cents': amount,
         'currency': 'EGP',
-        // todo I should put items here
         'items': [],
       }),
     );

@@ -1,7 +1,12 @@
+import 'dart:developer';
+
+import 'package:coffe_app/features/fav/widgets/coffee_card_widget_in_fav_screen.dart';
+import 'package:coffe_app/features/fav/widgets/empty_fav_list.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:coffe_app/features/home/data/models/hive/hive.dart';
 import 'package:coffe_app/features/home/presentation/widgets/coffe_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../core/utils/app_colors.dart';
 
 class FavScreen extends StatefulWidget {
@@ -17,68 +22,48 @@ class _FavScreenState extends State<FavScreen> {
     List<CoffeeItem> myItems = MyHive.getCoffeeItemList(MyHive.hiveBox);
     return SafeArea(
       child: Scaffold(
-        // appBar: AppBar(
-        //   centerTitle: true,
-        //   // iconTheme: const IconThemeData(
-        //   //   color: Colors.white, //change your color here
-        //   // ),
-        //   // title: const Text(
-        //   //   "Favourites",
-        //   //   style: TextStyle(color: AppColors.offWhiteAppColor),
-        //   // ),
-        //   actions: <Widget>[
-        //     IconButton(
-        //       icon: const Icon(
-        //         Icons.delete_rounded,
-        //         color: Colors.white,
-        //       ),
-        //       onPressed: () {
-        //         MyHive.deleteAllFavourites();
-        //         log("delete all button pressed");
-        //         setState(() {});
-        //       },
-        //     )
-        //   ],
-        //   backgroundColor: Colors.transparent,
-        //   //  backgroundColor: AppColors.brownAppColor,
-        //   elevation: 0,
-        // ),
+        appBar: AppBar(
+          title: Text('Favourite'),
+          foregroundColor: AppColors.brownAppColor,
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.delete_rounded,
+              ),
+              onPressed: () {
+                MyHive.deleteAllFavourites();
+                log("delete all button pressed");
+                myItems.clear();
+                setState(() {});
+              },
+            )
+          ],
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
         backgroundColor: AppColors.offWhiteAppColor,
         body: myItems.isEmpty
-            ? const Center(
-                child: Text("No Favourites",
-                    style: TextStyle(color: Colors.black)))
+            ? EmptyFavList()
             : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
                 child: Column(
                   children: [
-                    const Text(
-                      'Favorite',
-                      style: TextStyle(
-                        color: AppColors.brownAppColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 28,
-                        letterSpacing: 1.5,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
                     Expanded(
-                      child: GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: myItems.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 16,
-                            childAspectRatio: 0.68,
-                            crossAxisSpacing: 5,
-                          ),
+                      child: ListView.separated(
                           itemBuilder: (context, index) {
-                            return CoffeeCardWidget(
-                              cardModel: myItems[index],
+                            return CoffeeCardWidgetInFavScreen(
+                              coffeeItem: myItems[index],
                             );
-                          }),
+                          },
+                          separatorBuilder: (context, index) {
+                            return const Divider(
+                              color: AppColors.brownAppColor,
+                              endIndent: 30,
+                              indent: 30,
+                            );
+                          },
+                          itemCount: myItems.length),
                     ),
                   ],
                 ),

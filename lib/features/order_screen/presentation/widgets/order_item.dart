@@ -1,5 +1,6 @@
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/utils/app_colors.dart';
 import 'custom_circular_button.dart';
 
@@ -23,7 +24,7 @@ class CustomOrderItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       width: double.infinity,
-      height: 100,
+      height: 100.h,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -31,8 +32,8 @@ class CustomOrderItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             child: Image.network(
               coffeeItem.image,
-              height: 80,
-              width: 80,
+              height: 80.h,
+              width: 70.h,
               fit: BoxFit.cover,
             ),
           ),

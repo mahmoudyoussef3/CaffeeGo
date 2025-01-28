@@ -71,12 +71,15 @@ class CoffeeCardWidget extends StatelessWidget {
                                 const EdgeInsets.symmetric(horizontal: 5.0),
                             child: Text(
                               cardModel.description
-                                  .split(" ")
-                                  .take(3)
-                                  .join(" "),
+                              // .split(" ")
+                              // .take(3)
+                              // .join(" "),
+                              ,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                               style: const TextStyle(
                                   color: Color(0xffA2A2A2),
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w600),
                             ),
                           ),

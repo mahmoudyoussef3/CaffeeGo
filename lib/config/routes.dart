@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:coffe_app/features/Onboarding/screens/onboarding_screen.dart';
+import 'package:coffe_app/features/Order/Presentation/screens/order_screen.dart';
 import 'package:coffe_app/features/cart/Data/DataSource/user_data_firebase.dart';
 import 'package:coffe_app/features/cart/Data/repo/user_data_repo.dart';
 import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart';
@@ -69,8 +70,11 @@ class AppRouter {
       case AppStrings.fav:
         return MaterialPageRoute(builder: (context) => const FavScreen());
       case AppStrings.onBoarding:
-        return MaterialPageRoute(builder: (context) => const OnboardingScreen());
+        return MaterialPageRoute(
+            builder: (context) => const OnboardingScreen());
 
+      case AppStrings.orderHistory:
+        return MaterialPageRoute(builder: (context) => const OrderScreen());
       case AppStrings.itemDetails:
         final CoffeeItem? args = settings.arguments as CoffeeItem?;
         log("${args!.description}  ======  item details");

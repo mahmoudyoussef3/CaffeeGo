@@ -1,3 +1,4 @@
+import 'package:coffe_app/features/payment/wallet_payment.dart';
 import 'package:flutter/material.dart';
 
 class PayWithWallet extends StatelessWidget {
@@ -6,8 +7,9 @@ class PayWithWallet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // TODO: Implement Mobile Wallet payment logic
+      onTap: () async {
+        await PayMobWalletManager()
+            .getPaymentKeyForWallet(300, "+201204154971");
       },
       child: Container(
         width: 130,

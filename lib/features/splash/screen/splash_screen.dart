@@ -7,18 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Onboarding/screens/onboarding_screen.dart';
-
-class SharedPrefsHelper {
-  static Future<void> saveBool(String key, bool value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(key, value);
-  }
-
-  static Future<bool?> getBool(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(key);
-  }
-}
+import '../shared_pref_helper.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -38,6 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Opacity(
                 opacity: 0.5,
                 child: Image.asset(
+                    fit: BoxFit.cover,
                     'assets/onboarding_imgs/unsplash_SCbq6uKCyMY.png')),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 30.h),
@@ -49,8 +39,11 @@ class _SplashScreenState extends State<SplashScreen> {
                   const Spacer(),
                   InkWell(
                     onTap: () async {
-                      if (await getBool()) {
-                        if (FirebaseAuth.instance.currentUser?.uid != null) {
+                      bool? isUserSignedIn = await SharedPrefsHelper.getBool(
+                              AppStrings.introPagesViewed) ??
+                          false;
+                      if (isUserSignedIn) {
+                        if (FirebaseAuth.instance.currentUser != null) {
                           Navigator.pushReplacementNamed(
                               context, AppStrings.home);
                         } else {
@@ -88,10 +81,5 @@ class _SplashScreenState extends State<SplashScreen> {
             )
           ],
         ));
-  }
-
-  Future<bool> getBool() async {
-    return await SharedPrefsHelper.getBool(AppStrings.introPagesViewed) ??
-        false;
   }
 }
