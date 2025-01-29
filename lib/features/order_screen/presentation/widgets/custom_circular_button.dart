@@ -1,3 +1,4 @@
+import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CircularButton extends StatelessWidget {
@@ -19,7 +20,7 @@ class CircularButton extends StatelessWidget {
         width: 35,
         decoration: const BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.white,
+          color: AppColors.offWhiteAppColor,
         ),
         child: Center(
           child: Icon(

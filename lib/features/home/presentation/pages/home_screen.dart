@@ -19,14 +19,14 @@ class HomeScreen extends StatelessWidget {
               foregroundColor: AppColors.offWhiteAppColor,
               backgroundColor: Colors.black,
               elevation: 0,
-              // actions: [
-              //   IconButton(
-              //     icon: const Icon(
-              //       Icons.notifications,
-              //     ),
-              //     onPressed: () {},
-              //   )
-              // ],
+              actions: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.notifications,
+                  ),
+                  onPressed: () {},
+                )
+              ],
             ),
             backgroundColor: Colors.white,
             body: const SingleChildScrollView(

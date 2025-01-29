@@ -20,7 +20,7 @@ class CustomOrderItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: AppColors.offWhiteAppColor,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
       ),
       width: double.infinity,
@@ -74,6 +74,7 @@ class CustomOrderItem extends StatelessWidget {
           Row(
             children: [
               CircularButton(
+
                 icon: Icons.remove,
                 onPressed: onDecrease,
               ),

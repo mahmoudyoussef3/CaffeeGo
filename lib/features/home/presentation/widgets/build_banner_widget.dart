@@ -27,8 +27,8 @@ class _BuildBannerWidgetState extends State<BuildBannerWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        right: 28.0,
-        left: 28.0,
+        right: 10.0,
+        left: 18.0,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
