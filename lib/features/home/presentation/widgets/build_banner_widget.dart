@@ -49,6 +49,8 @@ class _BuildBannerWidgetState extends State<BuildBannerWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       "Hello, ${state.userDataClass.firstName}",
                       style: const TextStyle(
                           color: Colors.white,

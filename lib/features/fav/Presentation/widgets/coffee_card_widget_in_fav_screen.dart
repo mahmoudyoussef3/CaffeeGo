@@ -2,7 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
-import '../../home/data/models/coffe_item.dart';
+import '../../../home/data/models/coffe_item.dart';
+
 
 class CoffeeCardWidgetInFavScreen extends StatelessWidget {
   const CoffeeCardWidgetInFavScreen({super.key, required this.coffeeItem});

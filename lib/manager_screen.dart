@@ -1,5 +1,4 @@
 import 'package:coffe_app/core/utils/app_colors.dart';
-import 'package:coffe_app/features/fav/screen/fav_screen.dart';
 import 'package:coffe_app/features/home/presentation/pages/home_screen.dart';
 import 'package:coffe_app/features/notification/screen/notification_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,7 @@ class _ManagerScreenState extends State<ManagerScreen> {
   int _selectedTab = 0;
   List<Widget> myScreens = [
     HomeScreen(),
-    FavScreen(),
+   // FavScreen(),
     // CartScreen(
     //   itemQuantity: null,
     // ),

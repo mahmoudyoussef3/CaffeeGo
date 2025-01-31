@@ -1,5 +1,13 @@
 name: coffe_app
 description: "A new Flutter project."
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/onboarding_imgs/Frame 2.png
+  android: true
+  ios: true
+  android_12:
+    image: assets/onboarding_imgs/Frame 2.png
+    icon_background_color: "#ffffff"
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -34,15 +42,17 @@ dependencies:
   google_sign_in: ^6.2.2
   dotted_line: ^3.2.3
   introduction_screen: ^3.1.14
-  shared_preferences: ^2.4.0
+  shared_preferences: ^2.5.1
   flutter_screenutil: ^5.9.3
   device_preview: ^1.2.0
   qr_flutter: ^4.1.0
+  fluttertoast: ^8.2.10
   flutter_staggered_animations: ^1.1.1
-
-dev_dependencies:
+  flutter_native_splash: ^2.4.4
   build_runner: ^2.4.14
   hive_generator: ^2.0.1
+
+dev_dependencies:
   flutter_test:
     sdk: flutter
 
@@ -60,9 +70,9 @@ flutter:
     - assets/images/
     - assets/images/Rectangle 1.svg
     - assets/onboarding_imgs/
-    - assets/onboarding_imgs/
     - assets/onboarding_imgs/unsplash_SCbq6uKCyMY.png
     - assets/images/app_img.png
+    - assets/onboarding_imgs/Frame 2.png
 
   fonts:
     - family: Poppins

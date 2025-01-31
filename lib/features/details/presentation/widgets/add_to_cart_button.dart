@@ -3,6 +3,7 @@ import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../home/data/models/coffe_item.dart';
 
@@ -33,33 +34,26 @@ class AddToCartButton extends StatelessWidget {
                     .userCart
                     .any((item) => item.uniqueId == coffeeItem.uniqueId);
                 if (isItemInCart) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      backgroundColor: Colors.white,
-                      content: Text(
-                        'Item already in cart.',
-                        style: TextStyle(
-                            color: AppColors.secondaryBrownAppColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  );
+                  Fluttertoast.showToast(
+                      msg: "Item already in cart!",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity
+                          .BOTTOM, // You can change it to top, center, etc.
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: AppColors.offWhiteAppColor,
+                      textColor: AppColors.brownAppColor,
+                      fontSize: 16.0);
                 } else {
                   if (coffeeItem.uniqueId.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: Colors.white,
-                        content: Text(
-                          'Please select a size.',
-                          style: TextStyle(
-                            color: AppColors.secondaryBrownAppColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    );
+                    Fluttertoast.showToast(
+                        msg: "Please select size",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity
+                            .BOTTOM, // You can change it to top, center, etc.
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: AppColors.offWhiteAppColor,
+                        textColor: AppColors.brownAppColor,
+                        fontSize: 16.0);
                     return;
                   } else {
                     context

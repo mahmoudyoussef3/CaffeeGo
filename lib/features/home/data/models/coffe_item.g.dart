@@ -1,38 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'hive_item.dart';
+part of 'coffe_item.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class HiveItemAdapter extends TypeAdapter<HiveItem> {
+class CoffeeItemAdapter extends TypeAdapter<CoffeeItem> {
   @override
   final int typeId = 0;
 
   @override
-  HiveItem read(BinaryReader reader) {
+  CoffeeItem read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return HiveItem(
+    return CoffeeItem(
       id: fields[0] as String,
       name: fields[1] as String,
       description: fields[2] as String,
       image: fields[3] as String,
       category: fields[4] as String,
-      rate: fields[5] as String,
-      ingredients: (fields[6] as List).cast<HiveIngredient>(),
-      sizes: (fields[7] as Map).cast<String, double>(),
-      uniqueId: fields[8] as String,
-      selectedSize: fields[10] as String,
-      quantityInCart: fields[9] as int,
+      rate: fields[8] as String,
+      ingredients: (fields[9] as List).cast<Ingredient>(),
+      uniqueId: fields[6] as String,
+      sizes: (fields[10] as Map).cast<String, double>(),
+      quantityInCart: fields[5] as int,
+      selectedSize: fields[7] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, HiveItem obj) {
+  void write(BinaryWriter writer, CoffeeItem obj) {
     writer
       ..writeByte(11)
       ..writeByte(0)
@@ -46,17 +46,17 @@ class HiveItemAdapter extends TypeAdapter<HiveItem> {
       ..writeByte(4)
       ..write(obj.category)
       ..writeByte(5)
-      ..write(obj.rate)
-      ..writeByte(6)
-      ..write(obj.ingredients)
-      ..writeByte(7)
-      ..write(obj.sizes)
-      ..writeByte(8)
-      ..write(obj.uniqueId)
-      ..writeByte(9)
       ..write(obj.quantityInCart)
+      ..writeByte(6)
+      ..write(obj.uniqueId)
+      ..writeByte(7)
+      ..write(obj.selectedSize)
+      ..writeByte(8)
+      ..write(obj.rate)
+      ..writeByte(9)
+      ..write(obj.ingredients)
       ..writeByte(10)
-      ..write(obj.selectedSize);
+      ..write(obj.sizes);
   }
 
   @override
@@ -65,29 +65,29 @@ class HiveItemAdapter extends TypeAdapter<HiveItem> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is HiveItemAdapter &&
+      other is CoffeeItemAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
 
-class HiveIngredientAdapter extends TypeAdapter<HiveIngredient> {
+class IngredientAdapter extends TypeAdapter<Ingredient> {
   @override
   final int typeId = 1;
 
   @override
-  HiveIngredient read(BinaryReader reader) {
+  Ingredient read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return HiveIngredient(
+    return Ingredient(
       name: fields[0] as String,
       image: fields[1] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, HiveIngredient obj) {
+  void write(BinaryWriter writer, Ingredient obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
@@ -102,7 +102,7 @@ class HiveIngredientAdapter extends TypeAdapter<HiveIngredient> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is HiveIngredientAdapter &&
+      other is IngredientAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

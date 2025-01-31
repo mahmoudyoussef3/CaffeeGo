@@ -24,8 +24,7 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return  Scaffold(
       backgroundColor: AppColors.offWhiteAppColor,
       body: BlocBuilder<UserDataCubit, UserDataState>(
         builder: (context, state) {
@@ -65,7 +64,7 @@ class _CartScreenState extends State<CartScreen> {
           );
         },
       ),
-    ));
+    );
   }
 
   double totalPriceWithDiscount(List<CoffeeItem> items) {

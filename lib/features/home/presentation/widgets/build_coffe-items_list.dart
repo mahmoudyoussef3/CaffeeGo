@@ -1,3 +1,4 @@
+import 'package:coffe_app/features/details/presentation/screen/item_details.dart';
 import 'package:coffe_app/features/home/presentation/cubit/category_cubit/category_cubit.dart';
 import 'package:coffe_app/features/home/presentation/cubit/coffe_items/coffee_items_cubit.dart';
 import 'package:coffe_app/features/home/presentation/widgets/coffee_card_shimmer.dart';
@@ -74,8 +75,12 @@ class _CoffeeItemsListState extends State<BuildCoffeeItemsList> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, AppStrings.itemDetails,
-                                arguments: myItems[index]);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ItemDetails(coffeeItem: myItems[index]),
+                                ));
                           },
                           child: CoffeeCardWidget(cardModel: myItems[index]));
                     }),

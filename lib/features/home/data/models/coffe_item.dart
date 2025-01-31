@@ -1,16 +1,28 @@
-import 'package:flutter/foundation.dart';
-
-class CoffeeItem {
+import 'package:hive/hive.dart';
+part 'coffe_item.g.dart';
+@HiveType(typeId: 0)
+class CoffeeItem extends HiveObject {
+  @HiveField(0)
   final String id;
+  @HiveField(1)
   final String name;
+  @HiveField(2)
   final String description;
+  @HiveField(3)
   final String image;
+  @HiveField(4)
   final String category;
+  @HiveField(5)
   int quantityInCart;
+  @HiveField(6)
   String uniqueId;
+  @HiveField(7)
   String selectedSize;
+  @HiveField(8)
   final String rate;
+  @HiveField(9)
   final List<Ingredient> ingredients;
+  @HiveField(10)
   final Map<String, double> sizes;
 
   CoffeeItem(
@@ -54,7 +66,7 @@ class CoffeeItem {
       'description': description,
       'image': image,
       'category': category,
-      'rate': category,
+      'rate': rate,
       'ingredients':
           ingredients.map((ingredient) => ingredient.toJson()).toList(),
       'sizes': sizes.map((key, value) => MapEntry(key, value)),
@@ -65,8 +77,11 @@ class CoffeeItem {
   }
 }
 
-class Ingredient {
+@HiveType(typeId: 1)
+class Ingredient extends HiveObject {
+  @HiveField(0)
   final String name;
+  @HiveField(1)
   final String image;
 
   Ingredient({

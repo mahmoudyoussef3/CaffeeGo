@@ -4,27 +4,36 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../CommonWidgets/custom_text_form_field.dart';
 
 class RegisterTextFields extends StatelessWidget {
-  RegisterTextFields({super.key, required this.fullName, required this.emailController, required this.passwordController, required this.confirmPasswordController});
+  RegisterTextFields(
+      {super.key,
+      required this.fullName,
+      required this.emailController,
+      required this.passwordController,
+      required this.confirmPasswordController});
 
-  final TextEditingController fullName ;
-  final TextEditingController emailController ;
+  final TextEditingController fullName;
+  final TextEditingController emailController;
   final TextEditingController passwordController;
-  final TextEditingController confirmPasswordController ;
+  final TextEditingController confirmPasswordController;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-         SizedBox(height: 30.h),
+        SizedBox(height: 30.h),
         CustomTextFormField(
+          obscureText: false,
+          passwordFieldOrNot: false,
           controller: fullName,
           labelText: 'Full Name',
           icon: Icons.person,
           hintText: 'Enter your full name',
           validator: (value) => value!.isEmpty ? 'Name is required' : null,
         ),
-         SizedBox(height: 12.h),
+        SizedBox(height: 12.h),
         CustomTextFormField(
+          passwordFieldOrNot: false,
+          obscureText: false,
           controller: emailController,
           labelText: 'E-mail Address',
           icon: Icons.email,
@@ -36,8 +45,9 @@ class RegisterTextFields extends StatelessWidget {
               ? 'Enter a valid email'
               : null,
         ),
-         SizedBox(height: 12.h),
+        SizedBox(height: 12.h),
         CustomTextFormField(
+          passwordFieldOrNot: true,
           controller: passwordController,
           labelText: 'Password',
           icon: Icons.lock,
@@ -47,8 +57,9 @@ class RegisterTextFields extends StatelessWidget {
               ? 'Password must be at least 6 characters'
               : null,
         ),
-         SizedBox(height: 12.h),
+        SizedBox(height: 12.h),
         CustomTextFormField(
+          passwordFieldOrNot: true,
           controller: confirmPasswordController,
           labelText: 'Confirm Password',
           icon: Icons.lock,
@@ -58,7 +69,7 @@ class RegisterTextFields extends StatelessWidget {
               ? 'Passwords do not match'
               : null,
         ),
-         SizedBox(height: 32.h),
+        SizedBox(height: 32.h),
       ],
     );
   }
