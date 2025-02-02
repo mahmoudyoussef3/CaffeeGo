@@ -55,37 +55,14 @@ class UserData {
     }
   }
 
-  // Future<void> updateSelectedSize(String uniqueId, String newSize) async {
+  // Future<void> deleteCart() async {
   //   try {
-  //     DocumentSnapshot documentSnapshot = await docRef.get();
-  //     if (documentSnapshot.exists) {
-  //       List<dynamic> cartData = documentSnapshot.get('cart');
-  //
-  //       bool itemExists = cartData.any((item) => item['uniqueId'] == uniqueId);
-  //       if (itemExists) {
-  //         print('ItemAlreadyExists in the Cart');
-  //       } else {
-  //         print(
-  //             'Item with the specified unique ID does not exist in the cart.');
-  //         //todo we will add it
-  //         String newUniqueId = "${uniqueId.split('_')[0]}_$newSize";
-  //       }
-  //
-  //       List<dynamic> updatedCart = cartData.map((item) {
-  //         // if (item['uniqueId'] == uniqueId) {
-  //         //   item['selectedSize'] = newSize;
-  //         //   item['uniqueId'] = newUniqueId;
-  //         // }
-  //         return item;
-  //       }).toList();
-  //
-  //       await docRef.update({'cart': updatedCart});
-  //       print('Selected size updated successfully.');
-  //     } else {
-  //       print('User document does not exist.');
-  //     }
+  //     await FirebaseFirestore.instance
+  //         .collection('users')
+  //         .doc(FirebaseAuth.instance.currentUser!.uid)
+  //         .update({'cart': FieldValue.delete()});
   //   } catch (e) {
-  //     print('Error updating selected size: $e');
+  //     print('Error deleting cart: $e');
   //   }
   // }
 }

@@ -24,7 +24,7 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: AppColors.offWhiteAppColor,
       body: BlocBuilder<UserDataCubit, UserDataState>(
         builder: (context, state) {
@@ -55,13 +55,7 @@ class _CartScreenState extends State<CartScreen> {
                 priceBeforeDiscount: totalPrice(cartItems),
                 cartItems: cartItems);
           }
-
-          return const Center(
-            child: Text(
-              'Unknown state!',
-              style: TextStyle(fontSize: 18, color: Colors.black54),
-            ),
-          );
+          return const EmptyCartScreen();
         },
       ),
     );

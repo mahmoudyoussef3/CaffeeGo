@@ -14,11 +14,14 @@ class UserDataRepo {
     await userData.updateCart(myCart);
   }
 
-  Future<void> updateQuantity(String selectedSize,String id,int myQuantity) async {
-    await userData.updateQuantityNumber(selectedSize,id,myQuantity,);
+  Future<void> updateQuantity(
+      String selectedSize, String id, int myQuantity) async {
+    await userData.updateQuantityNumber(
+      selectedSize,
+      id,
+      myQuantity,
+    );
   }
 
-  // Future<void> updateSelectedSize(String id, String selectedSize) async {
-  //   await userData.updateSelectedSize(id,selectedSize);
-  // }
+
 }

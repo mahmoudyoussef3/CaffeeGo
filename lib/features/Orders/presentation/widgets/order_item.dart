@@ -45,6 +45,8 @@ class CustomOrderItem extends StatelessWidget {
               children: [
                 Text(
                   coffeeItem.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -74,7 +76,6 @@ class CustomOrderItem extends StatelessWidget {
           Row(
             children: [
               CircularButton(
-
                 icon: Icons.remove,
                 onPressed: onDecrease,
               ),

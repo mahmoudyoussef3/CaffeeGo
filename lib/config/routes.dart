@@ -1,5 +1,9 @@
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:coffe_app/features/Onboarding/screens/onboarding_screen.dart';
+import 'package:coffe_app/features/Orders/Data/DataSource/user_orders_data_firebase.dart';
+import 'package:coffe_app/features/Orders/Data/models/order_model.dart';
+import 'package:coffe_app/features/Orders/Data/repo/user_orders_repo.dart';
+import 'package:coffe_app/features/Orders/presentation/cubits/order_cubit/orders_cubit.dart';
 import 'package:coffe_app/features/cart/Data/DataSource/user_data_firebase.dart';
 import 'package:coffe_app/features/cart/Data/repo/user_data_repo.dart';
 import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart';
@@ -13,7 +17,7 @@ import 'package:coffe_app/features/payment/cubit/payment_cubit.dart';
 import 'package:coffe_app/manager_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../features/Order/Presentation/screens/order_screen.dart';
+import '../features/Orders/presentation/screens/order_screen.dart';
 import '../features/auth/RegisterScreen/presentation/screens/register_screen.dart';
 import '../features/auth/login_screen/presentation/screens/login_screen.dart';
 import '../features/cart/Presentation/screen/cart_screen.dart';
@@ -60,7 +64,12 @@ class AppRouter {
                         UserDataRepo(UserData()),
                       ),
                     ),
-                    BlocProvider(create: (context) => PaymentCubit())
+                    BlocProvider(create: (context) => PaymentCubit()),
+                    BlocProvider(
+                      create: (context) => OrdersCubit(
+                        UserOrdersRepo(OrderDataFirebase()),
+                      ),
+                    ),
                   ],
                   child: const CartScreen(),
                 ));
@@ -98,8 +107,12 @@ class AppRouter {
 
       case AppStrings.orderHistory:
         return MaterialPageRoute(
-            builder: (context) => OrderScreen(
-                  qrData: 'Test',
+            builder: (context) => BlocProvider(
+                  create: (context) =>
+                      OrdersCubit(UserOrdersRepo(OrderDataFirebase())),
+                  child: OrderScreen(
+                    qrData: 'Test',
+                  ),
                 ));
       default:
         return MaterialPageRoute(builder: (context) => LoginScreen());

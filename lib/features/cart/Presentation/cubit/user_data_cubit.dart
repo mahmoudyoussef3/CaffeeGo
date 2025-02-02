@@ -51,6 +51,21 @@ class UserDataCubit extends Cubit<UserDataState> {
     }
   }
 
+  Future clearCart() async {
+    UserDataLoading();
+    try {
+      await fetchUserCart();
+      userCart.clear();
+      await dataRepo.addToCart(userCart);
+      print('Cart Deleted successfully');
+      emit(UserDataCartUpdated(userCart));
+    } catch (e) {
+      print('Item failed');
+      print(e.toString());
+      emit(UserDataError(e.toString()));
+    }
+  }
+
   // Future updateSelectedSize(String id, String selectedSize) async {
   //   UserDataLoading();
   //   try {

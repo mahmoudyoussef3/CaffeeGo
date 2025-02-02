@@ -1,6 +1,7 @@
 import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/features/home/presentation/widgets/my_home_screen_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../widgets/build_coffe-items_list.dart';
 import '../widgets/build_promo.dart';
 import '../widgets/categories_toggle.dart';
@@ -27,13 +28,13 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
             backgroundColor: Colors.white,
-            body: const SingleChildScrollView(
+            body:  SingleChildScrollView(
               child: Column(
                 children: [
                   BuildPromo(),
                   Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
+                          EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 8.h),
                       child: CategoriesToggle()),
                   BuildCoffeeItemsList(),
                 ],

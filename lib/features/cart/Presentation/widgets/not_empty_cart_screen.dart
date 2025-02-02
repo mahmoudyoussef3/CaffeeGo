@@ -1,3 +1,4 @@
+import 'package:coffe_app/features/Orders/Data/models/order_model.dart';
 import 'package:coffe_app/features/cart/Presentation/widgets/payment_summary.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,14 @@ class NotEmptyCartScreen extends StatelessWidget {
             priceWithoutDiscount: priceBeforeDiscount,
             priceWithDiscount: discountPrice),
         const SizedBox(height: 20),
-        PaymentBottomSheet(amount: discountPrice),
+        PaymentBottomSheet(
+          amount: discountPrice,
+          myOrder: OrderModel(
+              orderStartDate: DateTime.now(),
+              myOrders: cartItems,
+              stateOfTheOrder: 'Pending',
+              orderTotalPrice: discountPrice.toStringAsFixed(2)),
+        ),
         const SizedBox(height: 20),
       ],
     );

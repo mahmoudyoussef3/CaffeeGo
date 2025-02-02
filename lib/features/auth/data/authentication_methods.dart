@@ -62,6 +62,7 @@ class AuthenticationMethods {
             userCredential.user!.phoneNumber ?? 'No phone number provided',
         'img': userCredential.user!.photoURL ?? '',
         'cart': [],
+        'orders': [],
       });
     } catch (e) {
       print('Error during Google sign-in: $e');
