@@ -1,6 +1,8 @@
 import 'package:coffe_app/features/cart/Data/DataSource/user_data_firebase.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 
+import '../../../Orders/Data/models/order_model.dart';
+
 class UserDataRepo {
   UserData userData;
   UserDataRepo(this.userData);
@@ -23,5 +25,7 @@ class UserDataRepo {
     );
   }
 
-
+  Future<void> addOrderToAdminOrders(OrderModel order) async {
+    await userData.addOrderToAdminOrders(order);
+  }
 }

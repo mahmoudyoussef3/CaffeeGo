@@ -22,8 +22,7 @@ class UserDataClassCubit extends Cubit<UserDataClassState> {
         Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
         userDataClass = UserDataClass(
           uuid: data['uid'] ?? '',
-          firstName: data['displayName'] ?? 'Unknown',
-          lastName: data['lastName'] ?? '',
+          name: data['displayName'] ?? 'Unknown',
           phoneNumber: data['phoneNumber'] ?? '0',
           email: data['email'] ?? '',
         );

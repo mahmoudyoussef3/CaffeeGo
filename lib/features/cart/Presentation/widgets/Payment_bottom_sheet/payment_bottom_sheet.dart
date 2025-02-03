@@ -36,15 +36,18 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
         ),
         child: GestureDetector(
           onTap: () {
-            //todo This must save order and it`s state in orderList in firebase.
             context.read<OrdersCubit>().updateOrderList(widget.myOrder).then(
               (value) {
                 context.read<UserDataCubit>().clearCart();
               },
             ).then(
               (value) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text('Coffee Items Added to your orderList')));
+                context
+                    .read<UserDataCubit>()
+                    .addOrderToOrdersAdmin(widget.myOrder);
+
+                // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                //     content: Text('Coffee Items Added to your orderList')));
               },
             );
             setState(() {});

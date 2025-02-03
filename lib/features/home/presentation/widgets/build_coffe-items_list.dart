@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import '../../../../core/utils/app_strings.dart';
+import '../../../../core/utils/widgets/custom_loading_progress.dart';
 import '../../../payment/wallet_payment.dart';
 import 'coffe_card_widget.dart';
 
@@ -27,28 +28,12 @@ class _CoffeeItemsListState extends State<BuildCoffeeItemsList> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CoffeeItemsCubit, CoffeeItemsState>(
+    return
+      BlocBuilder<CoffeeItemsCubit, CoffeeItemsState>(
         builder: (context, state) {
       if (state is CoffeeItemsLoading) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            color: Colors.white,
-            child: GridView.builder(
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemCount: 6,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 0.6,
-                  crossAxisSpacing: 10,
-                ),
-                itemBuilder: (context, index) {
-                  return const CoffeeCardShimmer();
-                }),
-          ),
-        );
+        return   Center(child: CustomLoadingProgress());
+
       }
       if (state is CoffeeItemsError) {
         return Center(child: Text(state.errorMessage));

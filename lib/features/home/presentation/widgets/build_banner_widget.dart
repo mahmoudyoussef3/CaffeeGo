@@ -1,13 +1,8 @@
-import 'package:coffe_app/core/utils/app_colors.dart';
-import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart';
 import 'package:coffe_app/features/home/presentation/cubit/UserData_cubit/user_data_cubit.dart';
-import 'package:coffe_app/features/home/presentation/cubit/category_cubit/category_cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BuildBannerWidget extends StatefulWidget {
   const BuildBannerWidget({super.key});
@@ -51,7 +46,7 @@ class _BuildBannerWidgetState extends State<BuildBannerWidget> {
                     Text(
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      "Hello, ${state.userDataClass.firstName}",
+                      "Hello, ${state.userDataClass.name}",
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 24,

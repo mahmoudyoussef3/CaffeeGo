@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffe_app/features/Orders/Data/models/order_model.dart';
 import 'package:coffe_app/features/cart/Data/repo/user_data_repo.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,18 +68,6 @@ class UserDataCubit extends Cubit<UserDataState> {
     }
   }
 
-  // Future updateSelectedSize(String id, String selectedSize) async {
-  //   UserDataLoading();
-  //   try {
-  //     await dataRepo.updateSelectedSize(id, selectedSize);
-  //     print('Item selectedSize updated successfully');
-  //     emit(UserDataSuccess(userCart));
-  //   } catch (e) {
-  //     print('Item updated failed');
-  //     print(e.toString());
-  //     emit(UserDataError(e.toString()));
-  //   }
-  // }
 
   Future<void> deleteCart(CoffeeItem item) async {
     try {
@@ -94,4 +84,17 @@ class UserDataCubit extends Cubit<UserDataState> {
       emit(UserDataError(e.toString()));
     }
   }
+  Future addOrderToOrdersAdmin(OrderModel order) async {
+    UserDataLoading();
+    try {
+      await dataRepo.addOrderToAdminOrders(order);
+      print('Order sent to admin successfully');
+      emit(UserDataSuccess(userCart));
+    } catch (e) {
+      print('Order failed to send');
+      print(e.toString());
+      emit(UserDataError(e.toString()));
+    }
+  }
+
 }

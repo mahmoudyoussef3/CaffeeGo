@@ -22,7 +22,6 @@ class _CategoriesToggleState extends State<CategoriesToggle> {
     context.read<CategoryCubit>().fetchCoffeeCategories();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -36,7 +35,6 @@ class _CategoriesToggleState extends State<CategoriesToggle> {
               return Text(state.errorMessage.toString());
             } else if (state is CategorySuccess) {
               var myCategories = state.myCategories;
-              print(myCategories);
               return Row(
                 children: List.generate(myCategories.length, (index) {
                   final isSelected = selectedIndex == index;

@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../../Orders/Data/models/order_model.dart';
+
 class UserData {
   DocumentReference docRef = FirebaseFirestore.instance
       .collection('users')
@@ -54,15 +56,17 @@ class UserData {
       print('Error updating quantity: $e');
     }
   }
+  Future<void> addOrderToAdminOrders(OrderModel order) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('orders')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set({'order': order.toJson()});
 
-  // Future<void> deleteCart() async {
-  //   try {
-  //     await FirebaseFirestore.instance
-  //         .collection('users')
-  //         .doc(FirebaseAuth.instance.currentUser!.uid)
-  //         .update({'cart': FieldValue.delete()});
-  //   } catch (e) {
-  //     print('Error deleting cart: $e');
-  //   }
-  // }
+      print('Added order to admin order done');
+    } catch (e) {
+      print('Error adding document: $e');
+    }
+  }
+
 }

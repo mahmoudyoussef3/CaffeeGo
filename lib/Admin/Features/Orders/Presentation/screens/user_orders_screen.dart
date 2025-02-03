@@ -1,9 +1,24 @@
+import 'package:coffe_app/Admin/Features/Orders/Presentation/cubits/get_all_users_cubit/get_all_orders_cubit.dart';
+import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 
-class ManageOrdersScreen extends StatelessWidget {
+class ManageOrdersScreen extends StatefulWidget {
   const ManageOrdersScreen({super.key});
+
+  @override
+  State<ManageOrdersScreen> createState() => _ManageOrdersScreenState();
+}
+
+class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<GetAllOrdersCubit>().getAllOrders();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +28,25 @@ class ManageOrdersScreen extends StatelessWidget {
           foregroundColor: AppColors.offWhiteAppColor,
           title: const Text('Manage Orders'),
           backgroundColor: AppColors.brownAppColor),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemCount: 12, // Replace with your dynamic data
-        itemBuilder: (context, index) {
-          return _buildOrderCard(context, 'Order #$index', 'Pending');
+      body: BlocBuilder<GetAllOrdersCubit, GetAllOrdersState>(
+        builder: (context, state) {
+          if (state is GetAllOrdersLoading) {
+            return Center(child: CustomLoadingProgress());
+          } else if (state is GetAllOrdersFailure) {
+            return Text('Failed to fetch orders');
+          } else if (state is GetAllOrdersSuccess) {
+            return ListView.builder(
+              padding: const EdgeInsets.all(16.0),
+              itemCount: state.orders.length,
+              itemBuilder: (context, index) {
+                return _buildOrderCard(
+                    context,
+                    state.orders.length.toString(),
+                state.orders.length.toString());
+              },
+            );
+          }
+          return SizedBox.shrink();
         },
       ),
     );

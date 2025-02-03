@@ -1,13 +1,11 @@
 class UserDataClass {
   String? uuid;
-  String? firstName;
-  String? lastName;
+  String? name;
   String? phoneNumber;
   String? email;
   UserDataClass({
     required this.uuid,
-    required this.firstName,
-    required this.lastName,
+    required this.name,
     required this.phoneNumber,
     required this.email,
   });
@@ -15,8 +13,7 @@ class UserDataClass {
   factory UserDataClass.fromJson(Map<String, dynamic> myUserData) {
     return UserDataClass(
       uuid: myUserData['uuid'],
-      firstName: myUserData['first_name'],
-      lastName: myUserData['last_name'],
+      name: myUserData['displayName'],
       phoneNumber: myUserData['phone_number'],
       email: myUserData['email'],
     );
