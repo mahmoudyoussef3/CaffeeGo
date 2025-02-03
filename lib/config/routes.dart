@@ -1,3 +1,4 @@
+import 'package:coffe_app/Admin/Features/Categories/Presentation/screens/Categories.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:coffe_app/features/Onboarding/screens/onboarding_screen.dart';
 import 'package:coffe_app/features/Orders/Data/DataSource/user_orders_data_firebase.dart';
@@ -17,6 +18,9 @@ import 'package:coffe_app/features/payment/cubit/payment_cubit.dart';
 import 'package:coffe_app/manager_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../Admin/Features/Items/Presentation/screens/Items.dart';
+import '../Admin/Features/Orders/Presentation/screens/user_orders_screen.dart';
+import '../Admin/Features/Users/Presentation/screens/users_screen.dart';
 import '../features/Orders/presentation/screens/order_screen.dart';
 import '../features/auth/RegisterScreen/presentation/screens/register_screen.dart';
 import '../features/auth/login_screen/presentation/screens/login_screen.dart';
@@ -53,8 +57,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => LoginScreen());
       case AppStrings.signup:
         return MaterialPageRoute(builder: (context) => const RegisterScreen());
-      case AppStrings.managerScreen:
-        return MaterialPageRoute(builder: (context) => const ManagerScreen());
+
       case AppStrings.cart:
         return MaterialPageRoute(
             builder: (context) => MultiBlocProvider(
@@ -78,30 +81,6 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (context) => const OnboardingScreen());
 
-      // case AppStrings.itemDetails:
-      //   final CoffeeItem? args = settings.arguments as CoffeeItem?;
-      //   log("${args!.description}  ======  item details");
-      //   return MaterialPageRoute(
-      //       settings: RouteSettings(arguments: args),
-      //       builder: (context) {
-      //         return MultiBlocProvider(
-      //           providers: [
-      //             BlocProvider(
-      //                 create: (context) => CategoryCubit(
-      //                     DataRepo(coffeeDataSource: CoffeeDataSource()),
-      //                     ItemsUseCse())),
-      //             BlocProvider(
-      //                 create: (context) =>
-      //                     UserDataCubit(UserDataRepo(UserData()))),
-      //             BlocProvider(
-      //               create: (context) => CoffeeItemsCubit(ItemsUseCse()),
-      //             )
-      //           ],
-      //           child: ItemDetails(
-      //             coffeeItem: args,
-      //           ),
-      //         );
-      //       });
       case AppStrings.fav:
         return MaterialPageRoute(builder: (context) => const FavScreen());
 
@@ -114,6 +93,16 @@ class AppRouter {
                     qrData: 'Test',
                   ),
                 ));
+      case AppStrings.manageCategories:
+        return MaterialPageRoute(
+            builder: (context) => ManageCategoriesScreen());
+      case AppStrings.manageItems:
+        return MaterialPageRoute(builder: (context) => ManageItemsScreen());
+      case AppStrings.manageOrders:
+        return MaterialPageRoute(builder: (context) => ManageOrdersScreen());
+      case AppStrings.manageUsers:
+        return MaterialPageRoute(builder: (context) => ManageUsersScreen());
+
       default:
         return MaterialPageRoute(builder: (context) => LoginScreen());
     }

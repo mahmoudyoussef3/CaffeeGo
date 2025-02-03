@@ -1,8 +1,21 @@
-import 'package:coffe_app/test_admin/admin.dart';
+import 'package:coffe_app/config/routes.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import '../core/utils/app_colors.dart';
+import '../firebase_options.dart';
+import 'Features/Home/Presentation/screens/admin_home_screen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const AdminApp());
+  Future.delayed(Duration(seconds: 2), () {
+    FlutterNativeSplash.remove();
+  });
 }
 
 class AdminApp extends StatelessWidget {
@@ -11,8 +24,17 @@ class AdminApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Admin App',
-        theme: ThemeData(primarySwatch: Colors.blue),
-        home: const AdminDashboard());
+        theme: ThemeData(
+            scaffoldBackgroundColor: AppColors.offWhiteAppColor,
+            bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+              backgroundColor: Colors.white,
+              type: BottomNavigationBarType.fixed,
+            ),
+            fontFamily: 'Sora',
+            textSelectionTheme: const TextSelectionThemeData(
+                cursorColor: AppColors.brownAppColor)),
+        onGenerateRoute: AppRouter.onGenerateRoute,
+        debugShowCheckedModeBanner: false,
+        home: const AdminHomeScreen());
   }
 }

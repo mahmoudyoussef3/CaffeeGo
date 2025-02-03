@@ -1,8 +1,14 @@
 class AppStrings {
+  //Admin//
+  static const String manageCategories = '/ManageCategory';
+  static const String manageItems = '/manageItems';
+  static const String manageOrders = '/manageOrders';
+  static const String manageUsers = '/manageUsers';
   static const String onBoarding = '/onBoarding';
   static const String introPagesViewed = 'introPagesViewed';
   static const String home = '/home';
   static const String splash = '/splash';
+
   static const String login = '/login';
   static const String signup = '/signup';
   static const String notification = '/notification';
