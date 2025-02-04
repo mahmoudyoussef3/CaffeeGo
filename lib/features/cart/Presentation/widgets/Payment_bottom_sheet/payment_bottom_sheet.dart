@@ -45,9 +45,6 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                 context
                     .read<UserDataCubit>()
                     .addOrderToOrdersAdmin(widget.myOrder);
-
-                // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                //     content: Text('Coffee Items Added to your orderList')));
               },
             );
             setState(() {});

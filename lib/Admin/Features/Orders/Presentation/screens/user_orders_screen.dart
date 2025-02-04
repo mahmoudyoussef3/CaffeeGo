@@ -1,4 +1,5 @@
 import 'package:coffe_app/Admin/Features/Orders/Presentation/cubits/get_all_users_cubit/get_all_orders_cubit.dart';
+import 'package:coffe_app/Admin/Features/Orders/Presentation/screens/order-details.dart';
 import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +16,6 @@ class ManageOrdersScreen extends StatefulWidget {
 class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<GetAllOrdersCubit>().getAllOrders();
   }
@@ -39,10 +39,18 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
               padding: const EdgeInsets.all(16.0),
               itemCount: state.orders.length,
               itemBuilder: (context, index) {
-                return _buildOrderCard(
-                    context,
-                    state.orders.length.toString(),
-                state.orders.length.toString());
+                return InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            OrderDetailsScreen(order: state.orders[index]),
+                      )),
+                  child: _buildOrderCard(
+                      context,
+                      state.orders.length.toString(),
+                      state.orders[index].stateOfTheOrder),
+                );
               },
             );
           }
@@ -53,13 +61,23 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
   }
 
   Widget _buildOrderCard(BuildContext context, String orderId, String status) {
-    Color statusColor = status == 'Pending'
-        ? Colors.orange
-        : status == 'Completed'
-            ? Colors.green
-            : Colors.red;
+    Color getColor() {
+      switch (status.toLowerCase()) {
+        case 'Pending':
+          return AppColors.brownAppColor;
+        case 'inProgress':
+          return Colors.blue;
+        case 'Cancelled':
+          return Colors.red;
+        case 'Completed':
+          return Colors.green;
+        default:
+          return Colors.grey;
+      }
+    }
 
     return Card(
+      color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       elevation: 4,
       margin: const EdgeInsets.only(bottom: 16),
@@ -67,7 +85,7 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
         leading: const Icon(Icons.coffee, color: AppColors.brownAppColor),
         title:
             Text(orderId, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text('Status: $status', style: TextStyle(color: statusColor)),
+        subtitle: Text('Status: $status', style: TextStyle(color: getColor())),
         trailing: PopupMenuButton<String>(
           onSelected: (value) {
             if (value == 'view') {

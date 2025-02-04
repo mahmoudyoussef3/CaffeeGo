@@ -68,7 +68,6 @@ class UserDataCubit extends Cubit<UserDataState> {
     }
   }
 
-
   Future<void> deleteCart(CoffeeItem item) async {
     try {
       final currentState = state;
@@ -84,6 +83,7 @@ class UserDataCubit extends Cubit<UserDataState> {
       emit(UserDataError(e.toString()));
     }
   }
+
   Future addOrderToOrdersAdmin(OrderModel order) async {
     UserDataLoading();
     try {
@@ -96,5 +96,4 @@ class UserDataCubit extends Cubit<UserDataState> {
       emit(UserDataError(e.toString()));
     }
   }
-
 }

@@ -4,10 +4,6 @@ import 'package:coffe_app/features/home/presentation/cubit/coffe_items/coffee_it
 import 'package:coffe_app/features/home/presentation/widgets/coffee_card_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
-import '../../../../core/utils/app_strings.dart';
-import '../../../../core/utils/widgets/custom_loading_progress.dart';
-import '../../../payment/wallet_payment.dart';
 import 'coffe_card_widget.dart';
 
 class BuildCoffeeItemsList extends StatefulWidget {
@@ -28,12 +24,27 @@ class _CoffeeItemsListState extends State<BuildCoffeeItemsList> {
 
   @override
   Widget build(BuildContext context) {
-    return
-      BlocBuilder<CoffeeItemsCubit, CoffeeItemsState>(
+    return BlocBuilder<CoffeeItemsCubit, CoffeeItemsState>(
         builder: (context, state) {
       if (state is CoffeeItemsLoading) {
-        return   Center(child: CustomLoadingProgress());
-
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+          child: SizedBox(
+            child: GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 6,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 16,
+                  childAspectRatio: 0.68,
+                  crossAxisSpacing: 5,
+                ),
+                itemBuilder: (context, index) {
+                  return CoffeeCardShimmer();
+                }),
+          ),
+        );
       }
       if (state is CoffeeItemsError) {
         return Center(child: Text(state.errorMessage));

@@ -15,7 +15,7 @@ class _BuildBannerWidgetState extends State<BuildBannerWidget> {
   @override
   void initState() {
     super.initState();
-    context.read<UserDataClassCubit>().getUsername();
+    context.read<UserDataClassCubit>().getUserData();
   }
 
   @override

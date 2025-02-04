@@ -10,7 +10,7 @@ class UserDataClassCubit extends Cubit<UserDataClassState> {
   UserDataClassCubit() : super(UserDataInitial());
   UserDataClass? userDataClass;
 
-  Future<UserDataClass?> getUsername() async {
+  Future<UserDataClass?> getUserData() async {
     emit(UserDataClassLoading());
     try {
       DocumentSnapshot userDoc = await FirebaseFirestore.instance

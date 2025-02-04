@@ -18,4 +18,13 @@ class UserDataClass {
       email: myUserData['email'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'uuid': uuid,
+      'displayName': name,
+      'phone_number': phoneNumber,
+      'email': email,
+    };
+  }
 }

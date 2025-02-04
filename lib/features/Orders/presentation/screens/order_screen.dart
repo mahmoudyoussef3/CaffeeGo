@@ -64,6 +64,7 @@ class _OrderScreenState extends State<OrderScreen> {
               itemCount: state.orders.length,
               itemBuilder: (context, index) {
                 final order = state.orders[index];
+                print(order.stateOfTheOrder);
                 return Card(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
@@ -140,14 +141,14 @@ class _OrderScreenState extends State<OrderScreen> {
 
   Widget _buildStatusChip(String status) {
     Color getColor() {
-      switch (status.toLowerCase()) {
-        case 'pending':
+      switch (status) {
+        case 'Pending':
           return AppColors.brownAppColor;
-        case 'in progress':
+        case 'inProgress':
           return Colors.blue;
-        case 'cancelled':
+        case 'Cancelled':
           return Colors.red;
-        case 'completed':
+        case 'Completed':
           return Colors.green;
         default:
           return Colors.grey;

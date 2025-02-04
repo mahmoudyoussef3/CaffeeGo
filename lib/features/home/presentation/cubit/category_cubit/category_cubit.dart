@@ -20,7 +20,7 @@ class CategoryCubit extends Cubit<CategoryState> {
       }
       emit(CategorySuccess(coffeeCategories));
     } catch (e) {
-    //  emit(CategoryError(errorMessage: e.toString()));
+      emit(CategoryError(errorMessage: e.toString()));
     }
   }
 }

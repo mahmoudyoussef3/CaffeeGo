@@ -1,3 +1,5 @@
+import 'package:coffe_app/Admin/Features/Categories/Data/DataSource/admin_category_data_source.dart';
+import 'package:coffe_app/Admin/Features/Categories/Presentation/cubits/admin_category_cubit.dart';
 import 'package:coffe_app/Admin/Features/Categories/Presentation/screens/Categories.dart';
 import 'package:coffe_app/Admin/Features/Orders/Data/repos/all_orders_repo.dart';
 import 'package:coffe_app/Admin/Features/Orders/Presentation/cubits/get_all_users_cubit/get_all_orders_cubit.dart';
@@ -77,6 +79,8 @@ class AppRouter {
                         UserOrdersRepo(OrderDataFirebase()),
                       ),
                     ),
+                    BlocProvider(create: (context) => (UserDataClassCubit())),
+
                   ],
                   child: const CartScreen(),
                 ));
@@ -107,9 +111,9 @@ class AppRouter {
                     CategoryCubit(
                         DataRepo(coffeeDataSource: CoffeeDataSource()),
                         ItemsUseCse())),
-            // BlocProvider(
-            //   create: (context) => CoffeeItemsCubit(ItemsUseCse()),
-            // ),
+            BlocProvider(
+              create: (context) =>AdminCategoryCubit(AdminCategoryDataSource()),
+            ),
           ], child: const ManageCategoriesScreen()),
         );
       case AppStrings.manageItems:
