@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffe_app/Admin/Features/AdminNotification/data/user_notifications.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../Orders/Data/models/order_model.dart';
+import '../../../notification/data/user_notifications.dart';
 
 class UserData {
   DocumentReference docRef = FirebaseFirestore.instance
@@ -67,13 +70,23 @@ class UserData {
     }
   }
 
-  Future<void> addOrderToAdminOrders(OrderModel order) async {
+  Future<void> addOrderToAdminOrders(
+    OrderModel order,
+  ) async {
     try {
       var uuid = Uuid();
       String orderId = uuid.v4();
       await FirebaseFirestore.instance
           .collection('orders')
           .add({'order': order.toJson(), 'orderId': orderId});
+      await OneSignalUser(
+              externalUserId: order.userDataClass.email!,
+              userName: order.userDataClass.name ?? 'Un Known user')
+          .initPlatform();
+      await OneSignalUser(
+              externalUserId: order.userDataClass.email!,
+              userName: order.userDataClass.name ?? 'Un Known user')
+          .sendNotificationToAdmin();
 
       print('Added order to admin order done');
     } catch (e) {

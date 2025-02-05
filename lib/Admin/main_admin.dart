@@ -1,3 +1,4 @@
+import 'package:coffe_app/Admin/Features/AdminNotification/data/user_notifications.dart';
 import 'package:coffe_app/config/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await OneSignalAdmin().initPlatform();
 
   runApp(const AdminApp());
   Future.delayed(Duration(seconds: 2), () {

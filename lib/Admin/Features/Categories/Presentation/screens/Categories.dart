@@ -1,8 +1,6 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/widgets/custom_loading_progress.dart';
 import '../../../../../features/home/presentation/cubit/category_cubit/category_cubit.dart';
@@ -10,7 +8,6 @@ import '../cubits/admin_category_cubit.dart';
 
 class ManageCategoriesScreen extends StatefulWidget {
   const ManageCategoriesScreen({super.key});
-
   @override
   State<ManageCategoriesScreen> createState() => _ManageCategoriesScreenState();
 }

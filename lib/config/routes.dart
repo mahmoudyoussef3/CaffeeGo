@@ -98,7 +98,6 @@ class AppRouter {
                   create: (context) =>
                       OrdersCubit(UserOrdersRepo(OrderDataFirebase())),
                   child: OrderScreen(
-                    qrData: 'Test',
                   ),
                 ));
       case AppStrings.manageCategories:

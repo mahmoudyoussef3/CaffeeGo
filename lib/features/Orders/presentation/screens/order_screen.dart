@@ -1,14 +1,13 @@
 import 'package:coffe_app/features/Orders/presentation/cubits/order_cubit/orders_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../../core/utils/app_colors.dart';
 
 class OrderScreen extends StatefulWidget {
-  const OrderScreen({super.key, required this.qrData});
-
-  final String qrData;
+  const OrderScreen({super.key});
 
   @override
   State<OrderScreen> createState() => _OrderScreenState();
@@ -125,6 +124,40 @@ class _OrderScreenState extends State<OrderScreen> {
                         Text('Order Date: ${order.orderStartDate.toString()}',
                             style: const TextStyle(
                                 color: Colors.black87, fontSize: 16)),
+                        const SizedBox(height: 10),
+                        ElevatedButton.icon(
+                            style: ButtonStyle(
+                                shape: WidgetStatePropertyAll(
+                                    ContinuousRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15))),
+                                backgroundColor: WidgetStatePropertyAll(
+                                    AppColors.brownAppColor),
+                                foregroundColor: WidgetStatePropertyAll(
+                                    AppColors.offWhiteAppColor)),
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    backgroundColor: AppColors.offWhiteAppColor,
+                                    title: Text('Scan QR Code'),
+                                    content: SizedBox(
+                                      height: 300.h,
+                                      width: 300.w,
+                                      child: QrImageView(
+                                          data:
+                                              "${order.userDataClass.name ?? 'UnKnownUser'} \n${order.myOrders.map((item) => "${item.name} - ${item.quantityInCart} - ${item.selectedSize}").toString()} "),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            label: Icon(
+                              Icons.qr_code,
+                              color: AppColors.offWhiteAppColor,
+                            )),
+                        // const SizedBox(height: 10),
                       ],
                     ),
                   ),
@@ -168,6 +201,12 @@ class _OrderScreenState extends State<OrderScreen> {
             status,
             style: const TextStyle(color: AppColors.offWhiteAppColor),
           ),
+          // QrImageView(
+          //   data: widget.qrData,
+          //   size: 250,
+          //   backgroundColor: Colors.white,
+          //   version: QrVersions.auto,
+          // ),
         ],
       ),
       backgroundColor: getColor(),
@@ -212,12 +251,7 @@ class _OrderScreenState extends State<OrderScreen> {
 //             child: Column(
 //               mainAxisAlignment: MainAxisAlignment.center,
 //               children: [
-//                 QrImageView(
-//                   data: widget.qrData,
-//                   size: 250,
-//                   backgroundColor: Colors.white,
-//                   version: QrVersions.auto,
-//                 ),
+
 //                 const SizedBox(height: 20),
 //                 const Text(
 //                   'Scan this QR Code to verify your payment.',
