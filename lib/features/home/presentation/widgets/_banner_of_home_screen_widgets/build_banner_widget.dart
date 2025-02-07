@@ -21,9 +21,9 @@ class _BuildBannerWidgetState extends State<BuildBannerWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        right: 10.0,
-        left: 18.0,
+      padding: EdgeInsets.only(
+        right: 10.0.w,
+        left: 18.0.w,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,10 +31,10 @@ class _BuildBannerWidgetState extends State<BuildBannerWidget> {
           BlocBuilder<UserDataClassCubit, UserDataClassState>(
             builder: (context, state) {
               if (state is UserDataClassLoading) {
-                return const Text('.....',
+                return Text('.....',
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 24,
+                        fontSize: 24.sp,
                         fontWeight: FontWeight.bold,
                         height: 1.2,
                         fontFamily: 'Roboto'));
@@ -47,14 +47,15 @@ class _BuildBannerWidgetState extends State<BuildBannerWidget> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       "Hello, ${state.userDataClass.name}",
-                      style: const TextStyle(
+                      style: TextStyle(
                           color: Colors.white,
-                          fontSize: 24,
+                          fontSize: 24.sp,
                           fontWeight: FontWeight.bold,
                           height: 1.2,
                           fontFamily: 'Roboto'),
                     ),
                     CircleAvatar(
+                      foregroundColor: Colors.transparent,
                       radius: 20.r,
                       backgroundImage: NetworkImage(FirebaseAuth
                               .instance.currentUser!.photoURL ??
@@ -66,13 +67,13 @@ class _BuildBannerWidgetState extends State<BuildBannerWidget> {
               return const SizedBox.shrink();
             },
           ),
-          const SizedBox(
-            height: 12,
+          SizedBox(
+            height: 12.h,
           ),
-          const Text(
+          Text(
             'Ready to start your day with a perfect cup of coffee?',
             style: TextStyle(
-                fontSize: 16,
+                fontSize: 14.sp,
                 fontWeight: FontWeight.w400,
                 fontStyle: FontStyle.italic,
                 height: 1.5,

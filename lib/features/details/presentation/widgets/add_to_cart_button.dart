@@ -49,7 +49,7 @@ class AddToCartButton extends StatelessWidget {
                         msg: "Please select size",
                         toastLength: Toast.LENGTH_SHORT,
                         gravity: ToastGravity
-                            .BOTTOM, // You can change it to top, center, etc.
+                            .BOTTOM,
                         timeInSecForIosWeb: 1,
                         backgroundColor: AppColors.offWhiteAppColor,
                         textColor: AppColors.brownAppColor,
@@ -60,25 +60,34 @@ class AddToCartButton extends StatelessWidget {
                         .read<UserDataCubit>()
                         .addToCart(coffeeItem)
                         .then((_) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          action: SnackBarAction(
-                            label: "Cart",
-                            textColor: AppColors.secondaryBrownAppColor,
-                            onPressed: () =>
-                                Navigator.pushNamed(context, AppStrings.cart),
-                          ),
-                          backgroundColor: Colors.white,
-                          content: const Text(
-                            'Item added to Cart',
-                            style: TextStyle(
-                              color: AppColors.secondaryBrownAppColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      );
+                      Fluttertoast.showToast(
+                          msg: "Item added to cart successfully!",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity
+                              .BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: AppColors.offWhiteAppColor,
+                          textColor: AppColors.brownAppColor,
+                          fontSize: 16.0);
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(
+                      //     action: SnackBarAction(
+                      //       label: "Cart",
+                      //       textColor: AppColors.secondaryBrownAppColor,
+                      //       onPressed: () =>
+                      //           Navigator.pushNamed(context, AppStrings.cart),
+                      //     ),
+                      //     backgroundColor: Colors.white,
+                      //     content: const Text(
+                      //       'Item added to Cart',
+                      //       style: TextStyle(
+                      //         color: AppColors.secondaryBrownAppColor,
+                      //         fontSize: 18,
+                      //         fontWeight: FontWeight.w500,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // );
                     });
                   }
                 }

@@ -92,12 +92,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                   widget.order.userDataClass.uuid!,
                                   widget.order.orderId);
 
-                    OneSignalAdmin().sendNotificationToSpecificUser(
-                    title: 'title',
-                    message: 'message',
-                    userId: widget.order.userDataClass.uuid!);
-
-
+                          OneSignalAdmin().sendNotificationToSpecificUser(
+                              title: 'title',
+                              message: 'message',
+                              userId: widget.order.userDataClass.uuid!);
                         }
                       : null,
                   child: Text('Update Order State'),

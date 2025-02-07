@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CoffeeCardWidget extends StatelessWidget {
   const CoffeeCardWidget({super.key, required this.cardModel});
@@ -12,16 +13,16 @@ class CoffeeCardWidget extends StatelessWidget {
         color: Colors.white,
         elevation: 5,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.r),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(
-            bottom: 8.0,
+          padding: EdgeInsets.only(
+            bottom: 5.0.h,
           ),
           child: Column(
             children: [
               SizedBox(
-                height: 240,
+                height: 200.h,
                 child: Column(
                   children: [
                     Expanded(
@@ -30,11 +31,11 @@ class CoffeeCardWidget extends StatelessWidget {
                         children: [
                           SizedBox(
                             width: MediaQuery.of(context).size.width / 2,
-                            height: 140,
+                            height: 120.h,
                             child: ClipRRect(
-                              borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(12),
-                                  topLeft: Radius.circular(12)),
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(12.r),
+                                  topLeft: Radius.circular(12.r)),
                               child: CachedNetworkImage(
                                 fit: BoxFit.cover,
                                 imageUrl: cardModel.image,
@@ -51,15 +52,15 @@ class CoffeeCardWidget extends StatelessWidget {
                             flex: 1,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 5),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 4.0.w, vertical: 4.h),
                             child: Text(
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               cardModel.name,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 16,
+                                  fontSize: 15.sp,
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
@@ -67,37 +68,31 @@ class CoffeeCardWidget extends StatelessWidget {
                             flex: 2,
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 5.0),
+                            padding: EdgeInsets.symmetric(horizontal: 4.0.w),
                             child: Text(
-                              cardModel.description
-                              // .split(" ")
-                              // .take(3)
-                              // .join(" "),
-                              ,
+                              cardModel.description,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Color(0xffA2A2A2),
-                                  fontSize: 14,
+                                  fontSize: 13.sp,
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
                           const Spacer(
                             flex: 3,
                           ),
-                          const SizedBox(
-                            height: 8,
+                          SizedBox(
+                            height: 4.h,
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 5.0),
+                            padding: EdgeInsets.symmetric(horizontal: 5.0.w),
                             child: Row(children: [
                               Text(
                                 "\$${cardModel.sizes['medium']}",
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 18,
+                                    fontSize: 14.sp,
                                     fontWeight: FontWeight.w600),
                               ),
                               const Spacer(),
@@ -108,9 +103,9 @@ class CoffeeCardWidget extends StatelessWidget {
                                 ),
                                 Text(
                                   " ${cardModel.rate}",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 16,
+                                      fontSize: 14.sp,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ]),
@@ -126,31 +121,6 @@ class CoffeeCardWidget extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class CustomAddButton extends StatelessWidget {
-  CustomAddButton({super.key, required this.onTap});
-
-  void Function() onTap;
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-          height: 32,
-          width: 32,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: const Color(0xffC67C4E),
-          ),
-          child: const Center(
-              child: Icon(
-            Icons.add,
-            color: Colors.white,
-            size: 24,
-          ))),
     );
   }
 }

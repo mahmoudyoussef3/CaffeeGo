@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../features/home/presentation/cubit/coffe_items/coffee_items_cubit.dart';
-import '../../../../../features/home/presentation/widgets/coffee_card_shimmer.dart';
 
 class ManageItemsScreen extends StatefulWidget {
   const ManageItemsScreen({super.key});
@@ -55,7 +54,11 @@ class _ManageItemsScreenState extends State<ManageItemsScreen> {
       }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AddCoffeeItemScreen(),));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddCoffeeItemScreen(),
+              ));
         },
         backgroundColor: AppColors.brownAppColor,
         foregroundColor: AppColors.offWhiteAppColor,
