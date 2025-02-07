@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coffe_app/Admin/Features/AdminNotification/data/user_notifications.dart';
+import 'package:coffe_app/Admin/Features/AdminNotification/data/admin_notifications.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -74,11 +74,10 @@ class UserData {
     OrderModel order,
   ) async {
     try {
-      var uuid = Uuid();
-      String orderId = uuid.v4();
+
       await FirebaseFirestore.instance
           .collection('orders')
-          .add({'order': order.toJson(), 'orderId': orderId});
+          .add({'order': order.toJson()});
       await OneSignalUser(
               externalUserId: order.userDataClass.email!,
               userName: order.userDataClass.name ?? 'Un Known user')

@@ -29,8 +29,7 @@ class OneSignalAdmin {
   Future<void> sendNotificationToSpecificUser({
     required String title,
     required String message,
-    required BuildContext context,
-    // List<String>? userIds,
+    required String userId,
   }) async {
     const String oneSignalUrl = "https://onesignal.com/api/v1/notifications";
     const String oneSignalAppId = '3e076dbf-8eba-4b5e-840d-4d24f7980010';
@@ -44,13 +43,13 @@ class OneSignalAdmin {
     final body = {
       "app_id": oneSignalAppId,
       "headings": {"en": title},
-      // 'included_segments': ['All'],
 
       "contents": {"en": message},
-      "include_external_user_ids": 'admin@gmail.com', // Target specific users
+      "include_external_user_ids": [userId],
     };
 
     try {
+      print('dddddddddddddd');
       final response = await http.post(
         Uri.parse(oneSignalUrl),
         headers: {
@@ -61,11 +60,12 @@ class OneSignalAdmin {
       );
 
       if (response.statusCode == 200) {
+        print('Notification sent successfully to $userId');
       } else {
-        print('Error: ${response.body}');
+        print('Erroyyyyyyr: ${response.body}');
       }
     } catch (e) {
-      print('Exception: $e');
+      print('Exceptyyyyyyyyion: $e');
     }
   }
 

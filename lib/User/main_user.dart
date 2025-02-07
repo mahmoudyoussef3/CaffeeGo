@@ -1,8 +1,10 @@
 import 'package:coffe_app/config/routes.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
+import 'package:coffe_app/features/notification/data/user_notifications.dart';
 import 'package:coffe_app/features/payment/cubit/payment_cubit.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +34,6 @@ void main() async {
   Hive.registerAdapter(CoffeeItemAdapter());
   Hive.registerAdapter(IngredientAdapter());
 
-  // Open the box after Hive initialization
   await Hive.openBox<CoffeeItem>(AppStrings.hiveBoxName);
 
   //

@@ -1,6 +1,7 @@
 import 'package:coffe_app/Admin/Features/Orders/Presentation/cubits/get_all_users_cubit/get_all_orders_cubit.dart';
 import 'package:coffe_app/Admin/Features/Orders/Presentation/screens/order-details.dart';
 import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
+import 'package:coffe_app/features/Orders/Data/models/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,8 +49,8 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
                       )),
                   child: _buildOrderCard(
                       context,
-                      state.orders.length.toString(),
-                      state.orders[index].stateOfTheOrder),
+                      state.orders[index].orderStartDate.toString(),
+                      state.orders[index]),
                 );
               },
             );
@@ -60,9 +61,10 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
     );
   }
 
-  Widget _buildOrderCard(BuildContext context, String orderId, String status) {
+  Widget _buildOrderCard(
+      BuildContext context, String orderId, OrderModel order) {
     Color getColor() {
-      switch (status.toLowerCase()) {
+      switch (order.stateOfTheOrder) {
         case 'Pending':
           return AppColors.brownAppColor;
         case 'inProgress':
@@ -78,28 +80,77 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
 
     return Card(
       color: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
       elevation: 4,
-      margin: const EdgeInsets.only(bottom: 16),
-      child: ListTile(
-        leading: const Icon(Icons.coffee, color: AppColors.brownAppColor),
-        title:
-            Text(orderId, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text('Status: $status', style: TextStyle(color: getColor())),
-        trailing: PopupMenuButton<String>(
-          onSelected: (value) {
-            if (value == 'view') {
-              Navigator.pushNamed(context, '/viewOrder');
-            } else if (value == 'update') {
-              // Handle update status logic here
-            } else if (value == 'delete') {
-              // Handle delete logic here
-            }
-          },
-          itemBuilder: (context) => [
-            const PopupMenuItem(value: 'view', child: Text('View Details')),
-            const PopupMenuItem(value: 'update', child: Text('Update Status')),
-            const PopupMenuItem(value: 'delete', child: Text('Delete Order')),
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(Icons.person),
+                SizedBox(width: 8),
+                Text(
+                  '${order.userDataClass.name}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+                Spacer(),
+                Container(
+                  decoration: BoxDecoration(
+                    color: getColor(),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  height: 40,
+                  width: 100,
+                  child: Center(
+                    child: Text(
+                      order.stateOfTheOrder,
+                      style: TextStyle(color: AppColors.offWhiteAppColor),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 10),
+            Text('Total Price: \$${order.orderTotalPrice}',
+                style: const TextStyle(color: Colors.black87, fontSize: 16)),
+            const SizedBox(height: 10),
+            Divider(),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Items:\n ${"-${order.myOrders.map((item) => item.name).join("\n -")}"}',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87,
+                  ),
+                ),
+                Text(
+                  '\n${order.myOrders.map((item) => item.quantityInCart).join("\n")}',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Divider(),
+            const SizedBox(height: 10),
+            Text('Order Date: ${order.orderStartDate.toString()}',
+                style: const TextStyle(color: Colors.black87, fontSize: 16)),
+
+            // const SizedBox(height: 10),
           ],
         ),
       ),

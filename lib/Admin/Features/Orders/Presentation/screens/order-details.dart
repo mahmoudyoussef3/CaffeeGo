@@ -6,6 +6,8 @@ import '../../../../../features/Orders/Data/models/order_model.dart';
 import '../../../../../features/home/data/models/UserData/user_data.dart';
 import 'package:intl/intl.dart';
 
+import '../../../AdminNotification/data/admin_notifications.dart';
+
 class OrderDetailsScreen extends StatefulWidget {
   final OrderModel order;
 
@@ -15,7 +17,12 @@ class OrderDetailsScreen extends StatefulWidget {
   State<OrderDetailsScreen> createState() => _OrderDetailsScreenState();
 }
 
-final List<String> states = ['Pending', 'inProgress', 'Completed', 'Cancelled'];
+final List<String> states = [
+  'Pending',
+  'In Progress',
+  'Completed',
+  'Cancelled'
+];
 String? selectedState;
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
@@ -78,8 +85,19 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   onPressed: selectedState != null
                       ? () async {
                           await GetAllOrders().changeTheStateOfTHeOrder(
-                              selectedState!,
-                              'ba43ccee-46c4-4530-a47d-3ff77d64e51d');
+                              selectedState!, widget.order.orderId);
+                          await GetAllOrders()
+                              .changeTheStateOfTHeOrderInUserCollection(
+                                  selectedState!,
+                                  widget.order.userDataClass.uuid!,
+                                  widget.order.orderId);
+
+                    OneSignalAdmin().sendNotificationToSpecificUser(
+                    title: 'title',
+                    message: 'message',
+                    userId: widget.order.userDataClass.uuid!);
+
+
                         }
                       : null,
                   child: Text('Update Order State'),

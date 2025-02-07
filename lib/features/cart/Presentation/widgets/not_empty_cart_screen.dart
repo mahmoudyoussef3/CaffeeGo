@@ -59,8 +59,7 @@ class _NotEmptyCartScreenState extends State<NotEmptyCartScreen> {
             if (state is UserDataClassLoading) {
               return CircularProgressIndicator();
             } else if (state is UserDataClassLoaded) {
-              var uuid = Uuid();
-              String orderId = uuid.v4();
+
               return PaymentBottomSheet(
                 amount: widget.discountPrice,
                 myOrder: OrderModel(
@@ -69,7 +68,7 @@ class _NotEmptyCartScreenState extends State<NotEmptyCartScreen> {
                     orderStartDate: DateTime.now(),
                     myOrders: widget.cartItems,
                     stateOfTheOrder: 'Pending',
-                    orderTotalPrice: widget.discountPrice.toStringAsFixed(2)),
+                    orderTotalPrice: widget.discountPrice.toStringAsFixed(2), ),
               );
             }
             return SizedBox.shrink();

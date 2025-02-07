@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffe_app/features/home/data/models/UserData/user_data.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
+import 'package:uuid/uuid.dart';
 
 class OrderModel {
+  String orderId;
   final List<CoffeeItem> myOrders;
   String stateOfTheOrder;
   String orderTotalPrice;
@@ -14,10 +16,13 @@ class OrderModel {
       required this.stateOfTheOrder,
       required this.orderTotalPrice,
       required this.orderStartDate,
-      required this.userDataClass});
+      required this.userDataClass,
+      String? orderId})
+      : orderId = orderId ?? Uuid().v4();
 
   factory OrderModel.fromJson(Map<String, dynamic> myData) {
     return OrderModel(
+        orderId: myData['orderId'] ?? Uuid().v4(),
         myOrders: (myData['orders'] as List<dynamic>?)
                 ?.map(
                     (data) => CoffeeItem.fromMap(data as Map<String, dynamic>))
@@ -31,6 +36,7 @@ class OrderModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'orderId': orderId,
       'orders': myOrders.map((item) => item.toMap()).toList(),
       'stateOfTheOrder': stateOfTheOrder,
       'orderTotalPrice': orderTotalPrice,

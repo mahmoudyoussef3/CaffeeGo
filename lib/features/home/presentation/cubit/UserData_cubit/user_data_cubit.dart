@@ -4,6 +4,8 @@ import 'package:coffe_app/features/home/data/models/UserData/user_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
+import '../../../../notification/data/user_notifications.dart';
+
 part 'user_data_state.dart';
 
 class UserDataClassCubit extends Cubit<UserDataClassState> {
@@ -26,6 +28,10 @@ class UserDataClassCubit extends Cubit<UserDataClassState> {
           phoneNumber: data['phoneNumber'] ?? '0',
           email: data['email'] ?? '',
         );
+        OneSignalUser(
+                externalUserId: userDataClass?.uuid ?? "",
+                userName: userDataClass?.name ?? '')
+            .initPlatform();
 
         emit(UserDataClassLoaded(userDataClass: userDataClass!));
       } else {

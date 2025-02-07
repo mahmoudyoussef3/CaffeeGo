@@ -34,7 +34,8 @@ class GetAllOrders {
   Future changeTheStateOfTHeOrder(String orderState, String orderId) async {
     try {
       var orderRef = FirebaseFirestore.instance.collection('orders');
-      var snapshot = await orderRef.where('orderId', isEqualTo: orderId).get();
+      var snapshot =
+          await orderRef.where('order.orderId', isEqualTo: orderId).get();
       if (snapshot.docs.isNotEmpty) {
         var docRef = snapshot.docs.first.reference;
         await docRef.update({'order.stateOfTheOrder': orderState});
@@ -43,6 +44,28 @@ class GetAllOrders {
       } else {
         print('Order not found');
       }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> changeTheStateOfTHeOrderInUserCollection(
+      String newState, String userId, String orderId) async {
+    try {
+      var userRef = FirebaseFirestore.instance.collection('users').doc(userId);
+      var userSnapShot = await userRef.get();
+      if (!userSnapShot.exists) return;
+
+      List<dynamic> orders = userSnapShot.data()?['orders'] ?? [];
+      final orderIndex =
+          orders.indexWhere((order) => order['orderId'] == orderId);
+      if (orderIndex == -1) return;
+
+      orders[orderIndex]['stateOfTheOrder'] = newState;
+
+      await userRef.update({'orders': orders});
+
+      print('Order state updated successfully.');
     } catch (e) {
       print(e.toString());
     }
