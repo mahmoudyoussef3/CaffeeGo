@@ -1,6 +1,7 @@
 import 'package:coffe_app/config/routes.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
+import 'package:coffe_app/features/home/presentation/cubit/UserData_cubit/user_data_cubit.dart';
 import 'package:coffe_app/features/notification/data/user_notifications.dart';
 import 'package:coffe_app/features/payment/cubit/payment_cubit.dart';
 import 'package:device_preview/device_preview.dart';
@@ -12,6 +13,9 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import '../features/Orders/Data/DataSource/user_orders_data_firebase.dart';
+import '../features/Orders/Data/repo/user_orders_repo.dart';
+import '../features/Orders/presentation/cubits/order_cubit/orders_cubit.dart';
 import '../features/cart/Data/DataSource/user_data_firebase.dart';
 import '../features/cart/Data/repo/user_data_repo.dart';
 import '../features/cart/Presentation/cubit/user_data_cubit.dart';
@@ -74,6 +78,13 @@ void main() async {
                 create: (context) => UserDataCubit(UserDataRepo(UserData()))),
             BlocProvider(
               create: (context) => CoffeeItemsCubit(ItemsUseCse()),
+            ),
+            BlocProvider(
+              create: (context) => UserDataClassCubit(),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  OrdersCubit(UserOrdersRepo(OrderDataFirebase())),
             ),
             BlocProvider(create: (context) => PaymentCubit())
           ], child: CoffeeShopApp())));

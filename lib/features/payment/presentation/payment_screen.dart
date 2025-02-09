@@ -74,47 +74,47 @@ class _PaymentScreenState extends State<PaymentScreen> {
     super.initState();
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse(widget.paymentUrl))
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onPageStarted: (String url) {
-            debugPrint('Page started loading: $url');
-          },
-          onPageFinished: (String url) {
-            debugPrint('Page finished loading: $url');
-          },
-          // onNavigationRequest: (NavigationRequest request) {
-          //   if (_isNavigated)
-          //     return NavigationDecision.prevent; // ✅ Prevent duplicate handling
-          //
-          //   if (request.url.contains("success=true")) {
-          //     debugPrint('Payment Successful');
-          //     _isNavigated = true; // ✅ Lock navigation
-          //     Future.delayed(Duration(seconds: 2))
-          //         .then((value) => Navigator.pushReplacement(
-          //               context,
-          //               MaterialPageRoute(
-          //                 builder: (context) => OrderScreen(
-          //                   qrData: "Payment successful details",
-          //                 ),
-          //               ),
-          //             ));
-          //     return NavigationDecision.prevent;
-          //   } else if (request.url.contains("payment_failure")) {
-          //     debugPrint('Payment Failed');
-          //     _isNavigated = true; // ✅ Lock navigation
-          //     ScaffoldMessenger.of(context).showSnackBar(
-          //       const SnackBar(
-          //         content: Text('Payment failed, please try again.'),
-          //       ),
-          //     );
-          //     Navigator.pop(context); // ✅ Exit PaymentScreen after failure
-          //     return NavigationDecision.prevent;
-          //   }
-          //   return NavigationDecision.navigate;
-          // },
-        ),
-      );
+      ..loadRequest(Uri.parse(widget.paymentUrl));
+    // ..setNavigationDelegate(
+    //   NavigationDelegate(
+    //     onPageStarted: (String url) {
+    //       debugPrint('Page started loading: $url');
+    //     },
+    //     onPageFinished: (String url) {
+    //       debugPrint('Page finished loading: $url');
+    //     },
+    //     onNavigationRequest: (NavigationRequest request) {
+    //       if (_isNavigated)
+    //         return NavigationDecision.prevent; // ✅ Prevent duplicate handling
+    //
+    //       if (request.url.contains("success=true")) {
+    //         debugPrint('Payment Successful');
+    //         _isNavigated = true; // ✅ Lock navigation
+    //         // Future.delayed(Duration(seconds: 2))
+    //         //     .then((value) => Navigator.pushReplacement(
+    //         //           context,
+    //         //           MaterialPageRoute(
+    //         //             builder: (context) => OrderScreen(
+    //         //               qrData: "Payment successful details",
+    //         //             ),
+    //         //           ),
+    //         //         ));
+    //         return NavigationDecision.prevent;
+    //       } else if (request.url.contains("payment_failure")) {
+    //         debugPrint('Payment Failed');
+    //         _isNavigated = true; // ✅ Lock navigation
+    //         ScaffoldMessenger.of(context).showSnackBar(
+    //           const SnackBar(
+    //             content: Text('Payment failed, please try again.'),
+    //           ),
+    //         );
+    //         Navigator.pop(context); // ✅ Exit PaymentScreen after failure
+    //         return NavigationDecision.prevent;
+    //       }
+    //       return NavigationDecision.navigate;
+    //     },
+    //   ),
+    // );
   }
 
   @override

@@ -1,8 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:coffe_app/Admin/Features/Categories/Data/DataSource/admin_category_data_source.dart';
-import 'package:meta/meta.dart';
 
-part 'admin_category_state.dart';
+import '../../../Items/Presentation/cubits/admin_items_cubit.dart';
+import 'admin_category_state.dart';
+
 
 class AdminCategoryCubit extends Cubit<AdminCategoryState> {
   AdminCategoryCubit(this.adminCategoryDataSource)
@@ -19,10 +20,10 @@ class AdminCategoryCubit extends Cubit<AdminCategoryState> {
     }
   }
 
-  Future updateCategory(String oldName,String newName) async {
+  Future updateCategory(String oldName, String newName) async {
     emit(AdminCategoryLoading());
     try {
-      await adminCategoryDataSource.updateCategoryName(oldName,newName);
+      await adminCategoryDataSource.updateCategoryName(oldName, newName);
       emit(AdminCategoryLoaded());
     } catch (e) {
       emit(AdminCategoryError(error: e.toString()));

@@ -42,9 +42,9 @@ class _PayWithCardState extends State<PayWithCard> {
 
         return GestureDetector(
           onTap: () {
-            context
-                .read<PaymentCubit>()
-                .payWithPayMob(widget.amount, widget.sheetContext);
+            // context
+            //     .read<PaymentCubit>()
+            //     .payWithPayMob(widget.amount, widget.sheetContext);
           },
           child: Container(
             width: 130,

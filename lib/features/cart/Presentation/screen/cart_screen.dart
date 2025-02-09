@@ -24,39 +24,41 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.offWhiteAppColor,
-      body: BlocBuilder<UserDataCubit, UserDataState>(
-        builder: (context, state) {
-          if (state is UserDataLoading) {
-            return const Center(
-                child: CircularProgressIndicator(
-              color: AppColors.brownAppColor,
-            ));
-          }
-
-          if (state is UserDataError) {
-            return const Center(
-              child: Text(
-                'Failed to load user data',
-                style: TextStyle(fontSize: 18, color: Colors.redAccent),
-              ),
-            );
-          }
-
-          if (state is UserDataSuccess) {
-            final cartItems = state.userCart;
-            if (cartItems.isEmpty) {
-              return const EmptyCartScreen();
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppColors.offWhiteAppColor,
+        body: BlocBuilder<UserDataCubit, UserDataState>(
+          builder: (context, state) {
+            if (state is UserDataLoading) {
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: AppColors.brownAppColor,
+              ));
             }
 
-            return NotEmptyCartScreen(
-                discountPrice: totalPriceWithDiscount(cartItems),
-                priceBeforeDiscount: totalPrice(cartItems),
-                cartItems: cartItems);
-          }
-          return const EmptyCartScreen();
-        },
+            if (state is UserDataError) {
+              return const Center(
+                child: Text(
+                  'Failed to load user data',
+                  style: TextStyle(fontSize: 18, color: Colors.redAccent),
+                ),
+              );
+            }
+
+            if (state is UserDataSuccess) {
+              final cartItems = state.userCart;
+              if (cartItems.isEmpty) {
+                return const EmptyCartScreen();
+              }
+
+              return NotEmptyCartScreen(
+                  discountPrice: totalPriceWithDiscount(cartItems),
+                  priceBeforeDiscount: totalPrice(cartItems),
+                  cartItems: cartItems);
+            }
+            return const EmptyCartScreen();
+          },
+        ),
       ),
     );
   }

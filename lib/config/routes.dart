@@ -1,6 +1,10 @@
 import 'package:coffe_app/Admin/Features/Categories/Data/DataSource/admin_category_data_source.dart';
 import 'package:coffe_app/Admin/Features/Categories/Presentation/cubits/admin_category_cubit.dart';
 import 'package:coffe_app/Admin/Features/Categories/Presentation/screens/Categories.dart';
+import 'package:coffe_app/Admin/Features/Items/Data/DataSource/admin_items_data_source.dart';
+import 'package:coffe_app/Admin/Features/Items/Data/Repo/admin_items_repo.dart';
+import 'package:coffe_app/Admin/Features/Items/Presentation/cubits/admin_items_cubit.dart';
+import 'package:coffe_app/Admin/Features/Items/Presentation/screens/add_item.dart';
 import 'package:coffe_app/Admin/Features/Orders/Data/repos/all_orders_repo.dart';
 import 'package:coffe_app/Admin/Features/Orders/Presentation/cubits/get_all_users_cubit/get_all_orders_cubit.dart';
 import 'package:coffe_app/Admin/Features/Users/Data/repos/all_users_repo.dart';
@@ -80,7 +84,6 @@ class AppRouter {
                       ),
                     ),
                     BlocProvider(create: (context) => (UserDataClassCubit())),
-
                   ],
                   child: const CartScreen(),
                 ));
@@ -97,8 +100,7 @@ class AppRouter {
             builder: (context) => BlocProvider(
                   create: (context) =>
                       OrdersCubit(UserOrdersRepo(OrderDataFirebase())),
-                  child: OrderScreen(
-                  ),
+                  child: OrderScreen(),
                 ));
       case AppStrings.manageCategories:
         return MaterialPageRoute(
@@ -111,7 +113,8 @@ class AppRouter {
                         DataRepo(coffeeDataSource: CoffeeDataSource()),
                         ItemsUseCse())),
             BlocProvider(
-              create: (context) =>AdminCategoryCubit(AdminCategoryDataSource()),
+              create: (context) =>
+                  AdminCategoryCubit(AdminCategoryDataSource()),
             ),
           ], child: const ManageCategoriesScreen()),
         );
@@ -121,13 +124,39 @@ class AppRouter {
             BlocProvider(
               create: (context) => CoffeeItemsCubit(ItemsUseCse()),
             ),
+            BlocProvider(
+                create: (
+              context,
+            ) =>
+                    CategoryCubit(
+                        DataRepo(coffeeDataSource: CoffeeDataSource()),
+                        ItemsUseCse())),
           ], child: const ManageItemsScreen()),
         );
+      case AppStrings.addItems:
+        return MaterialPageRoute(
+          builder: (context) => MultiBlocProvider(providers: [
+            BlocProvider(
+              create: (context) => CoffeeItemsCubit(ItemsUseCse()),
+            ),
+            BlocProvider(
+                create: (
+              context,
+            ) =>
+                    CategoryCubit(
+                        DataRepo(coffeeDataSource: CoffeeDataSource()),
+                        ItemsUseCse())),
+            BlocProvider(
+                create: (context) =>
+                    (AdminItemsCubit(AdminItemsRepo(AdminItemsDataSource())))),
+          ], child: const AddCoffeeItemScreen()),
+        );
       case AppStrings.manageOrders:
-        return MaterialPageRoute(builder: (context) => BlocProvider(
-  create: (context) => GetAllOrdersCubit(AllOrdersRepo()),
-  child: ManageOrdersScreen(),
-));
+        return MaterialPageRoute(
+            builder: (context) => BlocProvider(
+                  create: (context) => GetAllOrdersCubit(AllOrdersRepo()),
+                  child: ManageOrdersScreen(),
+                ));
       case AppStrings.manageUsers:
         return MaterialPageRoute(
             builder: (context) => BlocProvider(

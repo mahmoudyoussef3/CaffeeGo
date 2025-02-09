@@ -1,6 +1,7 @@
 class AppStrings {
   //Admin//
   static const String manageCategories = '/ManageCategory';
+  static const String addItems = '/addItems';
   static const String manageItems = '/manageItems';
   static const String manageOrders = '/manageOrders';
   static const String manageUsers = '/manageUsers';

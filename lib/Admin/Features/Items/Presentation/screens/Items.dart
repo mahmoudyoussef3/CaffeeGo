@@ -1,5 +1,6 @@
 import 'package:coffe_app/Admin/Features/Items/Presentation/screens/add_item.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
+import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,11 +55,7 @@ class _ManageItemsScreenState extends State<ManageItemsScreen> {
       }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AddCoffeeItemScreen(),
-              ));
+          Navigator.pushNamed(context, AppStrings.addItems);
         },
         backgroundColor: AppColors.brownAppColor,
         foregroundColor: AppColors.offWhiteAppColor,

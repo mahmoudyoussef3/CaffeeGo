@@ -1,10 +1,19 @@
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
+import 'package:coffe_app/features/Orders/Data/DataSource/user_orders_data_firebase.dart';
+import 'package:coffe_app/features/Orders/Data/repo/user_orders_repo.dart';
+import 'package:coffe_app/features/cart/Data/DataSource/user_data_firebase.dart';
+import 'package:coffe_app/features/cart/Data/repo/user_data_repo.dart';
+import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart';
+import 'package:coffe_app/features/home/data/models/coffe_item.dart';
+import 'package:coffe_app/features/home/presentation/cubit/UserData_cubit/user_data_cubit.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../Orders/presentation/cubits/order_cubit/orders_cubit.dart';
 import '../presentation/payment_screen.dart';
 part 'payment_state.dart';
 
@@ -16,7 +25,8 @@ class PaymentCubit extends Cubit<PaymentState> {
   final String frameUrl =
       'https://accept.paymob.com/api/acceptance/iframes/893140?payment_token=';
 
-  Future<String> payWithPayMob(double amount, BuildContext context) async {
+  Future<String> payWithPayMob(
+      double amount, BuildContext context, List<CoffeeItem> cartItems) async {
     emit(PaymentLoading());
     try {
       String token = await getAuthToken(apiKey);
@@ -30,8 +40,14 @@ class PaymentCubit extends Cubit<PaymentState> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              PaymentScreen(paymentUrl: '$frameUrl$paymentKey'),
+          builder: (context) => BlocProvider.value(
+            value: context.read<UserDataClassCubit>(),
+            child: PaymentScreen(
+              paymentUrl: '$frameUrl$paymentKey',
+              // cartItems: cartItems,
+              // discountPrice: amount,
+            ),
+          ),
         ),
       );
       return paymentKey;
