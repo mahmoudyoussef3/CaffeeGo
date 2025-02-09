@@ -10,6 +10,8 @@ class OrderModel {
   String orderTotalPrice;
   DateTime orderStartDate;
   UserDataClass userDataClass;
+  String paymentMethod;
+  bool paymentProcess;
 
   OrderModel(
       {required this.myOrders,
@@ -17,6 +19,8 @@ class OrderModel {
       required this.orderTotalPrice,
       required this.orderStartDate,
       required this.userDataClass,
+      required this.paymentMethod,
+      required this.paymentProcess,
       String? orderId})
       : orderId = orderId ?? Uuid().v4();
 
@@ -30,6 +34,8 @@ class OrderModel {
             [],
         stateOfTheOrder: myData['stateOfTheOrder'],
         orderTotalPrice: myData['orderTotalPrice'] ?? '0',
+        paymentMethod: myData['paymentMethod'],
+        paymentProcess: myData['paymentProcess'] ?? false,
         userDataClass: UserDataClass.fromJson(myData['userData']),
         orderStartDate: (myData['orderStartDate'] as Timestamp).toDate());
   }
@@ -42,6 +48,8 @@ class OrderModel {
       'orderTotalPrice': orderTotalPrice,
       'orderStartDate': orderStartDate.toUtc(),
       'userData': userDataClass.toJson(),
+      'paymentMethod': paymentMethod,
+      'paymentProcess': paymentProcess,
     };
   }
 }

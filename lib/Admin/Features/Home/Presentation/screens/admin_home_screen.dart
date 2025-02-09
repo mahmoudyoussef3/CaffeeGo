@@ -1,3 +1,4 @@
+import 'package:coffe_app/Admin/Features/Dashboard/Presentation/screens/dashboard_screen.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +51,8 @@ class AdminHomeScreen extends StatelessWidget {
               title: 'Orders',
               color: AppColors.brownAppColor,
               onTap: () {
-                Navigator.pushNamed(context, AppStrings.manageOrders);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboardScreen(),));
+                // Navigator.pushNamed(context, AppStrings.manageOrders);
               },
             ),
             _buildDashboardCard(

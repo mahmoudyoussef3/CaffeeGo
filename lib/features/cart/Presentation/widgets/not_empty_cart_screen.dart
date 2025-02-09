@@ -106,6 +106,8 @@ class _NotEmptyCartScreenState extends State<NotEmptyCartScreen> {
                         .read<OrdersCubit>()
                         .updateOrderList(
                           OrderModel(
+                            paymentMethod: 'Cash',
+                            paymentProcess: false,
                             userDataClass: context
                                 .read<UserDataClassCubit>()
                                 .userDataClass!,
@@ -124,6 +126,8 @@ class _NotEmptyCartScreenState extends State<NotEmptyCartScreen> {
                       (value) {
                         context.read<UserDataCubit>().addOrderToOrdersAdmin(
                               OrderModel(
+                                paymentMethod: 'Cash',
+                                paymentProcess: false,
                                 userDataClass: context
                                     .read<UserDataClassCubit>()
                                     .userDataClass!,
