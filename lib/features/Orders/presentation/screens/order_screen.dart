@@ -2,6 +2,7 @@ import 'package:coffe_app/features/Orders/presentation/cubits/order_cubit/orders
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../../core/utils/app_colors.dart';
@@ -121,7 +122,8 @@ class _OrderScreenState extends State<OrderScreen> {
                         const SizedBox(height: 10),
                         Divider(),
                         const SizedBox(height: 10),
-                        Text('Order Date: ${order.orderStartDate.toString()}',
+                        Text(
+                            'Date: ${DateFormat('MMM d, yyyy - hh:mm').format(order.orderStartDate)}',
                             style: const TextStyle(
                                 color: Colors.black87, fontSize: 16)),
                         const SizedBox(height: 10),
@@ -201,12 +203,6 @@ class _OrderScreenState extends State<OrderScreen> {
             status,
             style: const TextStyle(color: AppColors.offWhiteAppColor),
           ),
-          // QrImageView(
-          //   data: widget.qrData,
-          //   size: 250,
-          //   backgroundColor: Colors.white,
-          //   version: QrVersions.auto,
-          // ),
         ],
       ),
       backgroundColor: getColor(),

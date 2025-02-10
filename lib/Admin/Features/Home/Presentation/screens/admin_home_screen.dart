@@ -1,8 +1,8 @@
-import 'package:coffe_app/Admin/Features/Dashboard/Presentation/screens/dashboard_screen.dart';
-import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/app_strings.dart';
+import '../widgets/dashboard_card.dart';
 
 class AdminHomeScreen extends StatelessWidget {
   const AdminHomeScreen({super.key});
@@ -27,80 +27,57 @@ class AdminHomeScreen extends StatelessWidget {
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
           children: [
-            _buildDashboardCard(
-              context,
-              icon: Icons.coffee,
-              title: 'Manage Items',
-              color: AppColors.brownAppColor,
-              onTap: () {
-                Navigator.pushNamed(context, AppStrings.manageItems);
-              },
+            Hero(
+              tag: 'manage_items',
+              child: DashboardCard(
+                title: 'Manage Items',
+                onTap: () =>
+                    Navigator.pushNamed(context, AppStrings.manageItems),
+                icon: Icons.coffee,
+                color: AppColors.brownAppColor,
+              ),
             ),
-            _buildDashboardCard(
-              context,
-              icon: Icons.folder,
-              title: 'Manage Categories',
-              color: AppColors.brownAppColor,
-              onTap: () {
-                Navigator.pushNamed(context, AppStrings.manageCategories);
-              },
+            Hero(
+              tag: 'manage_categories',
+              child: DashboardCard(
+                title: 'Manage Categories',
+                onTap: () =>
+                    Navigator.pushNamed(context, AppStrings.manageCategories),
+                icon: Icons.folder,
+                color: AppColors.brownAppColor,
+              ),
             ),
-            _buildDashboardCard(
-              context,
-              icon: Icons.telegram_sharp,
-              title: 'Orders',
-              color: AppColors.brownAppColor,
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboardScreen(),));
-                // Navigator.pushNamed(context, AppStrings.manageOrders);
-              },
+            Hero(
+              tag: 'orders',
+              child: DashboardCard(
+                title: 'Orders',
+                onTap: () =>
+                    Navigator.pushNamed(context, AppStrings.manageOrders),
+                icon: Icons.shopping_cart,
+                color: AppColors.brownAppColor,
+              ),
             ),
-            _buildDashboardCard(
-              context,
-              icon: Icons.person,
-              title: 'User Management',
-              color: AppColors.brownAppColor,
-              onTap: () {
-                Navigator.pushNamed(context, AppStrings.manageUsers);
-              },
+            Hero(
+              tag: 'user_management',
+              child: DashboardCard(
+                title: 'User Management',
+                onTap: () =>
+                    Navigator.pushNamed(context, AppStrings.manageUsers),
+                icon: Icons.person,
+                color: AppColors.brownAppColor,
+              ),
+            ),
+            Hero(
+              tag: 'analytics',
+              child: DashboardCard(
+                title: 'Analytics',
+                onTap: () => Navigator.pushNamed(
+                    context, AppStrings.manageDashboardData),
+                icon: Icons.analytics,
+                color: AppColors.brownAppColor,
+              ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDashboardCard(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required Color color,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Card(
-        color: color,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        elevation: 5,
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, size: 50, color: Colors.white),
-              const SizedBox(height: 10),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );

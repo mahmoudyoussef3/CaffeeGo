@@ -5,6 +5,8 @@ class AppStrings {
   static const String manageItems = '/manageItems';
   static const String manageOrders = '/manageOrders';
   static const String manageUsers = '/manageUsers';
+  static const String manageDashboardData = '/manageDashboardData';
+
   static const String onBoarding = '/onBoarding';
   static const String introPagesViewed = 'introPagesViewed';
   static const String home = '/home';

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:coffe_app/Admin/Features/Items/Presentation/cubits/admin_items_cubit.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
+import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -127,8 +128,8 @@ class _AddCoffeeItemScreenState extends State<AddCoffeeItemScreen> {
       appBar: AppBar(
         title: Text("Add Coffee Item"),
         centerTitle: true,
-        backgroundColor: Colors.brown.shade700,
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.brownAppColor,
+        foregroundColor: AppColors.offWhiteAppColor,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -156,11 +157,15 @@ class _AddCoffeeItemScreenState extends State<AddCoffeeItemScreen> {
                           decoration: BoxDecoration(
                             color: Colors.brown.shade100,
                             borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: Colors.brown, width: 2),
+                            border: Border.all(
+                                color: AppColors.offWhiteAppColor, width: 2),
                           ),
                           child: _image == null
-                              ? Icon(Icons.camera_alt,
-                                  size: 50, color: Colors.brown.shade700)
+                              ? Icon(
+                                  Icons.camera_alt,
+                                  size: 50,
+                                  color: AppColors.offWhiteAppColor,
+                                )
                               : ClipRRect(
                                   borderRadius: BorderRadius.circular(16),
                                   child: Image.file(_image!,
@@ -194,7 +199,7 @@ class _AddCoffeeItemScreenState extends State<AddCoffeeItemScreen> {
                       builder: (context, state) {
                         log("Current state in BlocBuilder: $state");
                         if (state is CategoryLoading) {
-                          return const CategoriesContainerShimmer();
+                          return CustomLoadingProgress();
                         } else if (state is CategoryError) {
                           return Text(state.errorMessage.toString());
                         } else if (state is CategorySuccess) {
@@ -211,7 +216,7 @@ class _AddCoffeeItemScreenState extends State<AddCoffeeItemScreen> {
                         if (state is AdminItemsLoading) {
                           return Center(
                             child: CircularProgressIndicator(
-                              color: Colors.brown.shade900,
+                              color: AppColors.brownAppColor,
                             ),
                           );
                         } else if (state is AdminItemsError) {
@@ -233,7 +238,7 @@ class _AddCoffeeItemScreenState extends State<AddCoffeeItemScreen> {
                             await addCoffee();
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.brown.shade700,
+                            backgroundColor: AppColors.brownAppColor,
                             padding: EdgeInsets.symmetric(vertical: 15),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12)),
@@ -267,8 +272,13 @@ class _AddCoffeeItemScreenState extends State<AddCoffeeItemScreen> {
         controller: controller,
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: TextStyle(color: Colors.brown.shade900),
-          prefixIcon: Icon(icon, color: Colors.brown.shade700),
+          labelStyle: TextStyle(
+            color: AppColors.offWhiteAppColor,
+          ),
+          prefixIcon: Icon(
+            icon,
+            color: AppColors.offWhiteAppColor,
+          ),
           filled: true,
           fillColor: Colors.brown.shade100,
           border: OutlineInputBorder(
@@ -336,8 +346,8 @@ class _AddCoffeeItemScreenState extends State<AddCoffeeItemScreen> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: selectedCategory == index
-                          ? Colors.brown.shade700
-                          : Colors.brown.shade200),
+                          ? AppColors.brownAppColor
+                          : Colors.brown.shade100),
                   child: Center(
                       child: Text(
                     categories[index]['name'],

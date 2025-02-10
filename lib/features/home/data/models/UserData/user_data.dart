@@ -3,6 +3,7 @@ class UserDataClass {
   String? name;
   String? phoneNumber;
   String? email;
+
   UserDataClass({
     required this.uuid,
     required this.name,

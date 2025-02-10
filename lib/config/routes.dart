@@ -1,6 +1,10 @@
 import 'package:coffe_app/Admin/Features/Categories/Data/DataSource/admin_category_data_source.dart';
 import 'package:coffe_app/Admin/Features/Categories/Presentation/cubits/admin_category_cubit.dart';
 import 'package:coffe_app/Admin/Features/Categories/Presentation/screens/Categories.dart';
+import 'package:coffe_app/Admin/Features/Dashboard/Data/dashboard_repo.dart';
+import 'package:coffe_app/Admin/Features/Dashboard/Data/data_source.dart';
+import 'package:coffe_app/Admin/Features/Dashboard/Presentation/cubits/dashboard_cubit.dart';
+import 'package:coffe_app/Admin/Features/Dashboard/Presentation/screens/dashboard_screen.dart';
 import 'package:coffe_app/Admin/Features/Items/Data/DataSource/admin_items_data_source.dart';
 import 'package:coffe_app/Admin/Features/Items/Data/Repo/admin_items_repo.dart';
 import 'package:coffe_app/Admin/Features/Items/Presentation/cubits/admin_items_cubit.dart';
@@ -162,6 +166,13 @@ class AppRouter {
             builder: (context) => BlocProvider(
                   create: (context) => GetAllUsersCubit(AllUsersRepo()),
                   child: ManageUsersScreen(),
+                ));
+      case AppStrings.manageDashboardData:
+        return MaterialPageRoute(
+            builder: (context) => BlocProvider(
+                  create: (context) =>
+                      DashboardCubit(DashboardRepo(DashboardAnalysis())),
+                  child: AdminDashboardScreen(),
                 ));
 
       default:

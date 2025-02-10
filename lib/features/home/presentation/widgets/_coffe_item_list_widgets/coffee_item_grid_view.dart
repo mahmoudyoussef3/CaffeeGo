@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -26,16 +27,28 @@ class CoffeeItemGridView extends StatelessWidget {
                   crossAxisSpacing: 5,
                 ),
                 itemBuilder: (context, index) {
-                  return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ItemDetails(coffeeItem: myItems[index]),
-                            ));
-                      },
-                      child: CoffeeCardWidget(cardModel: myItems[index]));
+                  return OpenContainer(
+                    closedElevation: 4,
+                    transitionType: ContainerTransitionType.fadeThrough,
+                    closedShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    closedBuilder: (context, action) =>
+                        CoffeeCardWidget(cardModel: myItems[index]),
+                    openBuilder: (context, action) =>
+                        ItemDetails(coffeeItem: myItems[index]),
+                  );
+
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //           builder: (context) =>
+                  //               ItemDetails(coffeeItem: myItems[index]),
+                  //         ));
+                  //   },
+                  //   child: CoffeeCardWidget(cardModel: myItems[index]));
                 }),
           ),
         ));
