@@ -1,16 +1,16 @@
+import 'package:coffe_app/Admin/Features/Dashboard/Presentation/widgets/order_state.dart';
+import 'package:coffe_app/core/utils/app_colors.dart';
+import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fl_chart/fl_chart.dart';
-
-import '../../../../../core/utils/app_colors.dart';
-import '../../../../../core/utils/widgets/custom_loading_progress.dart';
 import '../cubits/dashboard_cubit.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
   const AdminDashboardScreen({super.key});
 
   @override
-  _AdminDashboardScreenState createState() => _AdminDashboardScreenState();
+  State<AdminDashboardScreen> createState() => _AdminDashboardScreenState();
 }
 
 class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
@@ -24,54 +24,77 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('📊 Dashboard',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-        centerTitle: true,
-        backgroundColor: AppColors.brownAppColor,
-        foregroundColor: Colors.white,
-        elevation: 4,
-      ),
+          title: Text(
+            'Analytics',
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+          backgroundColor: AppColors.offWhiteAppColor,
+          foregroundColor: Colors.black),
       body: BlocBuilder<DashboardCubit, DashboardState>(
         builder: (context, state) {
           if (state is DashboardLoading) {
-            return const Center(child: CustomLoadingProgress());
+            return const CustomLoadingProgress();
           } else if (state is DashboardError) {
             return Center(
-                child: Text(state.message,
-                    style: TextStyle(fontSize: 18, color: Colors.red)));
+              child: Text(
+                state.message,
+                style: TextStyle(fontSize: 18, color: Colors.red),
+              ),
+            );
           } else if (state is DashboardLoaded) {
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
+            return SingleChildScrollView(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 4, horizontal: 16.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: GridView(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                      ),
-                      children: [
-                        _buildStatCard(
-                            'Total Sales',
-                            state.totalSales.toString(),
-                            Icons.monetization_on,
-                            Colors.green),
-                        _buildStatCard(
-                            'Completed vs Canceled',
-                            "Completed :${state.completedOrdersToCancelled['Completed']}\nCanceled :${state.completedOrdersToCancelled['Canceled']}",
-                            Icons.check_circle,
-                            Colors.blue),
-                        _buildChartCard('Orders per Hour', state.ordersPerHour),
-                        _buildStatCard(
-                            'Payment Methods',
-                            "Online :${state.paymentMethodStats['online']}\nCash :${state.paymentMethodStats['cash']}",
-                            Icons.credit_card,
-                            Colors.purple),
-                        _buildTopProductsCard(state.topProducts)
-                      ],
-                    ),
+                  OrderStateChart(
+                    completedOrders:
+                        state.completedOrdersToCancelled['Completed']!,
+                    canceledOrders:
+                        state.completedOrdersToCancelled['Canceled']!,
+                    pendingOrders: state.completedOrdersToCancelled['Pending']!,
+                    inProgressOrders:
+                        state.completedOrdersToCancelled['In Progress']!,
                   ),
+                  SizedBox(height: 5),
+                  // Divider(
+                  //   color: AppColors.brownAppColor,
+                  //   height: 5,
+                  //   endIndent: 30,
+                  //   thickness: 2,
+                  //   indent: 30,
+                  // ),
+                  SizedBox(height: 5),
+                  _buildSummaryCard(
+                    title: 'Total Sales',
+                    value: state.totalSales.toString(),
+                    icon: Icons.monetization_on,
+                  ),
+                  SizedBox(height: 5),
+                  // Divider(
+                  //   color: AppColors.brownAppColor,
+                  //   height: 5,
+                  //   endIndent: 30,
+                  //   thickness: 2,
+                  //   indent: 30,
+                  // ),
+                  SizedBox(height: 5),
+                  _buildSummaryCard(
+                    title: 'Payment Methods',
+                    value:
+                        "Online: ${state.paymentMethodStats['online']}\nCash: ${state.paymentMethodStats['cash']}",
+                    icon: Icons.credit_card,
+                  ),
+                  SizedBox(height: 5),
+
+                  SizedBox(height: 5),
+                  _buildChartSection(state.ordersPerHour),
+                  SizedBox(height: 5),
+
+                  SizedBox(height: 5),
+                  _buildTopProducts(state.topProducts),
                 ],
               ),
             );
@@ -82,87 +105,156 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     );
   }
 
-  Widget _buildStatCard(
-      String title, String value, IconData icon, Color color) {
+  Widget _buildSummaryCard({
+    required String title,
+    required String value,
+    required IconData icon,
+  }) {
     return Card(
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(icon, size: 40, color: color),
-            SizedBox(height: 10),
-            Text(title,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            SizedBox(height: 5),
-            Text(value,
-                style: TextStyle(fontSize: 14, color: Colors.grey[700])),
-          ],
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: AppColors.brownAppColor,
+          child: Icon(icon, color: Colors.white),
+        ),
+        title: Text(
+          title,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(
+          value,
+          style: TextStyle(fontSize: 16, color: Colors.black54),
         ),
       ),
     );
   }
 
-  Widget _buildTopProductsCard(Map<String, num> topProducts) {
+  Widget _buildChartSection(Map<int, int> data) {
     return Card(
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(Icons.coffee, size: 40, color: Colors.orange),
-            SizedBox(height: 10),
-            Text('Top Products',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            SizedBox(height: 5),
-            ...topProducts.entries.map((entry) => Text(
-                  '${entry.key}: ${entry.value}',
-                  style: TextStyle(fontSize: 14, color: Colors.grey[700]),
-                )),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildChartCard(String title, Map<int, int> data) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(title,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
-            Expanded(
+            Container(
+              decoration: BoxDecoration(
+                  color: AppColors.brownAppColor,
+                  borderRadius: BorderRadius.circular(12)),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Orders per Hour",
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.offWhiteAppColor),
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            SizedBox(
+              height: 200,
               child: BarChart(
                 BarChartData(
-                  alignment: BarChartAlignment.spaceAround,
-                  barGroups: data.entries.map((e) {
+                  barGroups: data.entries.map((entry) {
                     return BarChartGroupData(
-                      x: e.key,
+                      x: entry.key,
                       barRods: [
                         BarChartRodData(
-                            toY: e.value.toDouble(),
-                            color: Colors.blue,
-                            width: 15)
+                          toY: entry.value.toDouble(),
+                          color: AppColors.brownAppColor,
+                          width: 16,
+                        ),
                       ],
                     );
                   }).toList(),
+                  borderData: FlBorderData(show: false),
                 ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildTopProducts(Map<String, num> products) {
+    return Card(
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 4,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: AppColors.brownAppColor,
+                  borderRadius: BorderRadius.circular(12)),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Top Products",
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.offWhiteAppColor),
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            Column(
+              children: products.entries.map((entry) {
+                return ListTile(
+                  title: Text(entry.key, style: TextStyle(fontSize: 16)),
+                  trailing: Text("${entry.value}",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  subtitle: Divider(),
+                );
+              }).toList(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildPieChart() {
+    return Container(
+      height: 100,
+      width: 100,
+      child: PieChart(PieChartData()
+
+          // data: [
+          //   PieChartData(
+          //     value: 30,
+          //     hole: 0.5,
+          //     color: Colors.blue,
+          //     holeColor: Colors.black54,
+          //     center: PieChartCenter(
+          //       text: 'Online',
+          //       textStyle: TextStyle(fontSize: 14),
+          //     ),
+          //   ),
+          //   PieChartData(
+          //     value: 70,
+          //     hole: 0.5,
+          //     color: Colors.green,
+          //     holeColor: Colors.black54,
+          //     center: PieChartCenter(
+          //       text: 'Cash',
+          //       textStyle: TextStyle(fontSize: 14),
+          //     ),
+          //   ),
+          // ],
+          ),
     );
   }
 }

@@ -37,7 +37,6 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
             return Text('Failed to fetch orders');
           } else if (state is GetAllOrdersSuccess) {
             return ListView.builder(
-              padding: const EdgeInsets.all(16),
               itemCount: state.orders.length,
               itemBuilder: (context, index) {
                 var order = state.orders[index];
@@ -48,21 +47,25 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
                           builder: (context) => OrderDetailsScreen(
                                 order: order,
                               ))),
-                  child: OrderCard(
-                    userName: order.userDataClass.name!,
-                    totalPrice: order.orderTotalPrice,
-                    items: order.myOrders
-                        .map((item) => {
-                              "name": item.name,
-                              "quantity": item.quantityInCart,
-                            })
-                        .toList(),
-                    orderDate: order.orderStartDate,
-                    orderStatus: order.stateOfTheOrder,
-                    onScanQr: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => QRScannerScreen(),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 16),
+                    child: OrderCard(
+                      userName: order.userDataClass.name!,
+                      totalPrice: order.orderTotalPrice,
+                      items: order.myOrders
+                          .map((item) => {
+                                "name": item.name,
+                                "quantity": item.quantityInCart,
+                              })
+                          .toList(),
+                      orderDate: order.orderStartDate,
+                      orderStatus: order.stateOfTheOrder,
+                      onScanQr: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => QRScannerScreen(),
+                        ),
                       ),
                     ),
                   ),

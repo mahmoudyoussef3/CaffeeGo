@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:coffe_app/Admin/Features/Items/Presentation/cubits/admin_items_cubit.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
+import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +10,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
-
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,6 +21,7 @@ import '../../../../../features/home/data/models/coffe_item.dart';
 import '../../../../../features/home/presentation/cubit/category_cubit/category_cubit.dart';
 import '../../../../../features/home/presentation/widgets/_categories_widgets/categoies_container_shimmer.dart';
 import '../../../../../features/home/presentation/widgets/_categories_widgets/categories_container.dart';
+import '../../../AdminNotification/data/admin_notifications.dart';
 
 class AddCoffeeItemScreen extends StatefulWidget {
   const AddCoffeeItemScreen({super.key});
@@ -46,42 +50,32 @@ class _AddCoffeeItemScreenState extends State<AddCoffeeItemScreen> {
         setState(() {
           _image = File(pickedFile.path);
         });
-        await _uploadImageToFirebase();
+        imgUrl = await uploadImageToImgur(_image!);
       }
     } catch (e) {
       print("Image Picker Error: $e");
     }
   }
 
-  Future<void> _uploadImageToFirebase() async {
-    try {
-      if (_image == null) {
-        print("No image selected.");
-        return;
-      }
+  Future<String?> uploadImageToImgur(File imageFile) async {
+    print('Start_img ipload');
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('https://api.imgur.com/3/image'),
+    );
+    request.headers['Authorization'] = 'Client-ID feb2c06bb1eb337';
+    request.files
+        .add(await http.MultipartFile.fromPath('image', imageFile.path));
 
-      String fileName =
-          "coffee_images/${DateTime.now().millisecondsSinceEpoch}.jpg";
-      Reference storageRef = FirebaseStorage.instance.ref(fileName);
+    var response = await request.send();
+    var responseData = await response.stream.bytesToString();
+    var jsonData = jsonDecode(responseData);
 
-      UploadTask uploadTask = storageRef.putFile(_image!);
-
-      // Show real-time progress (optional)
-      uploadTask.snapshotEvents.listen((event) {
-        print(
-            "Upload progress: ${(event.bytesTransferred / event.totalBytes) * 100}%");
-      });
-
-      TaskSnapshot snapshot = await uploadTask;
-
-      // Wait for the image URL to be retrieved
-      imgUrl = await snapshot.ref.getDownloadURL();
-
-      print("Image uploaded successfully: $imgUrl");
-
-      setState(() {});
-    } catch (e) {
-      print("Image upload error: $e");
+    if (response.statusCode == 200) {
+      return jsonData['data']['link'];
+    } else {
+      print('Failed to upload: ${jsonData['data']['error']}');
+      return null;
     }
   }
 
@@ -223,7 +217,7 @@ class _AddCoffeeItemScreenState extends State<AddCoffeeItemScreen> {
                           return Text(state.errorMessage.toString());
                         } else if (state is AdminItemsLoaded) {
                           Fluttertoast.showToast(
-                              msg: "Item added successfully!",
+                              msg: "New item added successfully!",
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
                               timeInSecForIosWeb: 1,

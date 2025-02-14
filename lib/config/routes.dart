@@ -129,6 +129,9 @@ class AppRouter {
               create: (context) => CoffeeItemsCubit(ItemsUseCse()),
             ),
             BlocProvider(
+                create: (context) =>
+                    (AdminItemsCubit(AdminItemsRepo(AdminItemsDataSource())))),
+            BlocProvider(
                 create: (
               context,
             ) =>
@@ -144,15 +147,16 @@ class AppRouter {
               create: (context) => CoffeeItemsCubit(ItemsUseCse()),
             ),
             BlocProvider(
+              create: (context) =>
+                  AdminItemsCubit(AdminItemsRepo(AdminItemsDataSource())),
+            ),
+            BlocProvider(
                 create: (
               context,
             ) =>
                     CategoryCubit(
                         DataRepo(coffeeDataSource: CoffeeDataSource()),
                         ItemsUseCse())),
-            BlocProvider(
-                create: (context) =>
-                    (AdminItemsCubit(AdminItemsRepo(AdminItemsDataSource())))),
           ], child: const AddCoffeeItemScreen()),
         );
       case AppStrings.manageOrders:

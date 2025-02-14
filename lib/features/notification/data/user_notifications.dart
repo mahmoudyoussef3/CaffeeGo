@@ -28,7 +28,7 @@ class OneSignalUser {
     });
   }
 
-  Future<void> sendNotificationToAdmin() async {
+  Future<void> sendNotificationToAdmin(String imgUrl,String orderId) async {
     const String oneSignalUrl = "https://onesignal.com/api/v1/notifications";
     const String oneSignalAppId = '3e076dbf-8eba-4b5e-840d-4d24f7980010';
     const String oneSignalApiKey =
@@ -38,6 +38,9 @@ class OneSignalUser {
       "headings": {"en": 'You have new order from $userName'},
       "contents": {"en": 'message'},
       "include_external_user_ids": ['admin@gmail.com'],
+      "large_icon": "@mipmap/ic_launcher",
+      "big_picture": imgUrl,
+      "url": "myapp://order/$orderId"
     };
 
     try {

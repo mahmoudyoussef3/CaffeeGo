@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AdminItemsDataSource {
   Future addCoffee(CoffeeItem coffeeItem) async {
@@ -15,19 +18,26 @@ class AdminItemsDataSource {
     }
   }
 
-  // Future<void> updateCoffeeItem(
-  //     CoffeeItem oldCoffeeItem, CoffeeItem newOldCoffeeItem) async {
-  //   try {
-  //     var categoryRef = FirebaseFirestore.instance.collection('categories');
-  //     var snapshot = await categoryRef.where('name', isEqualTo: oldName).get();
-  //     var docRef = snapshot.docs.first.reference;
-  //
-  //     await docRef.update({'name': newName});
-  //     print('Category name updated successfully!');
-  //   } catch (e) {
-  //     print('Failed to update category name: $e');
-  //   }
-  // }
+  Future<String?> uploadImageToImgur(File imageFile) async {
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('https://api.imgur.com/3/image'),
+    );
+    request.headers['Authorization'] = 'feb2c06bb1eb337';
+    request.files
+        .add(await http.MultipartFile.fromPath('image', imageFile.path));
+
+    var response = await request.send();
+    var responseData = await response.stream.bytesToString();
+    var jsonData = jsonDecode(responseData);
+
+    if (response.statusCode == 200) {
+      return jsonData['data']['link'];
+    } else {
+      print('Failed to upload: ${jsonData['data']['error']}');
+      return null;
+    }
+  }
 
   Future<void> deleteCoffeeItem(String itemName) async {
     try {

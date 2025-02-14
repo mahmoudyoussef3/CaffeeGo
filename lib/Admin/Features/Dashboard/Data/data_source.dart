@@ -13,7 +13,7 @@ class DashboardAnalysis {
           .collection('orders')
           .where('order.orderStartDate', isGreaterThanOrEqualTo: startOfDay)
           .where('order.orderStartDate', isLessThanOrEqualTo: endOfDay)
-          .where('order.stateOfTheOrder', isEqualTo: "Pending")
+          .where('order.stateOfTheOrder', isEqualTo: "Completed")
           .get();
 
       double totalEarnings = 0.0;
@@ -44,17 +44,33 @@ class DashboardAnalysis {
 
       int completed = 0;
       int canceled = 0;
+      int pending = 0;
+      int inProgress = 0;
 
       for (var doc in querySnapshot.docs) {
         if (doc['order.stateOfTheOrder'] == 'Completed') {
           completed++;
-        } else if (doc['order.stateOfTheOrder'] == 'Canceled') {
+        } else if (doc['order.stateOfTheOrder'] == 'Cancelled') {
           canceled++;
+        } else if (doc['order.stateOfTheOrder'] == 'Pending') {
+          pending++;
+        } else if (doc['order.stateOfTheOrder'] == 'In Progress') {
+          inProgress++;
         }
       }
-      print({"Completed": completed, "Canceled": canceled});
+      print({
+        "Completed": completed,
+        "Canceled": canceled,
+        "In Progress": inProgress,
+        "Pending": pending
+      });
 
-      return {"Completed": completed, "Canceled": canceled};
+      return {
+        "Completed": completed,
+        "Canceled": canceled,
+        "In Progress": inProgress,
+        "Pending": pending
+      };
     } catch (e) {
       print("Error while getting order status count: $e");
       return {};

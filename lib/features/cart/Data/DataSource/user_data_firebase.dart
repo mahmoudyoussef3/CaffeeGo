@@ -74,7 +74,6 @@ class UserData {
     OrderModel order,
   ) async {
     try {
-
       await FirebaseFirestore.instance
           .collection('orders')
           .add({'order': order.toJson()});
@@ -85,7 +84,7 @@ class UserData {
       await OneSignalUser(
               externalUserId: order.userDataClass.email!,
               userName: order.userDataClass.name ?? 'Un Known user')
-          .sendNotificationToAdmin();
+          .sendNotificationToAdmin(order.myOrders[0].image,order.orderId);
 
       print('Added order to admin order done');
     } catch (e) {

@@ -25,7 +25,7 @@ class OrderCard extends StatelessWidget {
     switch (orderStatus) {
       case 'Pending':
         return AppColors.brownAppColor;
-      case 'inProgress':
+      case 'In Progress':
         return Colors.blue;
       case 'Cancelled':
         return Colors.red;
@@ -81,13 +81,11 @@ class OrderCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-
             Text(
               'Total Price: \$$totalPrice',
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const Divider(),
-
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: items.map((item) {
@@ -111,7 +109,6 @@ class OrderCard extends StatelessWidget {
               }).toList(),
             ),
             const Divider(),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -119,27 +116,46 @@ class OrderCard extends StatelessWidget {
                   'Date: ${DateFormat('MMM d, yyyy - hh:mm').format(orderDate)}',
                   style: const TextStyle(fontSize: 14, color: Colors.black54),
                 ),
-                ElevatedButton.icon(
-                  onPressed: onScanQr,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.brownAppColor,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
+                InkWell(
+                  onTap: onScanQr,
+                  child: Container(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  ),
-                  icon: const Icon(
-                    Icons.qr_code_scanner,
-                    color: AppColors.offWhiteAppColor,
-                  ),
-                  label: const Text(
-                    'Scan QR',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.offWhiteAppColor,
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: AppColors.brownAppColor,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      'Scan Qr',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
+
+                // ElevatedButton.icon(
+                //   onPressed: onScanQr,
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor: AppColors.brownAppColor,
+                //     shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(8)),
+                //     padding:
+                //         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                //   ),
+                //   icon: const Icon(
+                //     Icons.qr_code_scanner,
+                //     color: AppColors.offWhiteAppColor,
+                //   ),
+                //   label: const Text(
+                //     'Scan QR',
+                //     style: TextStyle(
+                //       fontWeight: FontWeight.w600,
+                //       color: AppColors.offWhiteAppColor,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ],

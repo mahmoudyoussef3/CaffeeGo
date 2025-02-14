@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:coffe_app/Admin/Features/Items/Presentation/cubits/admin_items_cubit.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../../features/home/presentation/cubit/coffe_items/coffee_items_cubit.dart';
 
 class ManageItemsScreen extends StatefulWidget {
@@ -60,11 +61,102 @@ class _ManageItemsScreenState extends State<ManageItemsScreen> {
               ),
               itemCount: state.items.length,
               itemBuilder: (context, index) {
-                return _buildItemCard(
-                  context,
-                  state.items[index].name,
-                  state.items[index].description,
-                  state.items[index].image,
+                return GestureDetector(
+                  onLongPress: () {
+                    showDialog(
+                      context: context,
+                      builder: (dialogContext) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          title: Text(
+                            state.items[index].name,
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          content: const Text(
+                            'Are you sure you want to delete this item?',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(dialogContext),
+                              child: const Text(
+                                'Cancel',
+                                style:
+                                    TextStyle(fontSize: 16, color: Colors.grey),
+                              ),
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              onPressed: () async {
+                                final itemName = state.items[index].name;
+                                try {
+                                  final cubit = context.read<AdminItemsCubit>();
+                                  await cubit.deleteCoffeeItem(itemName);
+
+                                  if (context.mounted) {
+                                    Navigator.pop(dialogContext);
+                                  }
+                                  setState(() {
+                                    context
+                                        .read<CoffeeItemsCubit>()
+                                        .fetchCoffeeItems();
+                                  });
+
+                                  Fluttertoast.showToast(
+                                    msg: "$itemName deleted successfully!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0,
+                                  );
+                                } catch (e) {
+                                  Fluttertoast.showToast(
+                                    msg: "Failed to delete item: $e",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0,
+                                  );
+                                }
+                              },
+                              child: const Text(
+                                'Delete',
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(12),
+                      splashColor: Colors.grey.withOpacity(0.2),
+                      child: _buildItemCard(
+                        context,
+                        state.items[index].name,
+                        state.items[index].description,
+                        state.items[index].image,
+                      ),
+                    ),
+                  ),
                 );
               },
             );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../widgets/dashboard_card.dart';
+import '../widgets/grid_painter.dart';
 
 class AdminHomeScreen extends StatelessWidget {
   const AdminHomeScreen({super.key});
@@ -20,65 +21,61 @@ class AdminHomeScreen extends StatelessWidget {
         ),
         backgroundColor: AppColors.brownAppColor,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: GridView.count(
-          crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          children: [
-            Hero(
-              tag: 'manage_items',
-              child: DashboardCard(
-                title: 'Manage Items',
-                onTap: () =>
-                    Navigator.pushNamed(context, AppStrings.manageItems),
-                icon: Icons.coffee,
-                color: AppColors.brownAppColor,
-              ),
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: CustomPaint(
+              size: Size(double.infinity, double.infinity),
+              painter: GridPainter(),
             ),
-            Hero(
-              tag: 'manage_categories',
-              child: DashboardCard(
-                title: 'Manage Categories',
-                onTap: () =>
-                    Navigator.pushNamed(context, AppStrings.manageCategories),
-                icon: Icons.folder,
-                color: AppColors.brownAppColor,
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: GridView.count(
+              crossAxisCount: 2,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
+              children: [
+                DashboardCard(
+                  title: 'Manage Items',
+                  onTap: () =>
+                      Navigator.pushNamed(context, AppStrings.manageItems),
+                  icon: Icons.coffee,
+                  color: AppColors.brownAppColor,
+                ),
+                DashboardCard(
+                  title: 'Manage Categories',
+                  onTap: () =>
+                      Navigator.pushNamed(context, AppStrings.manageCategories),
+                  icon: Icons.folder,
+                  color: AppColors.brownAppColor,
+                ),
+                DashboardCard(
+                  title: 'Orders',
+                  onTap: () =>
+                      Navigator.pushNamed(context, AppStrings.manageOrders),
+                  icon: Icons.shopping_cart,
+                  color: AppColors.brownAppColor,
+                ),
+                DashboardCard(
+                  title: 'User Management',
+                  onTap: () =>
+                      Navigator.pushNamed(context, AppStrings.manageUsers),
+                  icon: Icons.person,
+                  color: AppColors.brownAppColor,
+                ),
+                DashboardCard(
+                  title: 'Analytics',
+                  onTap: () => Navigator.pushNamed(
+                      context, AppStrings.manageDashboardData),
+                  icon: Icons.analytics,
+                  color: AppColors.brownAppColor,
+                ),
+              ],
             ),
-            Hero(
-              tag: 'orders',
-              child: DashboardCard(
-                title: 'Orders',
-                onTap: () =>
-                    Navigator.pushNamed(context, AppStrings.manageOrders),
-                icon: Icons.shopping_cart,
-                color: AppColors.brownAppColor,
-              ),
-            ),
-            Hero(
-              tag: 'user_management',
-              child: DashboardCard(
-                title: 'User Management',
-                onTap: () =>
-                    Navigator.pushNamed(context, AppStrings.manageUsers),
-                icon: Icons.person,
-                color: AppColors.brownAppColor,
-              ),
-            ),
-            Hero(
-              tag: 'analytics',
-              child: DashboardCard(
-                title: 'Analytics',
-                onTap: () => Navigator.pushNamed(
-                    context, AppStrings.manageDashboardData),
-                icon: Icons.analytics,
-                color: AppColors.brownAppColor,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

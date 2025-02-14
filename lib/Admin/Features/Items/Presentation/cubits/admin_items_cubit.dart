@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:coffe_app/Admin/Features/AdminNotification/data/admin_notifications.dart';
 import 'package:coffe_app/Admin/Features/Items/Data/Repo/admin_items_repo.dart';
 import 'package:meta/meta.dart';
 
@@ -15,6 +16,11 @@ class AdminItemsCubit extends Cubit<AdminItemsState> {
     try {
       await adminItemsRepo.addCoffeeRepo(coffee);
       emit(AdminItemsLoaded());
+      await OneSignalAdmin().sendNotificationToAllUsers(
+        title: 'New Item',
+        message: "${coffee.name}has been added",
+        imgUrl: coffee.image,
+      );
     } catch (e) {
       emit(AdminItemsError(errorMessage: e.toString()));
     }
@@ -24,6 +30,7 @@ class AdminItemsCubit extends Cubit<AdminItemsState> {
     emit(AdminItemsLoading());
     try {
       await adminItemsRepo.deleteCoffeeRepo(coffeeName);
+
       emit(AdminItemsLoaded());
     } catch (e) {
       emit(AdminItemsError(errorMessage: e.toString()));

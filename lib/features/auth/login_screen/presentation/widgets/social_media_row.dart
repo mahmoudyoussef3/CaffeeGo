@@ -1,4 +1,5 @@
 import 'package:coffe_app/core/utils/app_strings.dart';
+import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:coffe_app/features/auth/data/authentication_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -27,25 +28,34 @@ class SocialButton extends StatelessWidget {
       onTap: done
           ? () async {
               try {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) => const Center(
+                    child: CustomLoadingProgress(),
+                  ),
+                );
                 await AuthenticationMethods().signInWithGoogle();
+                Navigator.pop(context);
 
                 Navigator.pushNamed(context, AppStrings.home);
               } catch (e) {
                 print('Failed to sign in with Google: $e');
+                Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text('Sign-in failed. Please try again.')));
               }
             }
           : () {
-        Fluttertoast.showToast(
-            msg: "In progress...",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity
-                .BOTTOM, // You can change it to top, center, etc.
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.black,
-            textColor: Colors.white,
-            fontSize: 16.0);
+              Fluttertoast.showToast(
+                  msg: "In progress...",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity
+                      .BOTTOM, // You can change it to top, center, etc.
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.black,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
             },
       child: Container(
         width: 80.w,
