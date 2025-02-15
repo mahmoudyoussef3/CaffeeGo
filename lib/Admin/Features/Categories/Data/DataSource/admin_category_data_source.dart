@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 class AdminCategoryDataSource {
   Future addCategory(String categoryName) async {
@@ -9,21 +10,26 @@ class AdminCategoryDataSource {
         'image': 'https://example.com/image.jpg'
       });
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
-  Future<void> updateCategoryName(String oldName,String newName) async {
+  Future<void> updateCategoryName(String oldName, String newName) async {
     try {
       var categoryRef = FirebaseFirestore.instance.collection('categories');
-      var snapshot =
-          await categoryRef.where('name', isEqualTo: oldName).get();
+      var snapshot = await categoryRef.where('name', isEqualTo: oldName).get();
       var docRef = snapshot.docs.first.reference;
 
       await docRef.update({'name': newName});
-      print('Category name updated successfully!');
+      if (kDebugMode) {
+        print('Category name updated successfully!');
+      }
     } catch (e) {
-      print('Failed to update category name: $e');
+      if (kDebugMode) {
+        print('Failed to update category name: $e');
+      }
     }
   }
 
@@ -35,9 +41,13 @@ class AdminCategoryDataSource {
       var docRef = snapshot.docs.first.reference;
 
       await docRef.delete();
-      print('Category name updated successfully!');
+      if (kDebugMode) {
+        print('Category name updated successfully!');
+      }
     } catch (e) {
-      print('Failed to update category name: $e');
+      if (kDebugMode) {
+        print('Failed to update category name: $e');
+      }
     }
   }
 }

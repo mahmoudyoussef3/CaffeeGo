@@ -38,14 +38,14 @@ class AdminHomeScreen extends StatelessWidget {
               mainAxisSpacing: 20,
               children: [
                 DashboardCard(
-                  title: 'Manage Items',
+                  title: 'Drinks',
                   onTap: () =>
                       Navigator.pushNamed(context, AppStrings.manageItems),
                   icon: Icons.coffee,
                   color: AppColors.brownAppColor,
                 ),
                 DashboardCard(
-                  title: 'Manage Categories',
+                  title: 'Categories',
                   onTap: () =>
                       Navigator.pushNamed(context, AppStrings.manageCategories),
                   icon: Icons.folder,
@@ -59,7 +59,7 @@ class AdminHomeScreen extends StatelessWidget {
                   color: AppColors.brownAppColor,
                 ),
                 DashboardCard(
-                  title: 'User Management',
+                  title: 'Users',
                   onTap: () =>
                       Navigator.pushNamed(context, AppStrings.manageUsers),
                   icon: Icons.person,

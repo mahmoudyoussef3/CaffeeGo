@@ -29,53 +29,58 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
           foregroundColor: AppColors.offWhiteAppColor,
           title: const Text('Manage Orders'),
           backgroundColor: AppColors.brownAppColor),
-      body: BlocBuilder<GetAllOrdersCubit, GetAllOrdersState>(
-        builder: (context, state) {
-          if (state is GetAllOrdersLoading) {
-            return Center(child: CustomLoadingProgress());
-          } else if (state is GetAllOrdersFailure) {
-            return Text('Failed to fetch orders');
-          } else if (state is GetAllOrdersSuccess) {
-            return ListView.builder(
-              itemCount: state.orders.length,
-              itemBuilder: (context, index) {
-                var order = state.orders[index];
-                return InkWell(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => OrderDetailsScreen(
-                                order: order,
-                              ))),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16.0, horizontal: 16),
-                    child: OrderCard(
-                      userName: order.userDataClass.name!,
-                      totalPrice: order.orderTotalPrice,
-                      items: order.myOrders
-                          .map((item) => {
-                                "name": item.name,
-                                "quantity": item.quantityInCart,
-                              })
-                          .toList(),
-                      orderDate: order.orderStartDate,
-                      orderStatus: order.stateOfTheOrder,
-                      onScanQr: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => QRScannerScreen(),
+      body: StreamBuilder<GetAllOrdersState>(
+          stream: context.read<GetAllOrdersCubit>().stream,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CustomLoadingProgress());
+            }
+            if (snapshot.hasData) {
+              final state = snapshot.data;
+              if (state is GetAllOrdersSuccess) {
+                return ListView.builder(
+                  itemCount: state.orders.length,
+                  itemBuilder: (context, index) {
+                    var order = state.orders[index];
+                    return InkWell(
+                      onTap: () => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OrderDetailsScreen(
+                                    order: order,
+                                  ))),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16.0, horizontal: 16),
+                        child: OrderCard(
+                          userName: order.userDataClass.name!,
+                          totalPrice: order.orderTotalPrice,
+                          items: order.myOrders
+                              .map((item) => {
+                                    "name": item.name,
+                                    "quantity": item.quantityInCart,
+                                  })
+                              .toList(),
+                          orderDate: order.orderStartDate,
+                          orderStatus: order.stateOfTheOrder,
+                          onScanQr: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => QRScannerScreen(),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 );
-              },
-            );
-          }
-          return SizedBox.shrink();
-        },
-      ),
+              }
+            }
+            return Center(child: Text("No orders available"));
+          }),
     );
   }
 }

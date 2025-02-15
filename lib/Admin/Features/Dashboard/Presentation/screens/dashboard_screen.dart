@@ -69,7 +69,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   SizedBox(height: 5),
                   _buildSummaryCard(
                     title: 'Total Sales',
-                    value: state.totalSales.toString(),
+                    value: state.totalSales.toStringAsFixed(2),
                     icon: Icons.monetization_on,
                   ),
                   SizedBox(height: 5),

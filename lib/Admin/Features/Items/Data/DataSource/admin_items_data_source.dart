@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -11,10 +12,16 @@ class AdminItemsDataSource {
           .collection('coffee_items')
           .doc()
           .set(coffeeItem.toMap());
-      print('Coffee item added successfully!');
+      if (kDebugMode) {
+        print('Coffee item added successfully!');
+      }
     } catch (e) {
-      print(e);
-      print('Failed to add coffee item: $e');
+      if (kDebugMode) {
+        print(e);
+      }
+      if (kDebugMode) {
+        print('Failed to add coffee item: $e');
+      }
     }
   }
 
@@ -34,7 +41,9 @@ class AdminItemsDataSource {
     if (response.statusCode == 200) {
       return jsonData['data']['link'];
     } else {
-      print('Failed to upload: ${jsonData['data']['error']}');
+      if (kDebugMode) {
+        print('Failed to upload: ${jsonData['data']['error']}');
+      }
       return null;
     }
   }
@@ -46,9 +55,13 @@ class AdminItemsDataSource {
       var docRef = snapshot.docs.first.reference;
 
       await docRef.delete();
-      print('Item deleted successfully!');
+      if (kDebugMode) {
+        print('Item deleted successfully!');
+      }
     } catch (e) {
-      print('Failed to delete item : $e');
+      if (kDebugMode) {
+        print('Failed to delete item : $e');
+      }
     }
   }
 }

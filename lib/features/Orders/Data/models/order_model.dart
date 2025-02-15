@@ -12,6 +12,7 @@ class OrderModel {
   UserDataClass userDataClass;
   String paymentMethod;
   bool paymentProcess;
+  String userRequirements;
 
   OrderModel(
       {required this.myOrders,
@@ -21,11 +22,13 @@ class OrderModel {
       required this.userDataClass,
       required this.paymentMethod,
       required this.paymentProcess,
+      required this.userRequirements,
       String? orderId})
       : orderId = orderId ?? Uuid().v4();
 
   factory OrderModel.fromJson(Map<String, dynamic> myData) {
     return OrderModel(
+        userRequirements: myData['userRequirements'] ?? 'No Requirements',
         orderId: myData['orderId'] ?? Uuid().v4(),
         myOrders: (myData['orders'] as List<dynamic>?)
                 ?.map(
@@ -50,6 +53,7 @@ class OrderModel {
       'userData': userDataClass.toJson(),
       'paymentMethod': paymentMethod,
       'paymentProcess': paymentProcess,
+      'userRequirements': userRequirements,
     };
   }
 }

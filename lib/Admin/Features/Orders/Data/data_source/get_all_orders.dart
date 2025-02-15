@@ -8,8 +8,10 @@ class GetAllOrders {
   Future<List<OrderModel>> getAllOrders() async {
     List<OrderModel> myOrders = [];
     try {
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection('orders').get();
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('orders')
+          .orderBy('order.orderStartDate', descending: false)
+          .get();
 
       for (var document in querySnapshot.docs) {
         var data = document.data() as Map<String, dynamic>?;

@@ -11,8 +11,11 @@ class DashboardRepo {
   }
 
   Future<double> getTotalSales() async {
-    double totalSales =
-        await dashboardAnalysis.getTotalEarnings(DateTime.now());
+    double totalSales = await dashboardAnalysis.getTotalEarnings(
+      DateTime(2022, 1, 1, 0, 0, 0),
+    );
+
+    // await dashboardAnalysis.getTotalEarnings(DateTime.now());
     return totalSales;
   }
 

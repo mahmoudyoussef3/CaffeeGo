@@ -15,7 +15,7 @@ class CoffeeItemsCubit extends Cubit<CoffeeItemsState> {
     try {
       coffeeItems = await itemsUseCse.getItems(category);
       emit(CoffeeItemsSuccess(coffeeItems));
-      log('fetchCoffeeItems success:================================ ${coffeeItems}');
+      log('fetchCoffeeItems success:================================ $coffeeItems');
     } on Exception catch (e) {
       emit(CoffeeItemsError(e.toString()));
     }

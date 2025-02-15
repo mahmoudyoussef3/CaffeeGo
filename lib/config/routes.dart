@@ -157,7 +157,7 @@ class AppRouter {
                     CategoryCubit(
                         DataRepo(coffeeDataSource: CoffeeDataSource()),
                         ItemsUseCse())),
-          ], child: const AddCoffeeItemScreen()),
+          ], child:  AddCoffeeItemScreen()),
         );
       case AppStrings.manageOrders:
         return MaterialPageRoute(

@@ -12,14 +12,14 @@ class OrderCard extends StatelessWidget {
   final VoidCallback onScanQr;
 
   const OrderCard({
-    Key? key,
+    super.key,
     required this.userName,
     required this.totalPrice,
     required this.items,
     required this.orderDate,
     required this.orderStatus,
     required this.onScanQr,
-  }) : super(key: key);
+  });
 
   Color getStatusColor() {
     switch (orderStatus) {
@@ -64,17 +64,21 @@ class OrderCard extends StatelessWidget {
                   ),
                 ),
                 Container(
+                  width: 95,
+                  height: 30,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: getStatusColor(),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Text(
-                    orderStatus,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
+                  child: Center(
+                    child: Text(
+                      orderStatus,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
@@ -119,17 +123,22 @@ class OrderCard extends StatelessWidget {
                 InkWell(
                   onTap: onScanQr,
                   child: Container(
+                    width: 95,
+                    height: 30,
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: AppColors.brownAppColor,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Text(
-                      'Scan Qr',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
+                    child: Center(
+                      child: Text(
+                        'Scan Qr',
+                        style: const TextStyle(
+                          letterSpacing: 1,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),

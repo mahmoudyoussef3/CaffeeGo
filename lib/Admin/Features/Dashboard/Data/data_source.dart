@@ -7,7 +7,7 @@ class DashboardAnalysis {
       final startOfDay = Timestamp.fromDate(
           DateTime(date.year, date.month, date.day, 0, 0, 0));
       final endOfDay = Timestamp.fromDate(
-          DateTime(date.year, date.month, date.day, 23, 59, 59));
+          DateTime(date.year+5, date.month, date.day, 23, 59, 59));
 
       var querySnapshot = await FirebaseFirestore.instance
           .collection('orders')
