@@ -10,7 +10,6 @@ import '../../../../../core/utils/app_colors.dart';
 import 'build_banner_widget.dart';
 import 'build_search_bar.dart';
 
-
 class BuildPromo extends StatefulWidget {
   const BuildPromo({super.key});
 

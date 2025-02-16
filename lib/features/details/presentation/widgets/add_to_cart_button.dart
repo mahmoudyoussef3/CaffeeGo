@@ -1,4 +1,6 @@
+import 'package:coffe_app/Admin/main_admin.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
+import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,12 +9,18 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../home/data/models/coffe_item.dart';
 
-class AddToCartButton extends StatelessWidget {
+class AddToCartButton extends StatefulWidget {
   const AddToCartButton(
       {super.key, required this.price, required this.coffeeItem});
   final String price;
   final CoffeeItem coffeeItem;
 
+  @override
+  State<AddToCartButton> createState() => _AddToCartButtonState();
+}
+
+class _AddToCartButtonState extends State<AddToCartButton> {
+  bool pressed = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,68 +35,38 @@ class AddToCartButton extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                print(coffeeItem.uniqueId);
-                print(coffeeItem.selectedSize);
+                print(widget.coffeeItem.uniqueId);
+                print(widget.coffeeItem.selectedSize);
                 final isItemInCart = context
                     .read<UserDataCubit>()
                     .userCart
-                    .any((item) => item.uniqueId == coffeeItem.uniqueId);
+                    .any((item) => item.uniqueId == widget.coffeeItem.uniqueId);
                 if (isItemInCart) {
-                  Fluttertoast.showToast(
-                      msg: "Item already in cart!",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity
-                          .BOTTOM, // You can change it to top, center, etc.
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: AppColors.offWhiteAppColor,
-                      textColor: AppColors.brownAppColor,
-                      fontSize: 16.0);
+                  showToastMsg('Item already in cart!');
                 } else {
-                  if (coffeeItem.uniqueId.isEmpty) {
-                    Fluttertoast.showToast(
-                        msg: "Please select size",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity
-                            .BOTTOM,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: AppColors.offWhiteAppColor,
-                        textColor: AppColors.brownAppColor,
-                        fontSize: 16.0);
+                  if (widget.coffeeItem.uniqueId.isEmpty) {
+                    showToastMsg('Please select size');
                     return;
                   } else {
-                    context
-                        .read<UserDataCubit>()
-                        .addToCart(coffeeItem)
-                        .then((_) {
-                      Fluttertoast.showToast(
-                          msg: "Item added to cart successfully!",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity
-                              .BOTTOM,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: AppColors.offWhiteAppColor,
-                          textColor: AppColors.brownAppColor,
-                          fontSize: 16.0);
-                      // ScaffoldMessenger.of(context).showSnackBar(
-                      //   SnackBar(
-                      //     action: SnackBarAction(
-                      //       label: "Cart",
-                      //       textColor: AppColors.secondaryBrownAppColor,
-                      //       onPressed: () =>
-                      //           Navigator.pushNamed(context, AppStrings.cart),
-                      //     ),
-                      //     backgroundColor: Colors.white,
-                      //     content: const Text(
-                      //       'Item added to Cart',
-                      //       style: TextStyle(
-                      //         color: AppColors.secondaryBrownAppColor,
-                      //         fontSize: 18,
-                      //         fontWeight: FontWeight.w500,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // );
-                    });
+                    try {
+                      setState(() {
+                        pressed = true;
+                      });
+                      context
+                          .read<UserDataCubit>()
+                          .addToCart(widget.coffeeItem)
+                          .then((_) {
+                        setState(() {
+                          pressed = false;
+                        });
+                        showToastMsg('Item added to cart successfully!');
+                      });
+                    } catch (e) {
+                      setState(() {
+                        pressed = false;
+                      });
+                      showToastMsg(e.toString());
+                    }
                   }
                 }
               },
@@ -96,15 +74,19 @@ class AddToCartButton extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 3 / 4 - 60,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: AppColors.brownAppColor),
-                child: const Center(
-                  child: Text(
-                    'Add To Cart',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 18),
-                  ),
+                    color: pressed
+                        ? AppColors.offWhiteAppColor
+                        : AppColors.brownAppColor),
+                child: Center(
+                  child: pressed
+                      ? CustomLoadingProgress()
+                      : Text(
+                          'Add To Cart',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 18),
+                        ),
                 ),
               ),
             ),
@@ -127,7 +109,7 @@ class AddToCartButton extends StatelessWidget {
                       fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  "$price \$",
+                  "${widget.price} \$",
                   style: const TextStyle(
                       color: AppColors.brownAppColor,
                       fontWeight: FontWeight.w800,

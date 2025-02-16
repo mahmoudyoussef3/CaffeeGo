@@ -1,3 +1,4 @@
+import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:coffe_app/features/Orders/presentation/cubits/order_cubit/orders_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../../../../Admin/Features/Orders/Presentation/widgets/order_card.dart';
 import '../../../../core/utils/app_colors.dart';
 
 class OrderScreen extends StatefulWidget {
@@ -26,24 +28,23 @@ class _OrderScreenState extends State<OrderScreen> {
     return Scaffold(
       backgroundColor: AppColors.offWhiteAppColor,
       appBar: AppBar(
-        foregroundColor: Colors.black,
-        title: const Text(
-          'Your Orders',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 28,
-            letterSpacing: 1.5,
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-        elevation: 0,
-      ),
+          backgroundColor: AppColors.brownAppColor,
+          foregroundColor: AppColors.offWhiteAppColor,
+          centerTitle: true,
+          title: Text(
+            'Orders',
+            style: TextStyle(
+              fontFamily: 'Lato',
+              color: AppColors.offWhiteAppColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 28,
+              letterSpacing: 1.5,
+            ),
+          )),
       body: BlocBuilder<OrdersCubit, OrdersState>(
         builder: (context, state) {
           if (state is OrdersLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const CustomLoadingProgress();
           }
 
           if (state is OrdersError) {
@@ -60,108 +61,64 @@ class _OrderScreenState extends State<OrderScreen> {
                 endIndent: 30,
                 color: AppColors.brownAppColor,
               ),
-              padding: const EdgeInsets.all(12),
+              //  padding: const EdgeInsets.all(12),
               itemCount: state.orders.length,
               itemBuilder: (context, index) {
                 final order = state.orders[index];
                 print(order.stateOfTheOrder);
-                return Card(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  elevation: 4,
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 16.0, horizontal: 16),
+                  child: OrderCard(
+                    admin: false,
+                    userName: "${index + 1}",
+                    totalPrice: order.orderTotalPrice,
+                    items: order.myOrders
+                        .map((item) => {
+                              "name": item.name,
+                              "quantity": item.quantityInCart,
+                            })
+                        .toList(),
+                    orderDate: order.orderStartDate,
+                    orderStatus: order.stateOfTheOrder,
+                    qrWidget: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(Icons.coffee),
-                            SizedBox(width: 8),
-                            Text(
-                              'Order #${index + 1}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
-                            ),
-                            Spacer(),
-                            _buildStatusChip(order.stateOfTheOrder),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Text('Total Price: \$${order.orderTotalPrice}',
-                            style: const TextStyle(
-                                color: Colors.black87, fontSize: 16)),
-                        const SizedBox(height: 10),
-                        Divider(),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Items:\n ${"-${order.myOrders.map((item) => item.name).join("\n -")}"}',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.black87,
-                              ),
-                            ),
-                            Text(
-                              '\n${order.myOrders.map((item) => item.quantityInCart).join("\n")}',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.black87,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Divider(),
-                        const SizedBox(height: 10),
                         Text(
-                            'Date: ${DateFormat('MMM d, yyyy - hh:mm').format(order.orderStartDate)}',
-                            style: const TextStyle(
-                                color: Colors.black87, fontSize: 16)),
-                        const SizedBox(height: 10),
-                        ElevatedButton.icon(
-                            style: ButtonStyle(
-                                shape: WidgetStatePropertyAll(
-                                    ContinuousRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15))),
-                                backgroundColor: WidgetStatePropertyAll(
-                                    AppColors.brownAppColor),
-                                foregroundColor: WidgetStatePropertyAll(
-                                    AppColors.offWhiteAppColor)),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    backgroundColor: AppColors.offWhiteAppColor,
-                                    title: Text('Scan QR Code'),
-                                    content: SizedBox(
-                                      height: 300.h,
-                                      width: 300.w,
-                                      child: QrImageView(
-                                          data:
-                                              "${order.userDataClass.name ?? 'UnKnownUser'} \n${order.myOrders.map((item) => "${item.name} - ${item.quantityInCart} - ${item.selectedSize}").toString()} "),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                            label: Icon(
-                              Icons.qr_code,
-                              color: AppColors.offWhiteAppColor,
-                            )),
-                        // const SizedBox(height: 10),
+                          'QR Code',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Icon(
+                          Icons.qr_code,
+                          color: Colors.white,
+                          size: 14,
+                        ),
                       ],
                     ),
+                    onScanQr: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            backgroundColor: AppColors.offWhiteAppColor,
+                            title: Text('Scan QR Code'),
+                            content: SizedBox(
+                              height: 300.h,
+                              width: 300.w,
+                              child: QrImageView(
+                                  data:
+                                      "${order.userDataClass.name ?? 'UnKnownUser'} \n${order.myOrders.map((item) => "${item.name} - ${item.quantityInCart} - ${item.selectedSize}").toString()} "),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
                 );
               },

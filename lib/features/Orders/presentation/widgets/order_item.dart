@@ -24,7 +24,7 @@ class CustomOrderItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       width: double.infinity,
-      height: 100.h,
+      height: 80.h,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -45,7 +45,7 @@ class CustomOrderItem extends StatelessWidget {
               children: [
                 Text(
                   coffeeItem.name,
-                  maxLines: 2,
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 16,

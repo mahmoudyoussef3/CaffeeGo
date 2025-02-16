@@ -1,3 +1,4 @@
+import 'package:coffe_app/admin/main_admin.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:coffe_app/features/details/presentation/screen/item_details.dart';
 import 'package:coffe_app/features/fav/Data/hive_manager.dart';
@@ -33,9 +34,10 @@ class _FavScreenState extends State<FavScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Favourite'),
-          foregroundColor: AppColors.brownAppColor,
+      appBar: AppBar(
+          backgroundColor: AppColors.brownAppColor,
+          foregroundColor: AppColors.offWhiteAppColor,
+          centerTitle: true,
           actions: <Widget>[
             IconButton(
               icon: const Icon(
@@ -46,14 +48,7 @@ class _FavScreenState extends State<FavScreen> {
                   : () async {
                       await CoffeeHiveService().deleteAllItems().then(
                         (value) {
-                          Fluttertoast.showToast(
-                              msg: "All Items deleted successfully!",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.white,
-                              textColor: AppColors.brownAppColor,
-                              fontSize: 16.0);
+                          showToastMsg('All Items deleted successfully!');
                         },
                       );
                       myFavItems.clear();
@@ -61,47 +56,53 @@ class _FavScreenState extends State<FavScreen> {
                     },
             )
           ],
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
-        backgroundColor: AppColors.offWhiteAppColor,
-        body: myFavItems.isEmpty
-            ? EmptyFavList()
-            : Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: ListView.separated(
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ItemDetails(
-                                          coffeeItem: myFavItems[index]),
-                                    ));
-                              },
-                              child: CoffeeCardWidgetInFavScreen(
-                                coffeeItem: myFavItems[index],
-                              ),
-                            );
-                          },
-                          separatorBuilder: (context, index) {
-                            return const Divider(
-                              color: AppColors.brownAppColor,
-                              endIndent: 30,
-                              indent: 30,
-                            );
-                          },
-                          itemCount: myFavItems.length),
-                    ),
-                  ],
-                ),
+          title: Text(
+            'Favourites',
+            style: TextStyle(
+              fontFamily: 'Lato',
+              color: AppColors.offWhiteAppColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 28,
+              letterSpacing: 1.5,
+            ),
+          )),
+      backgroundColor: AppColors.offWhiteAppColor,
+      body: myFavItems.isEmpty
+          ? EmptyFavList()
+          : Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView.separated(
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ItemDetails(
+                                        coffeeItem: myFavItems[index]),
+                                  ));
+                            },
+                            child: CoffeeCardWidgetInFavScreen(
+                              coffeeItem: myFavItems[index],
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const Divider(
+                            color: AppColors.brownAppColor,
+                            endIndent: 30,
+                            indent: 30,
+                          );
+                        },
+                        itemCount: myFavItems.length),
+                  ),
+                ],
               ),
-      )
-    ;
+            ),
+    );
   }
 }

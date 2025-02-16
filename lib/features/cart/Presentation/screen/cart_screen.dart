@@ -3,6 +3,7 @@ import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/widgets/custom_loading_progress.dart';
 import '../widgets/empty_cart_screen.dart';
 import '../widgets/not_empty_cart_screen.dart';
 
@@ -24,41 +25,50 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.offWhiteAppColor,
-        body: BlocBuilder<UserDataCubit, UserDataState>(
-          builder: (context, state) {
-            if (state is UserDataLoading) {
-              return const Center(
-                  child: CircularProgressIndicator(
-                color: AppColors.brownAppColor,
-              ));
+    return Scaffold(
+      appBar: AppBar(
+          backgroundColor: AppColors.brownAppColor,
+          foregroundColor: AppColors.offWhiteAppColor,
+          centerTitle: true,
+          title: Text(
+            'Cart',
+            style: TextStyle(
+              fontFamily: 'Lato',
+              color: AppColors.offWhiteAppColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 28,
+              letterSpacing: 1.5,
+            ),
+          )),
+      backgroundColor: AppColors.offWhiteAppColor,
+      body: BlocBuilder<UserDataCubit, UserDataState>(
+        builder: (context, state) {
+          if (state is UserDataLoading) {
+            return const CustomLoadingProgress();
+          }
+
+          if (state is UserDataError) {
+            return const Center(
+              child: Text(
+                'Failed to load user data',
+                style: TextStyle(fontSize: 18, color: Colors.redAccent),
+              ),
+            );
+          }
+
+          if (state is UserDataSuccess) {
+            final cartItems = state.userCart;
+            if (cartItems.isEmpty) {
+              return const EmptyCartScreen();
             }
 
-            if (state is UserDataError) {
-              return const Center(
-                child: Text(
-                  'Failed to load user data',
-                  style: TextStyle(fontSize: 18, color: Colors.redAccent),
-                ),
-              );
-            }
-
-            if (state is UserDataSuccess) {
-              final cartItems = state.userCart;
-              if (cartItems.isEmpty) {
-                return const EmptyCartScreen();
-              }
-
-              return NotEmptyCartScreen(
-                  discountPrice: totalPriceWithDiscount(cartItems),
-                  priceBeforeDiscount: totalPrice(cartItems),
-                  cartItems: cartItems);
-            }
-            return const EmptyCartScreen();
-          },
-        ),
+            return NotEmptyCartScreen(
+                discountPrice: totalPriceWithDiscount(cartItems),
+                priceBeforeDiscount: totalPrice(cartItems),
+                cartItems: cartItems);
+          }
+          return const EmptyCartScreen();
+        },
       ),
     );
   }

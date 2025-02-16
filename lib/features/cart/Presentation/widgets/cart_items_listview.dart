@@ -19,6 +19,7 @@ class _CartItemsListviewState extends State<CartItemsListview> {
   Widget build(BuildContext context) {
     return Expanded(
         child: ListView.builder(
+      shrinkWrap: true,
       itemCount: widget.cartItems.length,
       itemBuilder: (context, index) {
         return Padding(

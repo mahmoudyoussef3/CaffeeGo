@@ -10,13 +10,14 @@ class PaymentSummary extends StatelessWidget {
   final double priceWithoutDiscount;
   final double priceWithDiscount;
 
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Container(
         width: double.infinity,
-        height: 200,
+        height: 150,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
@@ -30,7 +31,7 @@ class PaymentSummary extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -43,7 +44,7 @@ class PaymentSummary extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 24,
+                height: 12,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,13 +66,13 @@ class PaymentSummary extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
               const DottedLine(
                 direction: Axis.horizontal,
                 dashColor: AppColors.semiBlackAppColor,
               ),
               const Spacer(
-                flex: 3,
+                flex: 2,
               ),
               const Row(
                 children: [
@@ -94,7 +95,7 @@ class PaymentSummary extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 16,
+                height: 12,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,9 +117,6 @@ class PaymentSummary extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
-              const Spacer(
-                flex: 1,
               ),
             ],
           ),

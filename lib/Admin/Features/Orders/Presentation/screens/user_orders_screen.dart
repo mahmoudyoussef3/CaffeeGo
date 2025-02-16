@@ -56,6 +56,7 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
                         padding: const EdgeInsets.symmetric(
                             vertical: 16.0, horizontal: 16),
                         child: OrderCard(
+                          admin: true,
                           userName: order.userDataClass.name!,
                           totalPrice: order.orderTotalPrice,
                           items: order.myOrders

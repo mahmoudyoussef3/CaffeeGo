@@ -10,6 +10,8 @@ class OrderCard extends StatelessWidget {
   final DateTime orderDate;
   final String orderStatus;
   final VoidCallback onScanQr;
+  final Widget qrWidget;
+  final bool admin;
 
   const OrderCard({
     super.key,
@@ -19,7 +21,17 @@ class OrderCard extends StatelessWidget {
     required this.orderDate,
     required this.orderStatus,
     required this.onScanQr,
-  });
+    required this.admin,
+    Widget? qrWidget,
+  }) : qrWidget = qrWidget ??
+            const Text(
+              'Scan Qr',
+              style: TextStyle(
+                letterSpacing: 1,
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            );
 
   Color getStatusColor() {
     switch (orderStatus) {
@@ -50,7 +62,7 @@ class OrderCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Icon(Icons.person, size: 22, color: Colors.black87),
+                 Icon( admin ? Icons.person:Icons.coffee, size: 22, color: Colors.black87),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
@@ -131,16 +143,7 @@ class OrderCard extends StatelessWidget {
                       color: AppColors.brownAppColor,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Center(
-                      child: Text(
-                        'Scan Qr',
-                        style: const TextStyle(
-                          letterSpacing: 1,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
+                    child: Center(child: qrWidget),
                   ),
                 ),
 

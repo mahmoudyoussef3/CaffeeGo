@@ -68,26 +68,27 @@ void main() async {
   // log('Device User ID: ${value?.userId}');
   // });
 
-  runApp(DevicePreview(
-      builder: (context) => MultiBlocProvider(providers: [
-            BlocProvider(
-                create: (context) => CategoryCubit(
-                    DataRepo(coffeeDataSource: CoffeeDataSource()),
-                    ItemsUseCse())),
-            BlocProvider(
-                create: (context) => UserDataCubit(UserDataRepo(UserData()))),
-            BlocProvider(
-              create: (context) => CoffeeItemsCubit(ItemsUseCse()),
-            ),
-            BlocProvider(
-              create: (context) => UserDataClassCubit(),
-            ),
-            BlocProvider(
-              create: (context) =>
-                  OrdersCubit(UserOrdersRepo(OrderDataFirebase())),
-            ),
-            BlocProvider(create: (context) => PaymentCubit())
-          ], child: CoffeeShopApp())));
+  runApp(
+      // DevicePreview(
+      // builder: (context) =>
+      MultiBlocProvider(providers: [
+    BlocProvider(
+        create: (context) => CategoryCubit(
+            DataRepo(coffeeDataSource: CoffeeDataSource()), ItemsUseCse())),
+    BlocProvider(create: (context) => UserDataCubit(UserDataRepo(UserData()))),
+    BlocProvider(
+      create: (context) => CoffeeItemsCubit(ItemsUseCse()),
+    ),
+    BlocProvider(
+      create: (context) => UserDataClassCubit(),
+    ),
+    BlocProvider(
+      create: (context) => OrdersCubit(UserOrdersRepo(OrderDataFirebase())),
+    ),
+    BlocProvider(create: (context) => PaymentCubit())
+  ], child: CoffeeShopApp())
+      //)
+      );
 
   Future.delayed(Duration(seconds: 2), () {
     FlutterNativeSplash.remove();
@@ -111,7 +112,7 @@ class CoffeeShopApp extends StatelessWidget {
               backgroundColor: Colors.white,
               type: BottomNavigationBarType.fixed,
             ),
-            fontFamily: 'Sora',
+            fontFamily: 'Lato',
             textSelectionTheme: const TextSelectionThemeData(
                 cursorColor: AppColors.brownAppColor)),
         onGenerateRoute: AppRouter.onGenerateRoute,
