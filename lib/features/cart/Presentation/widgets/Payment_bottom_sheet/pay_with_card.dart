@@ -1,5 +1,6 @@
 import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
+import 'package:coffe_app/features/Orders/Data/models/order_model.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,11 +9,16 @@ import '../../../../payment/cubit/payment_cubit.dart';
 
 class PayWithCard extends StatefulWidget {
   const PayWithCard(
-      {super.key, required this.sheetContext, required this.amount,required this.cartItems});
+      {super.key,
+      required this.sheetContext,
+      required this.amount,
+      required this.cartItems,
+      required this.orderModel});
 
   final BuildContext sheetContext;
   final double amount;
   final List<CoffeeItem> cartItems;
+  final OrderModel orderModel;
 
   @override
   State<PayWithCard> createState() => _PayWithCardState();
@@ -44,9 +50,8 @@ class _PayWithCardState extends State<PayWithCard> {
 
         return GestureDetector(
           onTap: () {
-            context
-                .read<PaymentCubit>()
-                .payWithPayMob(widget.amount, widget.sheetContext,widget.cartItems);
+            context.read<PaymentCubit>().payWithPayMob(
+                widget.amount, widget.sheetContext, widget.orderModel);
           },
           child: Container(
             width: 130,

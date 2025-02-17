@@ -1,13 +1,17 @@
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffe_app/features/Orders/Data/DataSource/user_orders_data_firebase.dart';
+import 'package:coffe_app/features/Orders/Data/models/order_model.dart';
 import 'package:coffe_app/features/Orders/Data/repo/user_orders_repo.dart';
 import 'package:coffe_app/features/cart/Data/DataSource/user_data_firebase.dart';
 import 'package:coffe_app/features/cart/Data/repo/user_data_repo.dart';
 import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart';
+import 'package:coffe_app/features/home/data/models/UserData/user_data.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:coffe_app/features/home/presentation/cubit/UserData_cubit/user_data_cubit.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
@@ -26,17 +30,16 @@ class PaymentCubit extends Cubit<PaymentState> {
       'https://accept.paymob.com/api/acceptance/iframes/893140?payment_token=';
 
   Future<String> payWithPayMob(
-      double amount, BuildContext context, List<CoffeeItem> cartItems) async {
+      double amount, BuildContext context, OrderModel order) async {
     emit(PaymentLoading());
     try {
       String token = await getAuthToken(apiKey);
-      int orderId = await createOrder(token, (100 * amount).toInt().toString());
-      String paymentKey = await getPaymentKey(
-          token, orderId.toString(), (100 * amount).toInt().toString());
+      int orderId = await createOrder(
+          token, (100 * amount).toInt().toString(), order.myOrders);
+      String paymentKey = await getPaymentKey(token, orderId.toString(),
+          (100 * amount).toInt().toString(), order.userDataClass);
       print('Payment Key: $paymentKey');
-
       emit(PaymentSuccess(message: paymentKey));
-
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -44,15 +47,17 @@ class PaymentCubit extends Cubit<PaymentState> {
             value: context.read<UserDataClassCubit>(),
             child: PaymentScreen(
               paymentUrl: '$frameUrl$paymentKey',
-              // cartItems: cartItems,
-              // discountPrice: amount,
+              totalPrice: amount,
+              orderModel: order,
             ),
           ),
         ),
       );
       return paymentKey;
     } catch (e) {
-      print('Payment Error: $e');
+      if (kDebugMode) {
+        print('Payment Error: $e');
+      }
       emit(PaymentError(message: e.toString()));
     }
     return '';
@@ -75,7 +80,8 @@ class PaymentCubit extends Cubit<PaymentState> {
   }
 
 //TODO This is the second function to create order to get orderId that used in third function.
-  Future<int> createOrder(String authToken, String amount) async {
+  Future<int> createOrder(
+      String authToken, String amount, List<CoffeeItem> items) async {
     final response = await http.post(
       Uri.parse('https://accept.paymob.com/api/ecommerce/orders'),
       headers: {
@@ -87,7 +93,8 @@ class PaymentCubit extends Cubit<PaymentState> {
         'delivery_needed': "true",
         'amount_cents': amount,
         'currency': 'EGP',
-        'items': [],
+        // 'items': items.map((item) => item.toMap()).toList(),
+        'items': []
       }),
     );
     print(amount);
@@ -97,14 +104,14 @@ class PaymentCubit extends Cubit<PaymentState> {
           "jsonDecode(response.body)['id']${jsonDecode(response.body)['id']}");
       return jsonDecode(response.body)['id'];
     } else {
-      print(response.statusCode);
+      print("❌ Error ${response.statusCode}: ${response.body}");
       throw Exception('Failed to create order');
     }
   }
 
 //TODO This is the third function to get paymentKyToken that used in url to complete payment process.
-  Future<String> getPaymentKey(
-      String authToken, String orderId, String amount) async {
+  Future<String> getPaymentKey(String authToken, String orderId, String amount,
+      UserDataClass userData) async {
     final response = await http.post(
       Uri.parse('https://accept.paymob.com/api/acceptance/payment_keys'),
       headers: {
@@ -118,17 +125,17 @@ class PaymentCubit extends Cubit<PaymentState> {
         'currency': 'EGP',
         'billing_data': {
           'apartment': 'NA',
-          'email': 'john.doe@example.com',
+          'email': userData.email,
           'floor': 'NA',
-          'first_name': 'John',
+          'first_name': userData.name ?? "",
           'street': 'NA',
           'building': 'NA',
-          'phone_number': '+201234567890',
+          'phone_number': userData.phoneNumber ?? "No phone number provided",
           'shipping_method': 'NA',
           'postal_code': 'NA',
           'city': 'Cairo',
           'country': 'EG',
-          'last_name': 'Doe',
+          'last_name': userData.name ?? "",
           'state': 'NA',
         },
         'integration_id': integrationId,

@@ -207,6 +207,17 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                     sheetContext: context,
                     amount: amount,
                     cartItems: widget.cartItems,
+                    orderModel: OrderModel(
+                      userRequirements: notesController.text,
+                      paymentMethod: 'Online Card',
+                      paymentProcess: true,
+                      userDataClass:
+                          context.read<UserDataClassCubit>().userDataClass!,
+                      orderStartDate: DateTime.now(),
+                      myOrders: widget.cartItems,
+                      stateOfTheOrder: 'Pending',
+                      orderTotalPrice: widget.finalPrice.toStringAsFixed(2),
+                    ),
                   ),
                   const PayWithWallet()
                 ],
