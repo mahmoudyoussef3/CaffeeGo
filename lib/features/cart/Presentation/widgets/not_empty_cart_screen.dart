@@ -3,8 +3,10 @@ import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart'
 import 'package:coffe_app/features/cart/Presentation/widgets/payment_summary.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:coffe_app/features/home/presentation/cubit/UserData_cubit/user_data_cubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../core/utils/app_colors.dart';
@@ -43,6 +45,36 @@ class _NotEmptyCartScreenState extends State<NotEmptyCartScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              InkWell(
+                onTap: () => Navigator.pop(context),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: AppColorsDarkTheme.greyAppColor),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset('assets/icons/drawer_icon.png'),
+                  ),
+                ),
+              ),
+              Spacer(),
+              Text(
+                'Cart',
+                style: TextStyle(
+                    letterSpacing: 2,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 24,
+                    color: AppColorsDarkTheme.whiteAppColor),
+              ),
+              Spacer(),
+            ],
+          ),
+        ),
         SizedBox(
           height: 12,
         ),
@@ -51,17 +83,36 @@ class _NotEmptyCartScreenState extends State<NotEmptyCartScreen> {
         Container(
           padding: EdgeInsets.all(16),
           child: TextField(
+            style: TextStyle(
+                color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
             controller: notesController,
             decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderSide:
+                    BorderSide(color: AppColorsDarkTheme.darkBlueAppColor),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              fillColor: AppColorsDarkTheme.greyAppColor,
+              filled: true,
               focusedBorder: OutlineInputBorder(
+                borderSide:
+                    BorderSide(color: AppColorsDarkTheme.darkBlueAppColor),
                 borderRadius: BorderRadius.circular(12),
               ),
-              labelText: 'Add Your Notes',
-              labelStyle: TextStyle(color: Colors.black),
+              hintText: 'Add Your Notes',
+              hintStyle: TextStyle(
+                  color: AppColorsDarkTheme.greyLessDegreeAppColor,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.sp),
               border: OutlineInputBorder(
+                borderSide:
+                    BorderSide(color: AppColorsDarkTheme.darkBlueAppColor),
                 borderRadius: BorderRadius.circular(12),
               ),
-              suffixIcon: Icon(Icons.note_alt_outlined),
+              suffixIcon: Icon(
+                Icons.note_alt_outlined,
+                color: AppColorsDarkTheme.greyLessDegreeAppColor,
+              ),
             ),
           ),
         ),

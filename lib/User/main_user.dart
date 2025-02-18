@@ -1,4 +1,5 @@
 import 'package:coffe_app/config/routes.dart';
+import 'package:coffe_app/config/themes.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:coffe_app/features/home/presentation/cubit/UserData_cubit/user_data_cubit.dart';
@@ -40,34 +41,6 @@ void main() async {
 
   await Hive.openBox<CoffeeItem>(AppStrings.hiveBoxName);
 
-  //
-  // FlutterPaymob.instance.initialize(
-  //     apiKey:
-  //         "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TVRBeE56RXpPQ3dpYm1GdFpTSTZJbWx1YVhScFlXd2lmUS5qZUdnSnk1b2NRcUtpN1Y0SXExS0FTcGVvWm5VM2lKU1hYV0t0cnNpVUlSMy1rSm01WjhtcTkwNGdyckZ4eVFpaUc5Z0o0UFlKUXB1Z19IUHg2cWh4Zw==",
-  //     integrationID: 4923809,
-  //     walletIntegrationId: 4923809,
-  //     iFrameID: 893140);
-  // MyHive.initHive();
-  //
-  // await OneSignal.shared.setAppId('3e076dbf-8eba-4b5e-840d-4d24f7980010');
-  // await OneSignal.shared
-  //     .promptUserForPushNotificationPermission(fallbackToSettings: true);
-  //
-  // const externalUserId = 'hhfjfjfj35@gmail.com';
-  // if (externalUserId.isNotEmpty) {
-  //   await OneSignal.shared.setExternalUserId(externalUserId).then((value) {
-  //     log('External User ID Set: $externalUserId');
-  //   });
-  // } else {
-  //   await OneSignal.shared.setExternalUserId(externalUserId).then((value) {
-  //     log('External User ID Cleared');
-  //   });
-  // }
-
-//  await OneSignal.shared.getDeviceState().then((value) {
-  // log('Device User ID: ${value?.userId}');
-  // });
-
   runApp(
       // DevicePreview(
       // builder: (context) =>
@@ -107,14 +80,19 @@ class CoffeeShopApp extends StatelessWidget {
       child: MaterialApp(
         locale: DevicePreview.locale(context),
         builder: DevicePreview.appBuilder,
-        theme: ThemeData(
-            bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-              backgroundColor: Colors.white,
-              type: BottomNavigationBarType.fixed,
-            ),
-            fontFamily: 'Lato',
-            textSelectionTheme: const TextSelectionThemeData(
-                cursorColor: AppColors.brownAppColor)),
+        darkTheme: darkTheme,
+        theme: darkTheme,
+        themeMode: ThemeMode.dark,
+
+        // theme: ThemeData(
+        //     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        //       backgroundColor: Colors.white,
+        //       type: BottomNavigationBarType.fixed,
+        //     ),
+        //     fontFamily: 'Poppins',
+        //     scaffoldBackgroundColor: AppColorsDarkTheme.darkBlueAppColor,
+        //     textSelectionTheme: const TextSelectionThemeData(
+        //         cursorColor: AppColors.brownAppColor)),
         onGenerateRoute: AppRouter.onGenerateRoute,
         initialRoute: AppStrings.splash,
         debugShowCheckedModeBanner: false,

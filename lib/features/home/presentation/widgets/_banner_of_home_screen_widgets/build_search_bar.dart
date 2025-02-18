@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../cubit/coffe_items/coffee_items_cubit.dart';
 
-
 class BuildSearchBar extends StatelessWidget {
   const BuildSearchBar({super.key, required this.searchController});
   final TextEditingController searchController;
@@ -17,7 +16,7 @@ class BuildSearchBar extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(23.r),
       ),
-      width: MediaQuery.of(context).size.width * 3 / 4 - 40.w,
+      width: MediaQuery.of(context).size.width - 30,
       child: Center(
         child: SearchBar(
           controller: searchController,
@@ -37,22 +36,26 @@ class BuildSearchBar extends StatelessWidget {
           },
           textStyle: WidgetStatePropertyAll(
             TextStyle(
-              color: Colors.black,
+              color: AppColorsDarkTheme.greyLighterAppColor,
               fontSize: 16.sp,
               fontWeight: FontWeight.w500,
             ),
           ),
-          hintStyle: const WidgetStatePropertyAll(
-            TextStyle(color: Colors.black38),
+          hintStyle: WidgetStatePropertyAll(
+            TextStyle(
+                color: AppColorsDarkTheme.greyLessDegreeAppColor,
+                fontWeight: FontWeight.w500,
+                fontSize: 14.sp),
           ),
           elevation: const WidgetStatePropertyAll(10),
           shape: WidgetStatePropertyAll(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12.r)),
+              borderRadius: BorderRadius.all(Radius.circular(16.r)),
             ),
           ),
-          backgroundColor: const WidgetStatePropertyAll(Colors.white),
-          hintText: 'Search coffee',
+          backgroundColor:
+              const WidgetStatePropertyAll(AppColorsDarkTheme.greyAppColor),
+          hintText: 'Find Your Coffee...',
           leading: InkWell(
             onTap: () {
               if (kDebugMode) {
@@ -64,7 +67,7 @@ class BuildSearchBar extends StatelessWidget {
             },
             child: const Icon(
               Icons.search,
-              color: AppColors.brownAppColor,
+              color: AppColorsDarkTheme.greyLessDegreeAppColor,
             ),
           ),
         ),

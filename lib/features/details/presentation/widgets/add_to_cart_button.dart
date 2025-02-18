@@ -5,7 +5,6 @@ import 'package:coffe_app/features/cart/Presentation/cubit/user_data_cubit.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../home/data/models/coffe_item.dart';
 
@@ -27,7 +26,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
         height: 60.h,
         width: 345,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColorsDarkTheme.darkBlueAppColor,
           borderRadius: BorderRadius.circular(34),
         ),
         child: Row(
@@ -76,7 +75,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                     borderRadius: BorderRadius.circular(12),
                     color: pressed
                         ? AppColors.offWhiteAppColor
-                        : AppColors.brownAppColor),
+                        : AppColorsDarkTheme.brownAppColor),
                 child: Center(
                   child: pressed
                       ? CustomLoadingProgress()
@@ -84,7 +83,8 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                           'Add To Cart',
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 1,
                               fontSize: 18),
                         ),
                 ),
@@ -98,23 +98,32 @@ class _AddToCartButtonState extends State<AddToCartButton> {
               endIndent: 5,
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
                   'Price',
                   style: TextStyle(
-                      color: Colors.black54,
+                      color: AppColorsDarkTheme.greyLighterAppColor,
                       fontSize: 20,
                       fontWeight: FontWeight.w700),
                 ),
-                Text(
-                  "${widget.price} \$",
-                  style: const TextStyle(
-                      color: AppColors.brownAppColor,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 24),
-                ),
+                Text.rich(TextSpan(children: [
+                  TextSpan(
+                    text: '\$ ',
+                    style: const TextStyle(
+                        color: AppColors.brownAppColor,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 24),
+                  ),
+                  TextSpan(
+                    text: widget.price,
+                    style: const TextStyle(
+                        color: AppColorsDarkTheme.whiteAppColor,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 24),
+                  )
+                ])),
               ],
             )
           ],

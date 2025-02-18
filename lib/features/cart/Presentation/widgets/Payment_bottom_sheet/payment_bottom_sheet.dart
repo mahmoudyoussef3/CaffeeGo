@@ -137,7 +137,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                   flex: 1,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.brownAppColor,
+                      backgroundColor: AppColorsDarkTheme.greyAppColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -149,7 +149,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                     child: const Text(
                       'Pay Now',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColorsDarkTheme.greyLighterAppColor,
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
@@ -169,7 +169,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: AppColorsDarkTheme.darkBlueAppColor,
       builder: (sheetContext) {
         return Container(
           padding: const EdgeInsets.all(16),
@@ -194,10 +194,9 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
               const Text(
                 'Choose Payment Method',
                 style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
-                ),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white),
               ),
               const SizedBox(height: 20),
               Row(

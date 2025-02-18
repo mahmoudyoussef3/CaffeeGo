@@ -50,38 +50,103 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 4,
-      margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: [
+          AppColorsDarkTheme.greyAppColor,
+          AppColorsDarkTheme.darkBlueAppColor,
+        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 Icon( admin ? Icons.person:Icons.coffee, size: 22, color: Colors.black87),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    userName,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Colors.black87,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Order Date'),
+                    SizedBox(height: 5,),
+                    Text(
+                      DateFormat('MMM d, yyyy - hh:mm').format(orderDate),
+                      style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: AppColorsDarkTheme.greyLighterAppColor),
                     ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  ],
                 ),
+
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text('Total Amount'),
+                    SizedBox(height: 5,),
+
+                    Text(
+                      "\$ ${totalPrice.toString()}",
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: AppColorsDarkTheme.brownAppColor),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            const Divider(),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: items.map((item) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                            '${item["name"]}',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      Text.rich(TextSpan(children: [
+                        TextSpan(text: 'X ',
+
+                          style: const TextStyle(
+                            color: AppColorsDarkTheme.brownAppColor,
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(
+
+                          text:
+                            '${item["quantity"]}',
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+
+                        )
+                      ]))
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+            const Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
                 Container(
                   width: 95,
                   height: 30,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: getStatusColor(),
+                    color: AppColorsDarkTheme.darkBlueAppColor,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Center(
@@ -93,44 +158,6 @@ class OrderCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Text(
-              'Total Price: \$$totalPrice',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-            const Divider(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: items.map((item) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '- ${item["name"]}',
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                      Text(
-                        '${item["quantity"]}',
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                );
-              }).toList(),
-            ),
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Date: ${DateFormat('MMM d, yyyy - hh:mm').format(orderDate)}',
-                  style: const TextStyle(fontSize: 14, color: Colors.black54),
                 ),
                 InkWell(
                   onTap: onScanQr,

@@ -19,41 +19,28 @@ class DismissedCoffeeCartItem extends StatefulWidget {
 class _DismissedCoffeeCartItemState extends State<DismissedCoffeeCartItem> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: Colors.white,
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 5,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: CustomOrderItem(
-        coffeeItem: widget.cartItems[widget.index],
-        onDecrease: () async {
-          setState(() {
-            widget.cartItems[widget.index].quantityInCart > 1
-                ? widget.cartItems[widget.index].quantityInCart--
-                : null;
-          });
-          await context.read<UserDataCubit>().updateQuantity(
-              widget.cartItems[widget.index].selectedSize,
-              widget.cartItems[widget.index].id,
-              widget.cartItems[widget.index].quantityInCart);
-        },
-        onIncrease: () async {
-          setState(() {
-            widget.cartItems[widget.index].quantityInCart++;
-          });
-          await context.read<UserDataCubit>().updateQuantity(
-              widget.cartItems[widget.index].selectedSize,
-              widget.cartItems[widget.index].id,
-              widget.cartItems[widget.index].quantityInCart);
-        },
-      ),
+    return CustomOrderItem(
+      coffeeItem: widget.cartItems[widget.index],
+      onDecrease: () async {
+        setState(() {
+          widget.cartItems[widget.index].quantityInCart > 1
+              ? widget.cartItems[widget.index].quantityInCart--
+              : null;
+        });
+        await context.read<UserDataCubit>().updateQuantity(
+            widget.cartItems[widget.index].selectedSize,
+            widget.cartItems[widget.index].id,
+            widget.cartItems[widget.index].quantityInCart);
+      },
+      onIncrease: () async {
+        setState(() {
+          widget.cartItems[widget.index].quantityInCart++;
+        });
+        await context.read<UserDataCubit>().updateQuantity(
+            widget.cartItems[widget.index].selectedSize,
+            widget.cartItems[widget.index].id,
+            widget.cartItems[widget.index].quantityInCart);
+      },
     );
   }
 }

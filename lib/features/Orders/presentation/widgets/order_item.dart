@@ -18,93 +18,133 @@ class CustomOrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 140,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        gradient: LinearGradient(colors: [
+          AppColorsDarkTheme.greyAppColor,
+          AppColorsDarkTheme.darkBlueAppColor,
+        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
         borderRadius: BorderRadius.circular(12),
       ),
       width: double.infinity,
-      height: 80.h,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.network(
               coffeeItem.image,
-              height: 80.h,
-              width: 70.h,
+              height: 120.h,
+              width: 100.h,
               fit: BoxFit.cover,
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 18),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
                   coffeeItem.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                      letterSpacing: 2),
                 ),
-                const SizedBox(height: 5),
-                Text(
-                  "Price: ${coffeeItem.sizes[coffeeItem.selectedSize]}",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey.shade700,
-                  ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: AppColorsDarkTheme.darkBlueAppColor),
+                      child: Center(
+                        child: Text(
+                          coffeeItem.selectedSize,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14),
+                        ),
+                      ),
+                    ),
+                    Text.rich(TextSpan(children: [
+                      TextSpan(
+                          text: '\$ ',
+                          style: TextStyle(
+                              color: AppColorsDarkTheme.brownAppColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20)),
+                      TextSpan(
+                          style: TextStyle(
+                              color: AppColorsDarkTheme.whiteAppColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20),
+                          text: '${coffeeItem.sizes[coffeeItem.selectedSize]}')
+                    ]))
+                  ],
                 ),
-                const SizedBox(height: 5),
-                Text(
-                  "Size: ${coffeeItem.selectedSize}",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey.shade700,
-                  ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                        onTap: onDecrease,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: AppColorsDarkTheme.brownAppColor),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Icon(
+                              Icons.remove,
+                            ),
+                          ),
+                        )),
+                    Container(
+                      width: 60,
+                      height: 35,
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: AppColorsDarkTheme.brownAppColor),
+                          borderRadius: BorderRadius.circular(8),
+                          color: AppColorsDarkTheme.darkBlueAppColor),
+                      child: Center(
+                        child: Text(
+                          "${coffeeItem.quantityInCart}",
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                        onTap: onIncrease,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: AppColorsDarkTheme.brownAppColor),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Icon(
+                              Icons.add,
+                            ),
+                          ),
+                        )),
+                  ],
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 10),
-          Row(
-            children: [
-              CircularButton(
-                icon: Icons.remove,
-                onPressed: onDecrease,
-              ),
-              const SizedBox(width: 8),
-              Container(
-                width: 38,
-                height: 35,
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: AppColors.brownAppColor),
-                child: Center(
-                  child: Text(
-                    "${coffeeItem.quantityInCart}",
-                    style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 8),
-              CircularButton(
-                icon: Icons.add,
-                onPressed: onIncrease,
-              ),
-              const SizedBox(width: 8),
-            ],
-          ),
+          // const SizedBox(width: 10),
         ],
       ),
     );

@@ -93,7 +93,6 @@ class PaymentCubit extends Cubit<PaymentState> {
         'delivery_needed': "true",
         'amount_cents': amount,
         'currency': 'EGP',
-        // 'items': items.map((item) => item.toMap()).toList(),
         'items': []
       }),
     );

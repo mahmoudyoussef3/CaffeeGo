@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,17 +9,19 @@ class CoffeeCardWidget extends StatelessWidget {
   final CoffeeItem cardModel;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Card(
-        color: Colors.white,
-        elevation: 5,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.r),
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(14.r),
+          gradient: LinearGradient(
+              colors: [Color(0xff252A32), AppColorsDarkTheme.darkBlueAppColor],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight)),
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: 5.0.h,
         ),
         child: Padding(
-          padding: EdgeInsets.only(
-            bottom: 5.0.h,
-          ),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               SizedBox(
@@ -33,9 +36,8 @@ class CoffeeCardWidget extends StatelessWidget {
                             width: MediaQuery.of(context).size.width / 2,
                             height: 120.h,
                             child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(12.r),
-                                  topLeft: Radius.circular(12.r)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.r)),
                               child: CachedNetworkImage(
                                 fit: BoxFit.cover,
                                 imageUrl: cardModel.image,
@@ -59,9 +61,9 @@ class CoffeeCardWidget extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               cardModel.name,
                               style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w600),
+                                  color: AppColorsDarkTheme.whiteAppColor,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ),
                           const Spacer(
@@ -76,7 +78,7 @@ class CoffeeCardWidget extends StatelessWidget {
                               style: TextStyle(
                                   color: Color(0xffA2A2A2),
                                   fontSize: 13.sp,
-                                  fontWeight: FontWeight.w600),
+                                  fontWeight: FontWeight.w500),
                             ),
                           ),
                           const Spacer(
@@ -88,23 +90,36 @@ class CoffeeCardWidget extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 5.0.w),
                             child: Row(children: [
-                              Text(
-                                "\$${cardModel.sizes['medium']}",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w600),
+                              Text.rich(
+                                TextSpan(
+                                  text: "\$ ",
+                                  style: TextStyle(
+                                      color: AppColorsDarkTheme.brownAppColor,
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w600),
+                                  children: [
+                                    TextSpan(
+                                      text:
+                                          '${cardModel.sizes['medium']} ', // Bold part
+                                      style: TextStyle(
+                                          color:
+                                              AppColorsDarkTheme.whiteAppColor,
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
                               ),
                               const Spacer(),
                               Row(children: [
                                 const Icon(
                                   Icons.star,
-                                  color: Colors.yellow,
+                                  color: AppColorsDarkTheme.brownAppColor,
                                 ),
                                 Text(
                                   " ${cardModel.rate}",
                                   style: TextStyle(
-                                      color: Colors.black,
+                                      color: AppColorsDarkTheme.whiteAppColor,
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w600),
                                 ),

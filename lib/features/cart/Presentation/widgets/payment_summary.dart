@@ -10,7 +10,6 @@ class PaymentSummary extends StatelessWidget {
   final double priceWithoutDiscount;
   final double priceWithDiscount;
 
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,16 +18,11 @@ class PaymentSummary extends StatelessWidget {
         width: double.infinity,
         height: 150,
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 3,
-              blurRadius: 5,
-              offset: const Offset(0, 3),
-            ),
-          ],
+          gradient: LinearGradient(colors: [
+            AppColorsDarkTheme.greyAppColor,
+            AppColorsDarkTheme.darkBlueAppColor,
+          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
@@ -38,7 +32,7 @@ class PaymentSummary extends StatelessWidget {
               const Text(
                 'Payment Summary',
                 style: TextStyle(
-                  color: AppColors.semiBlackAppColor,
+                  color: AppColorsDarkTheme.whiteAppColor,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -52,18 +46,28 @@ class PaymentSummary extends StatelessWidget {
                   const Text(
                     'Price',
                     style: TextStyle(
-                      color: Colors.black54,
+                      color: AppColorsDarkTheme.greyLighterAppColor,
                       fontSize: 16,
                     ),
                   ),
-                  Text(
-                    '${priceWithoutDiscount.toStringAsFixed(2)} \$',
-                    style: const TextStyle(
-                      color: Colors.black87,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                  Text.rich(TextSpan(children: [
+                    TextSpan(
+                      text: '\$ ',
+                      style: TextStyle(
+                        color: AppColorsDarkTheme.brownAppColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
+                    TextSpan(
+                      text: priceWithoutDiscount.toStringAsFixed(2),
+                      style: TextStyle(
+                        color: AppColorsDarkTheme.whiteAppColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ])),
                 ],
               ),
               const SizedBox(height: 8),
@@ -86,7 +90,7 @@ class PaymentSummary extends StatelessWidget {
                     child: Text(
                       '15% off for totals over \$20!',
                       style: TextStyle(
-                        color: AppColors.brownAppColor,
+                        color: AppColorsDarkTheme.greyLighterAppColor,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
@@ -103,19 +107,29 @@ class PaymentSummary extends StatelessWidget {
                   const Text(
                     'Total Price',
                     style: TextStyle(
-                      color: AppColors.brownAppColor,
+                      color: AppColorsDarkTheme.whiteAppColor,
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Text(
-                    '${priceWithDiscount.toStringAsFixed(2)}\$',
-                    style: const TextStyle(
-                      color: AppColors.brownAppColor,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                  Text.rich(TextSpan(children: [
+                    TextSpan(
+                      text: '\$ ',
+                      style: TextStyle(
+                        color: AppColorsDarkTheme.brownAppColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
+                    TextSpan(
+                      text: priceWithDiscount.toStringAsFixed(2),
+                      style: TextStyle(
+                        color: AppColorsDarkTheme.whiteAppColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ])),
                 ],
               ),
             ],

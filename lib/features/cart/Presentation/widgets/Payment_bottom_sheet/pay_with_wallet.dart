@@ -1,3 +1,4 @@
+import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/features/payment/wallet_payment.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class PayWithWallet extends StatelessWidget {
         height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: Colors.green,
+          color: AppColorsDarkTheme.greyAppColor
         ),
         child: const Center(
           child: Text(

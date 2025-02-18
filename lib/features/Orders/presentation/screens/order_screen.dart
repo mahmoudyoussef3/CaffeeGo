@@ -25,108 +25,141 @@ class _OrderScreenState extends State<OrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.offWhiteAppColor,
-      appBar: AppBar(
-          backgroundColor: AppColors.brownAppColor,
-          foregroundColor: AppColors.offWhiteAppColor,
-          centerTitle: true,
-          title: Text(
-            'Orders',
-            style: TextStyle(
-              fontFamily: 'Lato',
-              color: AppColors.offWhiteAppColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 28,
-              letterSpacing: 1.5,
-            ),
-          )),
-      body: BlocBuilder<OrdersCubit, OrdersState>(
-        builder: (context, state) {
-          if (state is OrdersLoading) {
-            return const CustomLoadingProgress();
-          }
+    return SafeArea(
+      child: Scaffold(
+        body: BlocBuilder<OrdersCubit, OrdersState>(
+          builder: (context, state) {
+            if (state is OrdersLoading) {
+              return const CustomLoadingProgress();
+            }
 
-          if (state is OrdersError) {
-            return Center(
-              child: Text('Error: ${state.errorMessage}',
-                  style: const TextStyle(color: Colors.red)),
-            );
-          }
+            if (state is OrdersError) {
+              return Center(
+                child: Text('Error: ${state.errorMessage}',
+                    style: const TextStyle(color: Colors.red)),
+              );
+            }
 
-          if (state is OrdersLoaded) {
-            return ListView.separated(
-              separatorBuilder: (context, index) => Divider(
-                indent: 30,
-                endIndent: 30,
-                color: AppColors.brownAppColor,
-              ),
-              //  padding: const EdgeInsets.all(12),
-              itemCount: state.orders.length,
-              itemBuilder: (context, index) {
-                final order = state.orders[index];
-                print(order.stateOfTheOrder);
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 16.0, horizontal: 16),
-                  child: OrderCard(
-                    admin: false,
-                    userName: "${index + 1}",
-                    totalPrice: order.orderTotalPrice,
-                    items: order.myOrders
-                        .map((item) => {
-                              "name": item.name,
-                              "quantity": item.quantityInCart,
-                            })
-                        .toList(),
-                    orderDate: order.orderStartDate,
-                    orderStatus: order.stateOfTheOrder,
-                    qrWidget: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+            if (state is OrdersLoaded) {
+              return Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 18),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'QR Code',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
+                        InkWell(
+                          onTap: () => Navigator.pop(context),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                color: AppColorsDarkTheme.greyAppColor),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child:
+                                  Image.asset('assets/icons/drawer_icon.png'),
+                            ),
                           ),
                         ),
-                        SizedBox(
-                          width: 4,
+                        Spacer(),
+                        Text(
+                          'Cart',
+                          style: TextStyle(
+                              letterSpacing: 2,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 24,
+                              color: AppColorsDarkTheme.whiteAppColor),
                         ),
-                        Icon(
-                          Icons.qr_code,
-                          color: Colors.white,
-                          size: 14,
-                        ),
+                        Spacer(),
                       ],
                     ),
-                    onScanQr: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            backgroundColor: AppColors.offWhiteAppColor,
-                            title: Text('Scan QR Code'),
-                            content: SizedBox(
-                              height: 300.h,
-                              width: 300.w,
-                              child: QrImageView(
-                                  data:
-                                      "${order.userDataClass.name ?? 'UnKnownUser'} \n${order.myOrders.map((item) => "${item.name} - ${item.quantityInCart} - ${item.selectedSize}").toString()} "),
+                    SizedBox(
+                      height: 24,
+                    ),
+                    Expanded(
+                      child: ListView.separated(
+                        separatorBuilder: (context, index) => Divider(
+                          indent: 30,
+                          endIndent: 30,
+                          color: AppColors.brownAppColor,
+                        ),
+                        //  padding: const EdgeInsets.all(12),
+                        itemCount: state.orders.length,
+                        itemBuilder: (context, index) {
+                          final order = state.orders[index];
+                          print(order.stateOfTheOrder);
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: OrderCard(
+                              admin: false,
+                              userName: "${index + 1}",
+                              totalPrice: order.orderTotalPrice,
+                              items: order.myOrders
+                                  .map((item) => {
+                                        "name": item.name,
+                                        "quantity": item.quantityInCart,
+                                      })
+                                  .toList(),
+                              orderDate: order.orderStartDate,
+                              orderStatus: order.stateOfTheOrder,
+                              qrWidget: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'QR Code',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 4,
+                                  ),
+                                  Icon(
+                                    Icons.qr_code,
+                                    color: Colors.white,
+                                    size: 14,
+                                  ),
+                                ],
+                              ),
+                              onScanQr: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      backgroundColor:
+                                          AppColorsDarkTheme.whiteAppColor,
+                                      title: Text(
+                                        'Scan QR Code',
+                                        style: TextStyle(
+                                            color: AppColorsDarkTheme
+                                                .darkBlueAppColor),
+                                      ),
+                                      content: SizedBox(
+                                        height: 300.h,
+                                        width: 300.w,
+                                        child: QrImageView(
+                                            data:
+                                                "${order.userDataClass.name ?? 'UnKnownUser'} \n${order.myOrders.map((item) => "${item.name} - ${item.quantityInCart} - ${item.selectedSize}").toString()} "),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
                             ),
                           );
                         },
-                      );
-                    },
-                  ),
-                );
-              },
-            );
-          }
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
 
-          return const SizedBox();
-        },
+            return const SizedBox();
+          },
+        ),
       ),
     );
   }

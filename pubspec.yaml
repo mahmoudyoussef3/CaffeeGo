@@ -82,6 +82,7 @@ flutter:
     - assets/onboarding_imgs/unsplash_SCbq6uKCyMY.png
     - assets/images/app_img.png
     - assets/onboarding_imgs/Frame 2.png
+    - assets/icons/
 
   fonts:
     - family: Poppins
