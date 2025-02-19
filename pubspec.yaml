@@ -34,7 +34,6 @@ dependencies:
   hive_flutter: ^1.1.0
   hive: ^2.2.3
   cached_network_image: ^3.4.1
-  onesignal_flutter: ^3.2.9
   http: ^1.2.2
   intl: ^0.19.0
   uuid: ^4.5.1
@@ -60,6 +59,9 @@ dependencies:
   lottie: ^3.3.1
   animations: ^2.0.11
   loading_animation_widget: ^1.3.0
+  flutter_local_notifications: ^18.0.1
+  firebase_messaging: ^15.2.3
+  googleapis_auth: ^1.6.0
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +86,7 @@ flutter:
     - assets/onboarding_imgs/Frame 2.png
     - assets/icons/
     - assets/icons/playstore.png
+    - assets/Jsons/coffe-shop-ea8dc-d06e7088e621.json
 
   fonts:
     - family: Poppins

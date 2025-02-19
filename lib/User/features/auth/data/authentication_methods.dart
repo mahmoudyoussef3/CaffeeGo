@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -19,6 +20,8 @@ class AuthenticationMethods {
         'phoneNumber': phoneNumber,
         'cart': [],
       });
+      subscribeToTopic();
+
       return userCredential;
     } on FirebaseException catch (e) {
       throw FirebaseAuthException(
@@ -26,6 +29,10 @@ class AuthenticationMethods {
         message: e.message,
       );
     }
+  }
+
+  void subscribeToTopic() {
+    FirebaseMessaging.instance.subscribeToTopic("allUsers");
   }
 
 //todo Create Authenticate with google mail(gmail)
@@ -50,7 +57,8 @@ class AuthenticationMethods {
 
       UserCredential userCredential =
           await auth.signInWithCredential(credential);
-
+      FirebaseMessaging messaging = FirebaseMessaging.instance;
+      String? token = await messaging.getToken();
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userCredential.user!.uid)
@@ -63,8 +71,10 @@ class AuthenticationMethods {
             userCredential.user!.phoneNumber ?? 'No phone number provided',
         'img': userCredential.user!.photoURL ?? '',
         'cart': [],
+        'fcmToken': token,
         'orders': [],
       });
+      subscribeToTopic();
     } catch (e) {
       if (kDebugMode) {
         print('Error during Google sign-in: $e');

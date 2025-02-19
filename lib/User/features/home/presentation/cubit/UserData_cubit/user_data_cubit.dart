@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../config/send_notification_srevice.dart';
 import '../../../../notification/data/user_notifications.dart';
 import '../../../data/models/UserData/user_data.dart';
 
@@ -27,11 +28,9 @@ class UserDataClassCubit extends Cubit<UserDataClassState> {
           name: data['displayName'] ?? 'Unknown',
           phoneNumber: data['phoneNumber'] ?? '0',
           email: data['email'] ?? '',
+          fcmToken: data['fcmToken'],
         );
-        OneSignalUser(
-                externalUserId: userDataClass?.uuid ?? "",
-                userName: userDataClass?.name ?? '')
-            .initPlatform();
+
 
         emit(UserDataClassLoaded(userDataClass: userDataClass!));
       } else {

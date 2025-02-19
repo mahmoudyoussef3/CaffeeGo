@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
+import '../../../../../config/send_notification_srevice.dart';
 import '../../../Orders/Data/models/order_model.dart';
 import '../../../home/data/models/coffe_item.dart';
 import '../../../notification/data/user_notifications.dart';
@@ -86,14 +87,20 @@ class UserData {
       await FirebaseFirestore.instance
           .collection('orders')
           .add({'order': order.toJson()});
-      await OneSignalUser(
-              externalUserId: order.userDataClass.email!,
-              userName: order.userDataClass.name ?? 'Un Known user')
-          .initPlatform();
-      await OneSignalUser(
-              externalUserId: order.userDataClass.email!,
-              userName: order.userDataClass.name ?? 'Un Known user')
-          .sendNotificationToAdmin(order.myOrders[0].image,order.orderId);
+      sendNotificationToAdmin(
+          token:
+              'e9nMNAFcS9eIVetcBJIQi5:APA91bFYT-ehmbWyYhurxDUREIhxXgF0mOXnywtyUarcTCsWA2le4zCof6-Gy3T7ujHra2LqbiinTRBhDldMgs8gs27k96GnuCeovddVswIZgQUJOy5v54Y',
+          title: "New order",
+          body: '${order.userDataClass.name!} has ordered drink',
+          data: {});
+      // await OneSignalUser(
+      //         externalUserId: order.userDataClass.email!,
+      //         userName: order.userDataClass.name ?? 'Un Known user')
+      //     .initPlatform();
+      // await OneSignalUser(
+      //         externalUserId: order.userDataClass.email!,
+      //         userName: order.userDataClass.name ?? 'Un Known user')
+      //     .sendNotificationToAdmin(order.myOrders[0].image,order.orderId);
 
       if (kDebugMode) {
         print('Added order to admin order done');

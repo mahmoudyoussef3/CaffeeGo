@@ -7,15 +7,15 @@ plugins {
 
 android {
     namespace = "com.example.coffe_app"
-    compileSdk = 33
+    compileSdk 34
 
     defaultConfig {
         applicationId = "com.example.coffe_app"
+        targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         multiDexEnabled true
         minSdkVersion 23
-        targetSdkVersion 34
     }
 
     buildTypes {
@@ -30,6 +30,7 @@ android {
     }
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -48,5 +49,6 @@ flutter {
 }
 
 dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
     implementation 'androidx.multidex:multidex:2.0.1'
 }

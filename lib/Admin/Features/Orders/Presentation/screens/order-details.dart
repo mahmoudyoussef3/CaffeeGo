@@ -1,3 +1,4 @@
+import 'package:coffe_app/config/send_notification_srevice.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -137,11 +138,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       widget.order.userDataClass.uuid!,
       widget.order.orderId,
     );
-    OneSignalAdmin().sendNotificationToSpecificUser(
-      title: 'Order Update',
-      message: 'Your order status has changed to $selectedState',
-      userId: widget.order.userDataClass.uuid!,
-    );
+    sendNotificationToUser(
+        title: 'Order Update',
+        body: 'Your order status has changed to $selectedState',
+        data: {},
+        token: widget.order.userDataClass.fcmToken ?? '');
+
   }
 
   Widget _buildSectionCard(

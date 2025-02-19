@@ -2,11 +2,12 @@ import 'package:coffe_app/Admin/Features/AdminNotification/data/admin_notificati
 import 'package:coffe_app/config/routes.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
+import '../config/notification_config.dart';
 import '../core/utils/app_colors.dart';
 import '../firebase_options.dart';
 import 'Features/Home/Presentation/screens/admin_home_screen.dart';
@@ -18,7 +19,8 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await OneSignalAdmin().initPlatform();
+  // await OneSignalAdmin().initPlatform();
+  MessagingConfig.initFirebaseMessaging();
 
   runApp(const AdminApp());
   Future.delayed(
@@ -41,6 +43,7 @@ class AdminApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseMessaging.instance.getToken().then((value) => print("value$value"));
     return MaterialApp(
         navigatorKey: navigatorKey,
         theme: ThemeData(
