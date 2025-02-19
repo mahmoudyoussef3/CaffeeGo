@@ -13,7 +13,7 @@ class EarningsChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: LineChart(
         LineChartData(
           titlesData: FlTitlesData(

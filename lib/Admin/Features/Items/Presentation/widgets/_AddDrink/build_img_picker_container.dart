@@ -25,7 +25,7 @@ class BuildImgPickerContainer extends StatelessWidget {
             border: Border.all(color: AppColors.offWhiteAppColor, width: 2),
           ),
           child: image == null
-              ? Icon(
+              ? const Icon(
                   Icons.camera_alt,
                   size: 50,
                   color: Colors.black,

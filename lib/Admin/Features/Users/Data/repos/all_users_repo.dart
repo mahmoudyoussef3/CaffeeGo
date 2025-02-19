@@ -1,5 +1,5 @@
 import 'package:coffe_app/Admin/Features/Users/Data/data_source/get_all_users.dart';
-import 'package:coffe_app/features/home/data/models/UserData/user_data.dart';
+import '../../../../../User/features/home/data/models/UserData/user_data.dart';
 
 class AllUsersRepo {
 

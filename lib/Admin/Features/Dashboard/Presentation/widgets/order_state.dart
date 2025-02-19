@@ -1,65 +1,5 @@
-// import 'package:flutter/material.dart';
-// import 'package:syncfusion_flutter_charts/charts.dart';
-//
-// class OrderStateChart extends StatelessWidget {
-//   final int completedOrders;
-//   final int canceledOrders;
-//
-//   const OrderStateChart(
-//       {super.key, required this.completedOrders, required this.canceledOrders});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     List<_ChartData> chartData = [
-//       _ChartData("Completed", completedOrders, Colors.blue),
-//       _ChartData("Canceled", canceledOrders, Colors.red),
-//     ];
-//
-//     return Card(
-//       elevation: 5,
-//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-//       child: Padding(
-//         padding: const EdgeInsets.all(15.0),
-//         child: Column(
-//           children: [
-//             Text(
-//               "Completed vs Canceled",
-//               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//             ),
-//             SizedBox(height: 10),
-//             SfCircularChart(
-//               legend: Legend(isVisible: true, position: LegendPosition.bottom),
-//               series: <CircularSeries>[
-//                 PieSeries<_ChartData, String>(
-//                   dataSource: chartData,
-//                   xValueMapper: (_ChartData data, _) => data.label,
-//                   yValueMapper: (_ChartData data, _) => data.value,
-//                   dataLabelMapper: (_ChartData data, _) => '${data.value}',
-//                   pointColorMapper: (_ChartData data, _) => data.color,
-//                   dataLabelSettings: DataLabelSettings(
-//                     isVisible: true,
-//                     labelPosition: ChartDataLabelPosition.outside,
-//                   ),
-//                 )
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// class _ChartData {
-//   final String label;
-//   final int value;
-//   final Color color;
-//
-//   _ChartData(this.label, this.value, this.color);
-// }
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
 import '../../../../../core/utils/app_colors.dart';
 
 class OrderStateChart extends StatelessWidget {
@@ -91,13 +31,13 @@ class OrderStateChart extends StatelessWidget {
 
     List<ChartData> chartData = [
       ChartData("Completed- $completedOrders", completedPercentage.toDouble(),
-          Color(0xff543A14)),
+          const Color(0xff543A14)),
       ChartData("In Progress- $inProgressOrders",
           inProgressPercentage.toDouble(), AppColors.brownAppColor),
       ChartData("Canceled- $canceledOrders", canceledPercentage.toDouble(),
-          Color(0xffF0BB78)),
+          const Color(0xffF0BB78)),
       ChartData("Pending- $pendingOrders", pendingPercentage.toDouble(),
-          Color(0xff131010)),
+          const Color(0xff131010)),
     ];
 
     return Center(
@@ -110,16 +50,16 @@ class OrderStateChart extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
-              Text(
+              const Text(
                 "State of the orders",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 child: SfCircularChart(
-                  legend: Legend(
+                  legend: const Legend(
                     isVisible: true,
                     isResponsive: true,
                     position: LegendPosition.bottom,
@@ -132,7 +72,7 @@ class OrderStateChart extends StatelessWidget {
                       yValueMapper: (ChartData data, _) => data.y,
                       dataLabelMapper: (ChartData data, _) => data.x,
                       radius: '50%', // Make it a perfect circle
-                      dataLabelSettings: DataLabelSettings(
+                      dataLabelSettings: const DataLabelSettings(
                         isVisible: true,
                         labelPosition: ChartDataLabelPosition.outside,
                       ),

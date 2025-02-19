@@ -24,7 +24,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Analytics',
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
@@ -39,7 +39,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             return Center(
               child: Text(
                 state.message,
-                style: TextStyle(fontSize: 18, color: Colors.red),
+                style: const TextStyle(fontSize: 18, color: Colors.red),
               ),
             );
           } else if (state is DashboardLoaded) {
@@ -58,48 +58,34 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     inProgressOrders:
                         state.completedOrdersToCancelled['In Progress']!,
                   ),
-                  SizedBox(height: 5),
-                  // Divider(
-                  //   color: AppColors.brownAppColor,
-                  //   height: 5,
-                  //   endIndent: 30,
-                  //   thickness: 2,
-                  //   indent: 30,
-                  // ),
-                  SizedBox(height: 5),
+                  const    SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   _buildSummaryCard(
                     title: 'Total Sales',
                     value: state.totalSales.toStringAsFixed(2),
                     icon: Icons.monetization_on,
                   ),
-                  SizedBox(height: 5),
-                  // Divider(
-                  //   color: AppColors.brownAppColor,
-                  //   height: 5,
-                  //   endIndent: 30,
-                  //   thickness: 2,
-                  //   indent: 30,
-                  // ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
+                  const   SizedBox(height: 5),
                   _buildSummaryCard(
                     title: 'Payment Methods',
                     value:
                         "Online: ${state.paymentMethodStats['online']}\nCash: ${state.paymentMethodStats['cash']}",
                     icon: Icons.credit_card,
                   ),
-                  SizedBox(height: 5),
+                  const  SizedBox(height: 5),
 
-                  SizedBox(height: 5),
+                  const  SizedBox(height: 5),
                   _buildChartSection(state.ordersPerHour),
-                  SizedBox(height: 5),
+                  const  SizedBox(height: 5),
 
-                  SizedBox(height: 5),
+                  const  SizedBox(height: 5),
                   _buildTopProducts(state.topProducts),
                 ],
               ),
             );
           }
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
         },
       ),
     );
@@ -121,11 +107,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         ),
         title: Text(
           title,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style:const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         subtitle: Text(
           value,
-          style: TextStyle(fontSize: 16, color: Colors.black54),
+          style:const TextStyle(fontSize: 16, color: Colors.black54),
         ),
       ),
     );
@@ -145,8 +131,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               decoration: BoxDecoration(
                   color: AppColors.brownAppColor,
                   borderRadius: BorderRadius.circular(12)),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+              child:const Padding(
+                padding:  EdgeInsets.all(8.0),
                 child: Text(
                   "Orders per Hour",
                   style: TextStyle(
@@ -156,7 +142,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             SizedBox(
               height: 200,
               child: BarChart(
@@ -197,8 +183,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               decoration: BoxDecoration(
                   color: AppColors.brownAppColor,
                   borderRadius: BorderRadius.circular(12)),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text(
                   "Top Products",
                   style: TextStyle(
@@ -208,15 +194,15 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const   SizedBox(height: 10),
             Column(
               children: products.entries.map((entry) {
                 return ListTile(
-                  title: Text(entry.key, style: TextStyle(fontSize: 16)),
+                  title: Text(entry.key, style:const TextStyle(fontSize: 16)),
                   trailing: Text("${entry.value}",
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  subtitle: Divider(),
+                      const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  subtitle:const Divider(),
                 );
               }).toList(),
             ),
@@ -227,34 +213,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   }
 
   Widget buildPieChart() {
-    return Container(
+    return SizedBox(
       height: 100,
       width: 100,
       child: PieChart(PieChartData()
-
-          // data: [
-          //   PieChartData(
-          //     value: 30,
-          //     hole: 0.5,
-          //     color: Colors.blue,
-          //     holeColor: Colors.black54,
-          //     center: PieChartCenter(
-          //       text: 'Online',
-          //       textStyle: TextStyle(fontSize: 14),
-          //     ),
-          //   ),
-          //   PieChartData(
-          //     value: 70,
-          //     hole: 0.5,
-          //     color: Colors.green,
-          //     holeColor: Colors.black54,
-          //     center: PieChartCenter(
-          //       text: 'Cash',
-          //       textStyle: TextStyle(fontSize: 14),
-          //     ),
-          //   ),
-          // ],
-          ),
+       ),
     );
   }
 }

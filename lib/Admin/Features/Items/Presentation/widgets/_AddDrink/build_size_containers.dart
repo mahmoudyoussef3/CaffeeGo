@@ -28,14 +28,14 @@ class BuildSizeContainers extends StatelessWidget {
   Widget buildContainer(String label, TextEditingController controller) {
     return Column(
       children: [
-        Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
-        SizedBox(height: 5),
+        Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 5),
         SizedBox(
           height: 50,
           width: 80,
           child: TextFormField(
             controller: controller,
-            style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1),
+            style: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1),
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               filled: true,

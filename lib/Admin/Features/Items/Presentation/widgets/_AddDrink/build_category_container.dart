@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../../../core/utils/app_colors.dart';
 
 class BuildCategoryContainer extends StatefulWidget {
@@ -35,7 +34,7 @@ class _BuildCategoryContainerState extends State<BuildCategoryContainer> {
               },
               child: Container(
                 width: 100,
-                padding: EdgeInsets.symmetric(vertical: 8.0),
+                padding:const EdgeInsets.symmetric(vertical: 8.0),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: selectedCategory == index
@@ -44,7 +43,7 @@ class _BuildCategoryContainerState extends State<BuildCategoryContainer> {
                 child: Center(
                   child: Text(
                     widget.categories[index]['name'],
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: AppColors.offWhiteAppColor,
                         fontWeight: FontWeight.w600),
                   ),

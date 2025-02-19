@@ -1,9 +1,9 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../User/features/home/presentation/cubit/category_cubit/category_cubit.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/widgets/custom_loading_progress.dart';
-import '../../../../../features/home/presentation/cubit/category_cubit/category_cubit.dart';
 import '../cubits/admin_category_cubit.dart';
 
 class ManageCategoriesScreen extends StatefulWidget {
@@ -62,7 +62,7 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _showAddEditDialog(context, isEditing: false);
+          _showAddEditDialog(context);
         },
         backgroundColor: AppColors.brownAppColor,
         foregroundColor: AppColors.offWhiteAppColor,

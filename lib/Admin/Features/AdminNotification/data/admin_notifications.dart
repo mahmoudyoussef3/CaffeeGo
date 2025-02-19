@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -55,12 +56,18 @@ class OneSignalAdmin {
       );
 
       if (response.statusCode == 200) {
-        print('Notification sent successfully to $userId');
+        if (kDebugMode) {
+          print('Notification sent successfully to $userId');
+        }
       } else {
-        print('Erroyyyyyyr: ${response.body}');
+        if (kDebugMode) {
+          print('Erroyyyyyyr: ${response.body}');
+        }
       }
     } catch (e) {
-      print('Exceptyyyyyyyyion: $e');
+      if (kDebugMode) {
+        print('Exceptyyyyyyyyion: $e');
+      }
     }
   }
 
@@ -95,10 +102,14 @@ class OneSignalAdmin {
 
       if (response.statusCode == 200) {
       } else {
-        print('Error: ${response.body}');
+        if (kDebugMode) {
+          print('Error: ${response.body}');
+        }
       }
     } catch (e) {
-      print('Exception: $e');
+      if (kDebugMode) {
+        print('Exception: $e');
+      }
     }
   }
 }

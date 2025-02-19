@@ -25,11 +25,11 @@ class DashboardCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, size: 40, color: Colors.white),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               title,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                   letterSpacing: 1,
                   color: Colors.white,
                   fontSize: 18,

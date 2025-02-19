@@ -36,7 +36,7 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
               return Text('Error: ${snapshot.error}');
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CustomLoadingProgress());
+              return const Center(child: CustomLoadingProgress());
             }
             if (snapshot.hasData) {
               final state = snapshot.data;
@@ -70,7 +70,7 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
                           onScanQr: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => QRScannerScreen(),
+                              builder: (context) => const QRScannerScreen(),
                             ),
                           ),
                         ),
@@ -80,7 +80,7 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
                 );
               }
             }
-            return Center(child: Text("No orders available"));
+            return const Center(child: Text("No orders available"));
           }),
     );
   }

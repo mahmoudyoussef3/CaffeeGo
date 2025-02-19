@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coffe_app/features/cart/Data/DataSource/user_data_firebase.dart';
-import 'package:coffe_app/features/home/data/models/UserData/user_data.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+
+import '../../../../../User/features/home/data/models/UserData/user_data.dart';
 
 class GetAllUsers {
   Future<List<UserDataClass>> getAllUsers() async {
@@ -15,7 +17,9 @@ class GetAllUsers {
             UserDataClass.fromJson(document.data() as Map<String, dynamic>));
       }
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
 
     return myUsers;

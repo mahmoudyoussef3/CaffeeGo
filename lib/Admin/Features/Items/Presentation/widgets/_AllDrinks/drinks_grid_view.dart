@@ -35,7 +35,7 @@ class DrinksGridView extends StatelessWidget {
                     title: Text(
                       drinks[index].name,
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     content: const Text(
                       'Are you sure you want to delete this item?',

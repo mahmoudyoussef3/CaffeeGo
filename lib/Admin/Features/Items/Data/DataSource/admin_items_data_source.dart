@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coffe_app/features/home/data/models/coffe_item.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import '../../../../../User/features/home/data/models/coffe_item.dart';
 
 class AdminItemsDataSource {
   Future addCoffee(CoffeeItem coffeeItem) async {

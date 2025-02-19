@@ -22,7 +22,6 @@ class DashboardLoaded extends DashboardState {
     required this.paymentMethodStats,
   });
 
-  @override
   List<Object> get props => [
     topProducts,
     totalSales,
@@ -37,6 +36,5 @@ class DashboardError extends DashboardState {
 
   DashboardError(this.message);
 
-  @override
   List<Object> get props => [message];
 }

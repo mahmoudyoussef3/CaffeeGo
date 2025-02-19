@@ -54,7 +54,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
                 child: Center(
                   child: Text(
                     "Scanned: $scannedData",
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppColors.brownAppColor),

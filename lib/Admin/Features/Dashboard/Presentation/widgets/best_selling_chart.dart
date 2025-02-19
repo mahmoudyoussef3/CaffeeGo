@@ -13,7 +13,7 @@ class BestSellingChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: BarChart(
         BarChartData(
           titlesData: FlTitlesData(

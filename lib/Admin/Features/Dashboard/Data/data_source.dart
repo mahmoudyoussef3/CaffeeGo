@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 class DashboardAnalysis {
   /// This function works good
   Future<double> getTotalEarnings(DateTime date) async {
     try {
       final startOfDay = Timestamp.fromDate(
-          DateTime(date.year, date.month, date.day, 0, 0, 0));
+          DateTime(date.year, date.month, date.day));
       final endOfDay = Timestamp.fromDate(
           DateTime(date.year+5, date.month, date.day, 23, 59, 59));
 
@@ -19,7 +20,6 @@ class DashboardAnalysis {
       double totalEarnings = 0.0;
 
       for (var doc in querySnapshot.docs) {
-        // totalEarnings += doc['order.orderTotalPrice'];
         var price = doc['order.orderTotalPrice'];
         if (price is String) {
           totalEarnings += double.tryParse(price) ?? 0.0;
@@ -27,11 +27,15 @@ class DashboardAnalysis {
           totalEarnings += price.toDouble();
         }
       }
-      print("Total earnings for $date: $totalEarnings");
+      if (kDebugMode) {
+        print("Total earnings for $date: $totalEarnings");
+      }
 
       return totalEarnings;
     } catch (e) {
-      print("Error while getting total earnings: $e");
+      if (kDebugMode) {
+        print("Error while getting total earnings: $e");
+      }
       return 0.0;
     }
   }
@@ -58,12 +62,14 @@ class DashboardAnalysis {
           inProgress++;
         }
       }
-      print({
+      if (kDebugMode) {
+        print({
         "Completed": completed,
         "Canceled": canceled,
         "In Progress": inProgress,
         "Pending": pending
       });
+      }
 
       return {
         "Completed": completed,
@@ -72,7 +78,9 @@ class DashboardAnalysis {
         "Pending": pending
       };
     } catch (e) {
-      print("Error while getting order status count: $e");
+      if (kDebugMode) {
+        print("Error while getting order status count: $e");
+      }
       return {};
     }
   }
@@ -92,11 +100,15 @@ class DashboardAnalysis {
               (productCounts[itemName] ?? 0) + item['quantity'];
         }
       }
-      print(productCounts);
+      if (kDebugMode) {
+        print(productCounts);
+      }
 
       return productCounts;
     } catch (e) {
-      print("Error while getting best selling items: $e");
+      if (kDebugMode) {
+        print("Error while getting best selling items: $e");
+      }
       return {};
     }
   }
@@ -113,11 +125,15 @@ class DashboardAnalysis {
         int hour = time.hour;
         hoursCount[hour] = (hoursCount[hour] ?? 0) + 1;
       }
-      print(hoursCount);
+      if (kDebugMode) {
+        print(hoursCount);
+      }
 
       return hoursCount;
     } catch (e) {
-      print("Error while getting orders per hour: $e");
+      if (kDebugMode) {
+        print("Error while getting orders per hour: $e");
+      }
       return {};
     }
   }
@@ -132,17 +148,21 @@ class DashboardAnalysis {
       int cashPayments = 0;
 
       for (var doc in querySnapshot.docs) {
-        if (doc['order.paymentMethod'] == 'Paymob') {
+        if (doc['order.paymentMethod'] == 'Payob') {
           onlinePayments++;
         } else if (doc['order.paymentMethod'] == 'Cash') {
           cashPayments++;
         }
       }
-      print({"online": onlinePayments, "cash": cashPayments});
+      if (kDebugMode) {
+        print({"online": onlinePayments, "cash": cashPayments});
+      }
 
       return {"online": onlinePayments, "cash": cashPayments};
     } catch (e) {
-      print("Error while getting payment method stats: $e");
+      if (kDebugMode) {
+        print("Error while getting payment method stats: $e");
+      }
       return {};
     }
   }

@@ -116,7 +116,7 @@ class _ManageUsersScreenState extends State<ManageUsersScreen> {
             return const Center(child: CustomLoadingProgress());
           }
           if (state is GetAllUsersFailure) {
-            return Center(
+            return const Center(
               child: Text(
                 'Error fetching users',
                 style: TextStyle(

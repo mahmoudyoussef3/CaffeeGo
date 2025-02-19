@@ -7,15 +7,15 @@ plugins {
 
 android {
     namespace = "com.example.coffe_app"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.example.coffe_app"
-        targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         multiDexEnabled true
         minSdkVersion 23
+        targetSdkVersion 34
     }
 
     buildTypes {

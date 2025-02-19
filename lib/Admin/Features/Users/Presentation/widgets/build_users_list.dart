@@ -1,6 +1,6 @@
-import 'package:coffe_app/features/home/data/models/UserData/user_data.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../User/features/home/data/models/UserData/user_data.dart';
 import '../../../../../core/utils/app_colors.dart';
 
 class BuildUserList extends StatelessWidget {
@@ -31,7 +31,7 @@ class BuildUserList extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(),
             blurRadius: 10,
             spreadRadius: 2,
           ),
@@ -39,9 +39,9 @@ class BuildUserList extends StatelessWidget {
       ),
       child: ListTile(
         contentPadding: const EdgeInsets.all(12),
-        leading: CircleAvatar(
+        leading: const CircleAvatar(
           backgroundColor: AppColors.brownAppColor,
-          child: const Icon(Icons.person, color: Colors.white),
+          child: Icon(Icons.person, color: Colors.white),
         ),
         title: Text(
           name,

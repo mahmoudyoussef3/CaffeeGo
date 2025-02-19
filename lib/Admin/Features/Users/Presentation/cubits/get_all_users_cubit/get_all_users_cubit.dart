@@ -1,7 +1,7 @@
-import 'package:bloc/bloc.dart';
 import 'package:coffe_app/Admin/Features/Users/Data/repos/all_users_repo.dart';
-import 'package:coffe_app/features/home/data/models/UserData/user_data.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../../User/features/home/data/models/UserData/user_data.dart';
 
 part 'get_all_users_state.dart';
 

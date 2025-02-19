@@ -26,7 +26,7 @@ class AdminHomeScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: CustomPaint(
-              size: Size(double.infinity, double.infinity),
+              size: const Size(double.infinity, double.infinity),
               painter: GridPainter(),
             ),
           ),

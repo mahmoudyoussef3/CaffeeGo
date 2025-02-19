@@ -19,7 +19,6 @@ class BuildItemCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 6,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Hero(
@@ -33,7 +32,6 @@ class BuildItemCard extends StatelessWidget {
                 imageUrl: imgUrl,
                 errorWidget: (context, url, error) => const Icon(Icons.error),
                 fadeInDuration: const Duration(milliseconds: 1000),
-                fadeOutDuration: const Duration(milliseconds: 1000),
               ),
             ),
           ),
@@ -55,7 +53,7 @@ class BuildItemCard extends StatelessWidget {
               style: TextStyle(color: Colors.grey.shade700),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 8,
           )
         ],

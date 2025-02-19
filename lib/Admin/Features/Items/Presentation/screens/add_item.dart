@@ -1,25 +1,18 @@
-import 'dart:developer';
-
 import 'package:coffe_app/Admin/Features/Items/Presentation/cubits/admin_items_cubit.dart';
-import 'package:coffe_app/Admin/Features/Items/Presentation/widgets/_AddDrink/build_category_container.dart';
 import 'package:coffe_app/Admin/Features/Items/Presentation/widgets/_AddDrink/build_img_picker_container.dart';
 import 'package:coffe_app/Admin/Features/Items/Presentation/widgets/_AddDrink/build_size_containers.dart';
 import 'package:coffe_app/Admin/Features/Items/Presentation/widgets/_AddDrink/build_text_field.dart';
-import 'package:coffe_app/Admin/main_admin.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
-import 'package:coffe_app/core/utils/app_strings.dart';
-import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:uuid/uuid.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../../../../features/home/data/models/coffe_item.dart';
-import '../../../../../features/home/presentation/cubit/category_cubit/category_cubit.dart';
+import '../../../../../User/features/home/data/models/coffe_item.dart';
+import '../../../../../User/features/home/presentation/cubit/category_cubit/category_cubit.dart';
 import '../widgets/_AddDrink/build_add_drink_cubit.dart';
 import '../widgets/_AddDrink/build_container_bloc_builder.dart';
 
@@ -41,7 +34,7 @@ class _AddCoffeeItemScreenState extends State<AddCoffeeItemScreen> {
   File? _image;
   String? imgUrl;
   final picker = ImagePicker();
-  final uuid = Uuid();
+  final uuid = const Uuid();
 
   Future<void> _pickImage() async {
     try {
@@ -53,12 +46,16 @@ class _AddCoffeeItemScreenState extends State<AddCoffeeItemScreen> {
         imgUrl = await uploadImageToImgur(_image!);
       }
     } catch (e) {
-      print("Image Picker Error: $e");
+      if (kDebugMode) {
+        print("Image Picker Error: $e");
+      }
     }
   }
 
   Future<String?> uploadImageToImgur(File imageFile) async {
-    print('Start_img ipload');
+    if (kDebugMode) {
+      print('Start_img ipload');
+    }
     var request = http.MultipartRequest(
       'POST',
       Uri.parse('https://api.imgur.com/3/image'),
@@ -74,14 +71,18 @@ class _AddCoffeeItemScreenState extends State<AddCoffeeItemScreen> {
     if (response.statusCode == 200) {
       return jsonData['data']['link'];
     } else {
-      print('Failed to upload: ${jsonData['data']['error']}');
+      if (kDebugMode) {
+        print('Failed to upload: ${jsonData['data']['error']}');
+      }
       return null;
     }
   }
 
   Future addCoffee() async {
     if (imgUrl == null) {
-      print("Image URL is null. Cannot add coffee item.");
+      if (kDebugMode) {
+        print("Image URL is null. Cannot add coffee item.");
+      }
       return;
     }
 
@@ -123,25 +124,25 @@ class _AddCoffeeItemScreenState extends State<AddCoffeeItemScreen> {
         foregroundColor: Colors.black,
         centerTitle: true,
         backgroundColor: AppColors.offWhiteAppColor,
-        title: Text('Add New Drink'),
+        title: const Text('Add New Drink'),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(12.0),
           child: Card(
             color: AppColors.offWhiteAppColor,
             elevation: 50,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             child: Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     BuildImgPickerContainer(pickImg: _pickImage, image: _image),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     BuildTextField(
                         controller: nameController,
                         label: "Name",
@@ -151,20 +152,20 @@ class _AddCoffeeItemScreenState extends State<AddCoffeeItemScreen> {
                         controller: descriptionController,
                         label: "Description",
                         icon: Icons.description),
-                    SizedBox(height: 16),
-                    Text('Select Category',
+                    const SizedBox(height: 16),
+                    const Text('Select Category',
                         style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     BuildCategoryBlocContainer(
                         categoryController: categoryController),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     BuildSizeContainers(
                         mediumController: mediumController,
                         largeController: largeController,
                         smallController: smallController),
-                    SizedBox(height: 32),
+                    const SizedBox(height: 32),
                     BuildAddDrinkCubit(addDrink: addCoffee),
-                    SizedBox(
+                    const SizedBox(
                       height: 18,
                     )
                   ],

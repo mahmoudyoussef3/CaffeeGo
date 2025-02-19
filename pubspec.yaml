@@ -1,13 +1,13 @@
 name: coffe_app
 description: "A new Flutter project."
 flutter_native_splash:
-  color: "#ffffff"
-  image: assets/onboarding_imgs/Frame 2.png
+  color: "#0C0F14"
+  image: assets/icons/playstore.png
   android: true
   ios: true
   android_12:
-    image: assets/onboarding_imgs/Frame 2.png
-    icon_background_color: "#ffffff"
+    image: assets/icons/playstore.png
+    icon_background_color: "#0C0F14"
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -83,6 +83,7 @@ flutter:
     - assets/images/app_img.png
     - assets/onboarding_imgs/Frame 2.png
     - assets/icons/
+    - assets/icons/playstore.png
 
   fonts:
     - family: Poppins

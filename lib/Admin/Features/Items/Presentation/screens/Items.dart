@@ -3,7 +3,7 @@ import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../features/home/presentation/cubit/coffe_items/coffee_items_cubit.dart';
+import '../../../../../User/features/home/presentation/cubit/coffe_items/coffee_items_cubit.dart';
 import '../widgets/_AllDrinks/drinks_grid_view.dart';
 
 class ManageItemsScreen extends StatefulWidget {
@@ -37,7 +37,7 @@ class _ManageItemsScreenState extends State<ManageItemsScreen> {
         stream: context.read<CoffeeItemsCubit>().stream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CustomLoadingProgress();
+            return const CustomLoadingProgress();
           }
           if (snapshot.hasError) {
             return Center(
@@ -45,7 +45,7 @@ class _ManageItemsScreenState extends State<ManageItemsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(snapshot.error.toString(),
-                      style: TextStyle(color: Colors.red)),
+                      style: const TextStyle(color: Colors.red)),
                 ],
               ),
             );
@@ -60,7 +60,7 @@ class _ManageItemsScreenState extends State<ManageItemsScreen> {
             }
           }
 
-          return Center(child: Text("No items available"));
+          return const Center(child: Text("No items available"));
         },
       ),
       floatingActionButton: FloatingActionButton(

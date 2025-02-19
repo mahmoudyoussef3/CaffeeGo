@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -52,7 +53,7 @@ class OrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(colors: [
+        gradient: const LinearGradient(colors: [
           AppColorsDarkTheme.greyAppColor,
           AppColorsDarkTheme.darkBlueAppColor,
         ], begin: Alignment.topLeft, end: Alignment.bottomRight),
@@ -67,11 +68,12 @@ class OrderCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Order Date'),
-                    SizedBox(height: 5,),
+                    const Text('Order Date'),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     Text(
                       DateFormat('MMM d, yyyy - hh:mm').format(orderDate),
                       style: const TextStyle(
@@ -81,14 +83,13 @@ class OrderCard extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text('Total Amount'),
-                    SizedBox(height: 5,),
-
+                    const Text('Total Amount'),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     Text(
                       "\$ ${totalPrice.toString()}",
                       style: const TextStyle(
@@ -102,35 +103,45 @@ class OrderCard extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             const Divider(),
-
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: items.map((item) {
+                if (kDebugMode) {
+                  print(item);
+                }
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                            '${item["name"]}',
-                        style: const TextStyle(fontSize: 16),
+                      SizedBox(
+                        width:150,
+                        child: Text(
+                          '${item["name"]}',
+                          style: const TextStyle(fontSize: 16),
+                        ),
                       ),
                       Text.rich(TextSpan(children: [
-                        TextSpan(text: 'X ',
-
-                          style: const TextStyle(
-                            color: AppColorsDarkTheme.brownAppColor,
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                        const TextSpan(
+                          text: 'X ',
+                          style: TextStyle(
+                              color: AppColorsDarkTheme.brownAppColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
-
-                          text:
-                            '${item["quantity"]}',
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-
+                          text: '${item["quantity"]}',
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         )
-                      ]))
+                      ])),
+                      Text(
+                        '${item["price"]}',
+                        style: const TextStyle(
+                            fontSize: 16,
+                            color: AppColorsDarkTheme.brownAppColor),
+                      ),
                     ],
                   ),
                 );

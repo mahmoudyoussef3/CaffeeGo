@@ -21,7 +21,7 @@ class BuildTextField extends StatelessWidget {
         maxLines: maxLines,
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: TextStyle(
+          labelStyle: const TextStyle(
             color: Colors.black,
           ),
           prefixIcon: Icon(

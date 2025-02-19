@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coffe_app/features/Orders/Data/models/order_model.dart';
-import 'package:coffe_app/features/cart/Data/DataSource/user_data_firebase.dart';
-import 'package:coffe_app/features/home/data/models/UserData/user_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import '../../../../../User/features/Orders/Data/models/order_model.dart';
 
 class GetAllOrders {
   Future<List<OrderModel>> getAllOrders() async {
@@ -19,16 +18,28 @@ class GetAllOrders {
         if (data != null && data.containsKey('order')) {
           myOrders.add(OrderModel.fromJson(data['order']));
         } else {
-          print('Null or invalid data found for document: ${document.id}');
+          if (kDebugMode) {
+            print('Null or invalid data found for document: ${document.id}');
+          }
         }
       }
     } catch (e) {
-      print('Error getting documents: $e');
+      if (kDebugMode) {
+        print('Error getting documents: $e');
+      }
     }
-    print(myOrders[0].orderTotalPrice);
-    print(myOrders[0].stateOfTheOrder);
-    print(myOrders[0].myOrders[0].name);
-    print(myOrders[0].userDataClass.name ?? 'Not provided');
+    if (kDebugMode) {
+      print(myOrders[0].orderTotalPrice);
+    }
+    if (kDebugMode) {
+      print(myOrders[0].stateOfTheOrder);
+    }
+    if (kDebugMode) {
+      print(myOrders[0].myOrders[0].name);
+    }
+    if (kDebugMode) {
+      print(myOrders[0].userDataClass.name ?? 'Not provided');
+    }
 
     return myOrders;
   }
@@ -42,12 +53,18 @@ class GetAllOrders {
         var docRef = snapshot.docs.first.reference;
         await docRef.update({'order.stateOfTheOrder': orderState});
 
-        print('Order state changed');
+        if (kDebugMode) {
+          print('Order state changed');
+        }
       } else {
-        print('Order not found');
+        if (kDebugMode) {
+          print('Order not found');
+        }
       }
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
   }
 
@@ -67,9 +84,13 @@ class GetAllOrders {
 
       await userRef.update({'orders': orders});
 
-      print('Order state updated successfully.');
+      if (kDebugMode) {
+        print('Order state updated successfully.');
+      }
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
   }
 }

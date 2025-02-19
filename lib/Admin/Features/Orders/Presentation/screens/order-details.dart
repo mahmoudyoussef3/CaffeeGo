@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../../../../../User/features/Orders/Data/models/order_model.dart';
+import '../../../../../User/features/home/data/models/UserData/user_data.dart';
+import '../../../../../User/features/home/data/models/coffe_item.dart';
 import '../../../../../core/utils/app_colors.dart';
-import '../../../../../features/Orders/Data/models/order_model.dart';
-import '../../../../../features/home/data/models/UserData/user_data.dart';
-import '../../../../../features/home/data/models/coffe_item.dart';
 import '../../../AdminNotification/data/admin_notifications.dart';
 import '../../Data/data_source/get_all_orders.dart';
 
@@ -59,7 +59,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   widget.order.userRequirements.isEmpty
                       ? 'No requirements'
                       : widget.order.userRequirements,
-                  style: TextStyle(fontSize: 16)),
+                  style: const TextStyle(fontSize: 16)),
             ),
             _buildSectionCard(
               title: "Order Details",
@@ -82,7 +82,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)],
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5)],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,9 +154,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 10,
-              spreadRadius: 2)
+              color: Colors.black.withValues(), blurRadius: 10, spreadRadius: 2)
         ],
       ),
       child: Column(
@@ -193,7 +191,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text("Total: \$${order.orderTotalPrice}",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         Text("Payment: ${order.paymentProcess ? 'Done' : 'Not paid'}"),
         Text("Status: ${order.stateOfTheOrder}"),
         Text("Date: $formattedDate"),
@@ -207,10 +205,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       children: orders.map((order) {
         return ListTile(
           title: Text(order.name,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              style:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           subtitle: Text(order.description),
           trailing: Text("\$${order.sizes[order.selectedSize]}",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              style:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         );
       }).toList(),
     );

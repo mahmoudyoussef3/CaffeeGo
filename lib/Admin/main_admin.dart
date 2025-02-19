@@ -2,6 +2,7 @@ import 'package:coffe_app/Admin/Features/AdminNotification/data/admin_notificati
 import 'package:coffe_app/config/routes.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,32 +19,10 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await OneSignalAdmin().initPlatform();
-  OneSignal.shared
-      .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
-    print("OPENED NOTIFICATION");
-    String? deepLink = result.notification.launchUrl;
-    if (deepLink != null) {
-      print("Deep link: $deepLink");
-    }
-    handleDeepLink(deepLink!);
-  });
-  OneSignal.shared.setLaunchURLsInApp(true);
 
   runApp(const AdminApp());
-  Future.delayed(Duration(seconds: 2), () {
-    FlutterNativeSplash.remove();
-  });
-}
-
-void handleDeepLink(String deepLink) {
-  print('start handeleDeepLink');
-  if (deepLink.startsWith('myapp://order/')) {
-    String orderId = deepLink.substring(14);
-    print("Order ID: $orderId");
-    navigatorKey.currentState?.pushNamed(
-      AppStrings.manageOrders,
-    );
-  }
+  Future.delayed(
+      const Duration(seconds: 2), () => FlutterNativeSplash.remove());
 }
 
 void showToastMsg(String msg) {
@@ -51,7 +30,6 @@ void showToastMsg(String msg) {
     msg: msg,
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.BOTTOM,
-    timeInSecForIosWeb: 1,
     backgroundColor: Colors.black,
     textColor: Colors.white,
     fontSize: 16.0,

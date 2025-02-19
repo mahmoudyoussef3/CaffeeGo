@@ -3,6 +3,8 @@ class AppStrings {
   static const String manageCategories = '/ManageCategory';
   static const String addItems = '/addItems';
   static const String manageItems = '/manageItems';
+  static const String profile = '/profile';
+
   static const String adminOrderDetails = '/adminOrderDetails';
   static const String manageOrders = '/manageOrders';
   static const String orderDetailsScreen = '/OrderDetailsScreen';
