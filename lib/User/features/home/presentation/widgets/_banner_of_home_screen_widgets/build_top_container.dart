@@ -12,29 +12,30 @@ class BuildTopContainer extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? AppColorsDarkTheme.greyAppColor
-                  : Colors.transparent),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Theme.of(context).brightness == Brightness.dark
-                ? Image.asset('assets/icons/drawer_icon.png')
-                : const Icon(
-                    Icons.menu,
-                    color: AppColors.brownAppColor,
-                  ),
+        InkWell(
+          onTap: () => Scaffold.of(context).openDrawer(),
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColorsDarkTheme.greyAppColor
+                    : Colors.transparent),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Theme.of(context).brightness == Brightness.dark
+                  ? Image.asset('assets/icons/drawer_icon.png')
+                  : const Icon(
+                      Icons.menu,
+                      color: AppColors.brownAppColor,
+                    ),
+            ),
           ),
         ),
         IconButton(
           icon: CircleAvatar(
             foregroundColor: Colors.transparent,
             radius: 20.r,
-            backgroundImage:
-
-            NetworkImage(FirebaseAuth
+            backgroundImage: NetworkImage(FirebaseAuth
                     .instance.currentUser!.photoURL ??
                 'https://c1.klipartz.com/pngpicture/314/450/sticker-png-circle-user-profile-avatar-computer-program-symbol-oval.png'),
           ),

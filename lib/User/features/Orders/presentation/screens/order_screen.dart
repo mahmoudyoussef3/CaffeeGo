@@ -1,7 +1,8 @@
-import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
+import 'package:coffe_app/User/features/Orders/presentation/widgets/empty_order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/components/app_components.dart';
 import '../cubits/order_cubit/orders_cubit.dart';
 import '../widgets/orders_list_view.dart';
 
@@ -26,7 +27,7 @@ class _OrderScreenState extends State<OrderScreen> {
         body: BlocBuilder<OrdersCubit, OrdersState>(
           builder: (context, state) {
             if (state is OrdersLoading) {
-              return const CustomLoadingProgress();
+              return AppComponents.customLoadingProgress();
             }
 
             if (state is OrdersError) {
@@ -37,26 +38,30 @@ class _OrderScreenState extends State<OrderScreen> {
             }
 
             if (state is OrdersLoaded) {
-              return Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 18),
-                child: Column(
-                  children: [
-                    const Text(
-                      'Order History',
-                      style: TextStyle(
-                          letterSpacing: 2,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 24,
-                          color: AppColorsDarkTheme.whiteAppColor),
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    OrdersListView(orders: state.orders)
-                  ],
-                ),
-              );
+              if (state.orders.isEmpty) {
+                return const EmptyOrderScreen();
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 24.0, vertical: 18),
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Order History',
+                        style: TextStyle(
+                            letterSpacing: 2,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 24,
+                            color: AppColorsDarkTheme.whiteAppColor),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      OrdersListView(orders: state.orders)
+                    ],
+                  ),
+                );
+              }
             }
 
             return const SizedBox();

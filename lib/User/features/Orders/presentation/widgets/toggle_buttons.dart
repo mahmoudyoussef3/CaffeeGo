@@ -25,8 +25,8 @@ class _ToggleButtonsWidgetState extends State<ToggleButtonsWidget> {
         child: ToggleButtons(
               isSelected: isSelected,
               borderRadius: BorderRadius.circular(10),
-              fillColor: AppColors.brownAppColor, // Background color of selected button
-              selectedColor: Colors.white, // Text color of selected button
+              fillColor: AppColors.brownAppColor,
+              selectedColor: Colors.white,
               color: Colors.black,
               borderColor:  Colors.transparent,
               constraints: const BoxConstraints.tightFor(width: 155, height: 40),

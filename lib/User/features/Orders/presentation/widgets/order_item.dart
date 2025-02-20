@@ -43,7 +43,6 @@ class CustomOrderItem extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
                   coffeeItem.name,
@@ -144,7 +143,6 @@ class CustomOrderItem extends StatelessWidget {
               ],
             ),
           ),
-          // const SizedBox(width: 10),
         ],
       ),
     );

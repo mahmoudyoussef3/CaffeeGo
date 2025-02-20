@@ -56,7 +56,6 @@ class PaymentCubit extends Cubit<PaymentState> {
     return '';
   }
 
-//TODO This is the first function to get Auth token that used in second function.
   Future<String> getAuthToken(String apiKey) async {
     final response = await http.post(
       Uri.parse('https://accept.paymob.com/api/auth/tokens'),
@@ -74,7 +73,6 @@ class PaymentCubit extends Cubit<PaymentState> {
     }
   }
 
-//TODO This is the second function to create order to get orderId that used in third function.
   Future<int> createOrder(
       String authToken, String amount, List<CoffeeItem> items) async {
     final response = await http.post(
@@ -109,7 +107,6 @@ class PaymentCubit extends Cubit<PaymentState> {
     }
   }
 
-//TODO This is the third function to get paymentKyToken that used in url to complete payment process.
   Future<String> getPaymentKey(String authToken, String orderId, String amount,
       UserDataClass userData) async {
     final response = await http.post(

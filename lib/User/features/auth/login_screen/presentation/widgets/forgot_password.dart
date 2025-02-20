@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../../../core/utils/app_colors.dart';
+import '../../../../../../core/utils/components/app_components.dart';
 
 
 class ForgotPassword extends StatelessWidget {
@@ -19,7 +20,7 @@ class ForgotPassword extends StatelessWidget {
         alignment: AlignmentDirectional.topEnd,
         child: InkWell(
           onTap: () {
-            showToastMsg('In Progress...');
+            AppComponents.showToastMsg('In Progress...');
           },
           child: Text('Forgot Password ?',
               textAlign: TextAlign.end,

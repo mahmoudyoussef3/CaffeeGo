@@ -12,7 +12,6 @@ import 'package:coffe_app/Admin/Features/Items/Presentation/screens/add_item.dar
 import 'package:coffe_app/Admin/Features/Orders/Data/repos/all_orders_repo.dart';
 import 'package:coffe_app/Admin/Features/Orders/Presentation/cubits/get_all_users_cubit/get_all_orders_cubit.dart';
 import 'package:coffe_app/Admin/Features/Users/Data/repos/all_users_repo.dart';
-import 'package:coffe_app/User/bottom_van_manager.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,10 +64,7 @@ class AppRouter {
             BlocProvider(create: (context) => (PaymentCubit()))
           ], child: const HomeScreen()),
         );
-      case AppStrings.managerScreen:
-        return MaterialPageRoute(
-          builder: (context) => const BottomNavManager(),
-        );
+
       case AppStrings.splash:
         return MaterialPageRoute(builder: (context) => const SplashScreen());
       case AppStrings.login:

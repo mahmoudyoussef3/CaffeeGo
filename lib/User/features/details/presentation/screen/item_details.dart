@@ -4,6 +4,7 @@ import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../core/utils/components/app_components.dart';
 import '../../../cart/Presentation/cubit/user_data_cubit.dart';
 import '../../../fav/Data/hive_manager.dart';
 import '../../../home/data/models/coffe_item.dart';
@@ -58,110 +59,14 @@ class _ItemDetailsState extends State<ItemDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 16,)
-,              Stack(children: [
-                Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(32),
-                    child: AnimatedOpacity(
-                      duration: const Duration(seconds: 1),
-                      opacity: _opacity,
-                      child: CachedNetworkImage(
-                        imageUrl: widget.coffeeItem.image,
-                        height: 240,
-                        width: MediaQuery.of(context).size.width - 20,
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                    child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      InkWell(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              color: AppColorsDarkTheme.darkBlueAppColor),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              color: isFavorite
-                                  ? AppColorsDarkTheme.redAppColor
-                                  : AppColorsDarkTheme.greyLighterAppColor,
-                              isFavorite
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                            ),
-                          ),
-                        ),
-                        onTap: () async {
-                          if (isFavorite) {
-                            setState(() {
-                              isFavorite = false;
-                            });
-                            await CoffeeHiveService()
-                                .deleteItem(widget.coffeeItem.id);
-                          } else {
-                            setState(() {
-                              isFavorite = true;
-                            });
-                            await CoffeeHiveService()
-                                .addItem(widget.coffeeItem)
-                                .then(
-                              (value) {
-                                showToastMsg('Item added Successfully!');
-                              },
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                ))
-              ]),
+              const SizedBox(
+                height: 16,
+              ),
+              buildStack(),
               const SizedBox(
                 height: 18,
               ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 3 / 4,
-                    child: Text(
-                      maxLines: 1,
-                      widget.coffeeItem.name,
-                      style: TextStyle(
-                        letterSpacing: 2,
-                        fontSize: 22.sp,
-                        overflow: TextOverflow.ellipsis,
-                        color: AppColorsDarkTheme.whiteAppColor,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ).animate().slideY(duration: 500.ms, begin: 0.5),
-                  ),
-                  const Spacer(),
-                  Row(children: [
-                    const Icon(
-                      Icons.star,
-                      color: AppColorsDarkTheme.brownAppColor,
-                      size: 22,
-                    ),
-                    Text(
-                      ' ${widget.coffeeItem.rate}',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: AppColorsDarkTheme.whiteAppColor,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ]).animate().fade(
-                        duration: 500.ms,
-                      ),
-                ],
-              ),
+              buildNameAndRating(),
               const SizedBox(
                 height: 12,
               ),
@@ -184,31 +89,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                     duration: 500.ms,
                   ),
               const SizedBox(height: 8),
-              Text(
-                widget.coffeeItem.description,
-                maxLines: isExpanded ? null : 2,
-                overflow:
-                    isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
-                style: const TextStyle(
-                    color: AppColorsDarkTheme.greyLighterAppColor,
-                    fontSize: 14,
-                    letterSpacing: 1,
-                    fontWeight: FontWeight.w500),
-              ).animate().fade(duration: 400.ms),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isExpanded = !isExpanded;
-                  });
-                },
-                child: Text(
-                  isExpanded ? 'Read Less' : 'Read More',
-                  style: const TextStyle(
-                    color: AppColorsDarkTheme.brownAppColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+              buildDescriptionSection(),
               const SizedBox(
                 height: 8,
               ),
@@ -229,44 +110,7 @@ class _ItemDetailsState extends State<ItemDetails> {
               const SizedBox(
                 height: 12,
               ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: List.generate(
-                      3,
-                      (index) => GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              coffeeSize = index;
-                              widget.coffeeItem.selectedSize =
-                                  coffeeSizeList[coffeeSize ?? 0];
-                              widget.coffeeItem.uniqueId =
-                                  widget.coffeeItem.id +
-                                      widget.coffeeItem.selectedSize;
-                            });
-                          },
-                          child: Container(
-                            height: 45,
-                            width: 95,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: coffeeSize == index
-                                    ? AppColorsDarkTheme.brownAppColor
-                                    : AppColorsDarkTheme.darkBlueAppColor,
-                              ),
-                              color: AppColorsDarkTheme.greyAppColor,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Center(
-                                child: Text(
-                              coffeeSizeList[index],
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: coffeeSize == index
-                                      ? AppColorsDarkTheme.brownAppColor
-                                      : AppColorsDarkTheme.greyLighterAppColor),
-                            )),
-                          ).animate().scale()))),
+              buildSizesRow(),
               const Spacer(
                 flex: 2,
               ),
@@ -276,9 +120,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                     .toString(),
                 coffeeItem: widget.coffeeItem,
               ).animate().scale()),
-              const Spacer(
-
-              ),
+              const Spacer(),
             ],
           ),
         ),
@@ -312,7 +154,11 @@ class _ItemDetailsState extends State<ItemDetails> {
                         color: AppColorsDarkTheme.brownAppColor,
                       ),
                       const SizedBox(width: 4),
-                      Text(e.name),
+                      Text(
+                        e.name,
+                        style: const TextStyle(
+                            color: AppColorsDarkTheme.greyLighterAppColor),
+                      ),
                     ],
                   ),
                 ).animate().fade(duration: 400.ms);
@@ -320,5 +166,188 @@ class _ItemDetailsState extends State<ItemDetails> {
             ).toList()),
       ]),
     );
+  }
+
+  buildImage() {
+    return Center(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(32),
+        child: AnimatedOpacity(
+          duration: const Duration(seconds: 1),
+          opacity: _opacity,
+          child: CachedNetworkImage(
+            imageUrl: widget.coffeeItem.image,
+            height: 300,
+            width: MediaQuery.of(context).size.width - 20,
+            fit: BoxFit.fitWidth,
+          ),
+        ),
+      ),
+    );
+  }
+
+  buildStack() {
+    return Stack(
+      children: [
+        buildImage(),
+        buildFvIconContainer(),
+      ],
+    );
+  }
+
+  buildFvIconContainer() {
+    return Positioned(
+        child: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          InkWell(
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: AppColorsDarkTheme.darkBlueAppColor),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  color: isFavorite
+                      ? AppColorsDarkTheme.redAppColor
+                      : AppColorsDarkTheme.greyLighterAppColor,
+                  isFavorite ? Icons.favorite : Icons.favorite_border,
+                ),
+              ),
+            ),
+            onTap: () async {
+              if (isFavorite) {
+                setState(() {
+                  isFavorite = false;
+                });
+                await CoffeeHiveService().deleteItem(widget.coffeeItem.id);
+              } else {
+                setState(() {
+                  isFavorite = true;
+                });
+                await CoffeeHiveService().addItem(widget.coffeeItem).then(
+                  (value) {
+                    AppComponents.showToastMsg('Item added Successfully!');
+                  },
+                );
+              }
+            },
+          ),
+        ],
+      ),
+    ));
+  }
+
+  buildNameAndRating() {
+    return Row(
+      children: [
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 3 / 4,
+          child: Text(
+            maxLines: 1,
+            widget.coffeeItem.name,
+            style: TextStyle(
+              letterSpacing: 2,
+              fontSize: 22.sp,
+              overflow: TextOverflow.ellipsis,
+              color: AppColorsDarkTheme.whiteAppColor,
+              fontWeight: FontWeight.w800,
+            ),
+          ).animate().slideY(duration: 500.ms, begin: 0.5),
+        ),
+        const Spacer(),
+        Row(children: [
+          const Icon(
+            Icons.star,
+            color: AppColorsDarkTheme.brownAppColor,
+            size: 22,
+          ),
+          Text(
+            ' ${widget.coffeeItem.rate}',
+            style: const TextStyle(
+              fontSize: 18,
+              color: AppColorsDarkTheme.whiteAppColor,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ]).animate().fade(
+              duration: 500.ms,
+            ),
+      ],
+    );
+  }
+
+  buildDescriptionSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.coffeeItem.description,
+          maxLines: isExpanded ? null : 2,
+          overflow: isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+          style: const TextStyle(
+              color: AppColorsDarkTheme.greyLighterAppColor,
+              fontSize: 14,
+              letterSpacing: 1,
+              fontWeight: FontWeight.w500),
+        ).animate().fade(duration: 400.ms),
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              isExpanded = !isExpanded;
+            });
+          },
+          child: Text(
+            isExpanded ? 'Read Less' : 'Read More',
+            style: const TextStyle(
+              color: AppColorsDarkTheme.brownAppColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  buildSizesRow() {
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: List.generate(
+            3,
+            (index) => GestureDetector(
+                onTap: () {
+                  setState(() {
+                    coffeeSize = index;
+                    widget.coffeeItem.selectedSize =
+                        coffeeSizeList[coffeeSize ?? 0];
+                    widget.coffeeItem.uniqueId =
+                        widget.coffeeItem.id + widget.coffeeItem.selectedSize;
+                  });
+                },
+                child: Container(
+                  height: 45,
+                  width: 95,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: coffeeSize == index
+                          ? AppColorsDarkTheme.brownAppColor
+                          : AppColorsDarkTheme.darkBlueAppColor,
+                    ),
+                    color: AppColorsDarkTheme.greyAppColor,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Center(
+                      child: Text(
+                    coffeeSizeList[index],
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: coffeeSize == index
+                            ? AppColorsDarkTheme.brownAppColor
+                            : AppColorsDarkTheme.greyLighterAppColor),
+                  )),
+                ).animate().scale())));
   }
 }

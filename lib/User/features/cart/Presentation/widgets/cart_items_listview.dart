@@ -1,6 +1,8 @@
+import 'package:coffe_app/Admin/main_admin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/components/app_components.dart';
 import '../../../home/data/models/coffe_item.dart';
 import '../cubit/user_data_cubit.dart';
 import 'dismissed_coffee_cart_item.dart';
@@ -22,7 +24,7 @@ class _CartItemsListviewState extends State<CartItemsListview> {
       itemCount: widget.cartItems.length,
       itemBuilder: (context, index) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          padding: const EdgeInsets.only(bottom: 16.0),
           child: Dismissible(
               key: Key(widget.cartItems[index].toString()),
               direction: DismissDirection.endToStart,
@@ -32,23 +34,14 @@ class _CartItemsListviewState extends State<CartItemsListview> {
                     .deleteCart(widget.cartItems[index]);
                 if (mounted) {
                   context.read<UserDataCubit>().fetchUserCart();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Item removed successfully',
-                        style: TextStyle(color: AppColors.brownAppColor),
-                      ),
-                      backgroundColor: AppColors.offWhiteAppColor,
-                    ),
-                  );
+                  AppComponents.showToastMsg('Item removed successfully');
                 }
               },
               background: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.red,
-                ),
+                    borderRadius: BorderRadius.circular(12),
+                    color: AppColorsDarkTheme.redAppColor),
                 alignment: Alignment.centerRight,
                 child: const Icon(Icons.delete, color: Colors.white),
               ),

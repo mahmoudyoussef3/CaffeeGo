@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationMethods {
-  //Todo Create account with email and password
   Future<UserCredential?> createAccountWithEmailAndPassword(String email,
       String password, String phoneNumber, String fullName) async {
     try {
@@ -35,7 +34,6 @@ class AuthenticationMethods {
     FirebaseMessaging.instance.subscribeToTopic("allUsers");
   }
 
-//todo Create Authenticate with google mail(gmail)
   signInWithGoogle() async {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final GoogleSignIn googleSignIn = GoogleSignIn();

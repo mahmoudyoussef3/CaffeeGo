@@ -2,6 +2,7 @@ import 'package:coffe_app/Admin/main_admin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../core/utils/components/app_components.dart';
 import '../../cubits/admin_items_cubit.dart';
 import 'build_item_card.dart';
 
@@ -34,8 +35,8 @@ class DrinksGridView extends StatelessWidget {
                     ),
                     title: Text(
                       drinks[index].name,
-                      style:
-                          const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     content: const Text(
                       'Are you sure you want to delete this item?',
@@ -69,9 +70,11 @@ class DrinksGridView extends StatelessWidget {
                               Navigator.pop(dialogContext);
                             }
 
-                            showToastMsg('$itemName deleted successfully!');
+                            AppComponents.showToastMsg(
+                                '$itemName deleted successfully!');
                           } catch (e) {
-                            showToastMsg('Failed to delete item: $e');
+                            AppComponents.showToastMsg(
+                                'Failed to delete item: $e');
                           }
                         },
                         child: const Text(

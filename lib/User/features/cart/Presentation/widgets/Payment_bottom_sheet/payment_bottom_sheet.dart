@@ -1,11 +1,11 @@
 import 'package:coffe_app/User/features/cart/Presentation/widgets/Payment_bottom_sheet/pay_with_card.dart';
 import 'package:coffe_app/User/features/cart/Presentation/widgets/Payment_bottom_sheet/pay_with_wallet.dart';
-import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../Admin/main_admin.dart';
 import '../../../../../../core/utils/app_colors.dart';
+import '../../../../../../core/utils/components/app_components.dart';
 import '../../../../Orders/Data/models/order_model.dart';
 import '../../../../Orders/presentation/cubits/order_cubit/orders_cubit.dart';
 import '../../../../home/data/models/coffe_item.dart';
@@ -33,32 +33,51 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
     return BlocBuilder<UserDataClassCubit, UserDataClassState>(
       builder: (context, state) {
         if (state is UserDataClassLoading) {
-          return const CustomLoadingProgress();
+          return  AppComponents.customLoadingProgress();
         } else if (state is UserDataClassLoaded) {
-          return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(children: [
-                Expanded(
-                  flex: 2,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: pressed
-                          ? AppColors.offWhiteAppColor
-                          : AppColors.brownAppColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      elevation: 4,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        pressed = true;
-                      });
-                      try {
-                        context
-                            .read<OrdersCubit>()
-                            .updateOrderList(
+          return Row(children: [
+            Expanded(
+              flex: 2,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: pressed
+                      ? AppColors.offWhiteAppColor
+                      : AppColors.brownAppColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  elevation: 4,
+                ),
+                onPressed: () {
+                  setState(() {
+                    pressed = true;
+                  });
+                  try {
+                    context
+                        .read<OrdersCubit>()
+                        .updateOrderList(
+                          OrderModel(
+                            userRequirements: notesController.text,
+                            paymentMethod: 'Cash',
+                            paymentProcess: false,
+                            userDataClass: context
+                                .read<UserDataClassCubit>()
+                                .userDataClass!,
+                            orderStartDate: DateTime.now(),
+                            myOrders: widget.cartItems,
+                            stateOfTheOrder: 'Pending',
+                            orderTotalPrice:
+                                widget.finalPrice.toStringAsFixed(2),
+                          ),
+                        )
+                        .then(
+                      (value) {
+                        context.read<UserDataCubit>().clearCart();
+                      },
+                    ).then(
+                      (value) {
+                        context.read<UserDataCubit>().addOrderToOrdersAdmin(
                               OrderModel(
                                 userRequirements: notesController.text,
                                 paymentMethod: 'Cash',
@@ -72,93 +91,71 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                                 orderTotalPrice:
                                     widget.finalPrice.toStringAsFixed(2),
                               ),
-                            )
-                            .then(
-                          (value) {
-                            context.read<UserDataCubit>().clearCart();
-                          },
-                        ).then(
-                          (value) {
-                            context.read<UserDataCubit>().addOrderToOrdersAdmin(
-                                  OrderModel(
-                                    userRequirements: notesController.text,
-                                    paymentMethod: 'Cash',
-                                    paymentProcess: false,
-                                    userDataClass: context
-                                        .read<UserDataClassCubit>()
-                                        .userDataClass!,
-                                    orderStartDate: DateTime.now(),
-                                    myOrders: widget.cartItems,
-                                    stateOfTheOrder: 'Pending',
-                                    orderTotalPrice:
-                                        widget.finalPrice.toStringAsFixed(2),
-                                  ),
-                                );
-                            setState(() {
-                              pressed = false;
-                            });
-                            showToastMsg('Order Sent Successfully!');
-                            if (kDebugMode) {
-                              print("is my userReq ${notesController.text}");
-                            }
-                          },
-                        );
-                      } catch (e) {
+                            );
                         setState(() {
                           pressed = false;
                         });
-                      }
-                    },
-                    child: pressed
-                        ? const Center(
-                            child: CustomLoadingProgress(),
-                          )
-                        : const Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'Submit Order',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                              ),
-                              Text(
-                                '(Pay Cash)',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
+                        AppComponents.showToastMsg('Order Sent Successfully!');
+                        if (kDebugMode) {
+                          print("is my userReq ${notesController.text}");
+                        }
+                      },
+                    );
+                  } catch (e) {
+                    setState(() {
+                      pressed = false;
+                    });
+                  }
+                },
+                child: pressed
+                    ?  Center(
+                        child: AppComponents.customLoadingProgress()
+                      )
+                    : const Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Submit Order',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
                           ),
+                          Text(
+                            '(Pay Cash)',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColorsDarkTheme.greyAppColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  elevation: 4,
+                ),
+                onPressed: () => showBottomSheet(context, widget.finalPrice),
+                child: const Text(
+                  'Pay Now',
+                  style: TextStyle(
+                    color: AppColorsDarkTheme.greyLighterAppColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
                   ),
                 ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColorsDarkTheme.greyAppColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      elevation: 4,
-                    ),
-                    onPressed: () =>
-                        showBottomSheet(context, widget.finalPrice),
-                    child: const Text(
-                      'Pay Now',
-                      style: TextStyle(
-                        color: AppColorsDarkTheme.greyLighterAppColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                )
-              ]));
+              ),
+            )
+          ]);
         }
         return const SizedBox.shrink();
       },

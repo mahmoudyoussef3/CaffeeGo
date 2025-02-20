@@ -1,11 +1,13 @@
+import 'package:coffe_app/Admin/main_admin.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
-import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../../../core/utils/app_colors.dart';
+import '../../../../../../core/utils/components/app_components.dart';
 import '../../../data/authentication_methods.dart';
 
 class SocialButton extends StatelessWidget {
@@ -29,8 +31,8 @@ class SocialButton extends StatelessWidget {
                 showDialog(
                   context: context,
                   barrierDismissible: false,
-                  builder: (context) => const Center(
-                    child: CustomLoadingProgress(),
+                  builder: (context) =>  Center(
+                    child: AppComponents.customLoadingProgress()
                   ),
                 );
                 await AuthenticationMethods().signInWithGoogle();
@@ -42,19 +44,14 @@ class SocialButton extends StatelessWidget {
                   print('Failed to sign in with Google: $e');
                 }
                 Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Sign-in failed. Please try again.')));
+                AppComponents.showSnackBar(
+                    'Sign-in failed. Please try again.',
+                    AppColorsDarkTheme.redAppColor,
+                    context);
               }
             }
           : () {
-              Fluttertoast.showToast(
-                  msg: "In progress...",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity
-                      .BOTTOM,
-                  backgroundColor: Colors.black,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+        AppComponents.showToastMsg('In progress...');
             },
       child: Container(
         width: 80.w,

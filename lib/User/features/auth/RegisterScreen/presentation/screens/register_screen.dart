@@ -4,11 +4,11 @@ import 'package:coffe_app/User/features/auth/RegisterScreen/presentation/screens
 import 'package:coffe_app/User/features/auth/RegisterScreen/presentation/screens/widgets/register_text_fields.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
-import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../../core/utils/components/app_components.dart';
 import '../../../CommonWidgets/background_img.dart';
 import '../../../CommonWidgets/build_auth_button.dart';
 import '../../../cubit/auth_cubit.dart';
@@ -67,20 +67,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       listener: (context, state) {
                         if (state is AuthSuccess) {
                           Navigator.pushNamed(context, AppStrings.home);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content:
-                                    Text('Welcome, ${state.user.email!}!')),
-                          );
+                          AppComponents.showSnackBar('Welcome, ${state.user.email!}!', Colors.green, context);
+
                         } else if (state is AuthError) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(state.errorMessage)),
-                          );
+                          AppComponents.showSnackBar(state.errorMessage,AppColorsDarkTheme.redAppColor, context);
+
                         }
                       },
                       builder: (context, state) {
                         if (state is AuthLoading) {
-                          return const CustomLoadingProgress();
+                          return  AppComponents.customLoadingProgress();
                         }
                         return BuildAuthButton(
                             buttonText: 'Sign Up',

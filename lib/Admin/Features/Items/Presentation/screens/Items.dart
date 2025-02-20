@@ -1,9 +1,9 @@
 import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:coffe_app/core/utils/app_strings.dart';
-import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../User/features/home/presentation/cubit/coffe_items/coffee_items_cubit.dart';
+import '../../../../../core/utils/components/app_components.dart';
 import '../widgets/_AllDrinks/drinks_grid_view.dart';
 
 class ManageItemsScreen extends StatefulWidget {
@@ -37,7 +37,7 @@ class _ManageItemsScreenState extends State<ManageItemsScreen> {
         stream: context.read<CoffeeItemsCubit>().stream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CustomLoadingProgress();
+            return  AppComponents.customLoadingProgress();
           }
           if (snapshot.hasError) {
             return Center(

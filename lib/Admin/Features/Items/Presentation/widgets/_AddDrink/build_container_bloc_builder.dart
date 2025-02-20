@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../User/features/home/presentation/cubit/category_cubit/category_cubit.dart';
-import '../../../../../../core/utils/widgets/custom_loading_progress.dart';
+import '../../../../../../core/utils/components/app_components.dart';
 import 'build_category_container.dart';
 
 class BuildCategoryBlocContainer extends StatelessWidget {
@@ -16,7 +16,7 @@ class BuildCategoryBlocContainer extends StatelessWidget {
       builder: (context, state) {
         log("Current state in BlocBuilder: $state");
         if (state is CategoryLoading) {
-          return const CustomLoadingProgress();
+          return  AppComponents.customLoadingProgress();
         } else if (state is CategoryError) {
           return Text(state.errorMessage.toString());
         } else if (state is CategorySuccess) {

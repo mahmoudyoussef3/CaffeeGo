@@ -1,9 +1,9 @@
 import 'dart:developer';
+import 'package:coffe_app/core/utils/components/app_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../User/features/home/presentation/cubit/category_cubit/category_cubit.dart';
 import '../../../../../core/utils/app_colors.dart';
-import '../../../../../core/utils/widgets/custom_loading_progress.dart';
 import '../cubits/admin_category_cubit.dart';
 
 class ManageCategoriesScreen extends StatefulWidget {
@@ -41,7 +41,7 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
         builder: (context, state) {
           log("Current state in BlocBuilder: $state");
           if (state is CategoryLoading) {
-            return const Center(child: CustomLoadingProgress());
+            return Center(child: AppComponents.customLoadingProgress());
           } else if (state is CategoryError) {
             return Center(child: Text(state.errorMessage.toString()));
           } else if (state is CategorySuccess) {
@@ -128,10 +128,10 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
                             _addCategory(categoryController.text);
                           }
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text('Category name cannot be empty')),
-                          );
+                          AppComponents.showSnackBar(
+                              'Category name cannot be empty',
+                              AppColorsDarkTheme.redAppColor,
+                              context);
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -162,9 +162,8 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
       Navigator.pop(context);
       context.read<CategoryCubit>().fetchCoffeeCategories();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Category name cannot be empty')),
-      );
+      AppComponents.showSnackBar('Category name cannot be empty',
+          AppColorsDarkTheme.redAppColor, context);
     }
   }
 
@@ -178,9 +177,8 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
       context.read<CategoryCubit>().fetchCoffeeCategories();
       setState(() {});
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Category name cannot be empty')),
-      );
+      AppComponents.showSnackBar('Category name cannot be empty',
+          AppColorsDarkTheme.redAppColor, context);
     }
   }
 

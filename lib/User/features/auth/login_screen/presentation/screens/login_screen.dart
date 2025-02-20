@@ -1,4 +1,5 @@
-import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
+import 'package:coffe_app/core/utils/app_colors.dart';
+import 'package:coffe_app/core/utils/components/app_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../core/utils/app_strings.dart';
@@ -57,19 +58,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     listener: (context, state) {
                       if (state is AuthSuccess) {
                         Navigator.pushNamed(context, AppStrings.home);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text('Welcome, ${state.user.email!}!')),
-                        );
+
+                          AppComponents.showSnackBar('Welcome, ${state.user.email!}!', Colors.green, context);
+
                       } else if (state is AuthError) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(state.errorMessage)),
-                        );
+                        AppComponents.showSnackBar(state.errorMessage, AppColorsDarkTheme.redAppColor, context);
+
+
                       }
                     },
                     builder: (context, state) {
                       if (state is AuthLoading) {
-                        return const Center(child: CustomLoadingProgress());
+                        return  Center(child: AppComponents.customLoadingProgress());
                       }
                       return BuildAuthButton(
                         buttonText: 'Sign in',

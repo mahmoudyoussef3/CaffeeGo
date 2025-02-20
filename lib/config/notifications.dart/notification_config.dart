@@ -81,7 +81,6 @@ class MessagingConfig {
               'High Importance Notifications',
               channelDescription:
                   'This channel is used for important notifications.',
-              //   sound: RawResourceAndroidNotificationSound('custom_sound'),
               icon: '@mipmap/ic_launcher',
             ),
             iOS: DarwinNotificationDetails(
@@ -93,7 +92,6 @@ class MessagingConfig {
           ),
         );
 
-        //   handleNotification(navigatorKey.currentContext!, event.data);
       } catch (err) {
         log(err.toString());
       }
@@ -103,12 +101,10 @@ class MessagingConfig {
         .getInitialMessage()
         .then((RemoteMessage? message) {
       if (message != null) {
-        //   handleNotification(navigatorKey.currentContext!, message.data);
       }
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      // handleNotification(navigatorKey.currentContext!, message.data);
     });
   }
 

@@ -23,7 +23,9 @@ class HomeScreen extends StatelessWidget {
                     child: const BuildTopContainer(),
                   ),
                   const BuildPromo(),
-                  const SizedBox(height: 16,),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 12.0.w, vertical: 8.h),

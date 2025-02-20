@@ -34,67 +34,75 @@ class _NotEmptyCartScreenState extends State<NotEmptyCartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Text(
-          'Cart',
-          style: TextStyle(
-              letterSpacing: 2,
-              fontWeight: FontWeight.w600,
-              fontSize: 24,
-              color: AppColorsDarkTheme.whiteAppColor),
-        ),
-        const SizedBox(
-          height: 12,
-        ),
-        CartItemsListview(cartItems: widget.cartItems),
-        const SizedBox(),
-        Container(
-          padding: const EdgeInsets.all(16),
-          child: TextField(
-            style: const TextStyle(
-                color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
-            controller: notesController,
-            decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                borderSide:
-                    const BorderSide(color: AppColorsDarkTheme.darkBlueAppColor),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              fillColor: AppColorsDarkTheme.greyAppColor,
-              filled: true,
-              focusedBorder: OutlineInputBorder(
-                borderSide:
-                    const BorderSide(color: AppColorsDarkTheme.darkBlueAppColor),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              hintText: 'Add Your Notes',
-              hintStyle: TextStyle(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 18),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 16,
+          ),
+          const Text(
+            'Cart',
+            style: TextStyle(
+                letterSpacing: 2,
+                fontWeight: FontWeight.w600,
+                fontSize: 24,
+                color: AppColorsDarkTheme.whiteAppColor),
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          CartItemsListview(cartItems: widget.cartItems),
+          const SizedBox(),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: TextField(
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500),
+              controller: notesController,
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                      color: AppColorsDarkTheme.darkBlueAppColor),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                fillColor: AppColorsDarkTheme.greyAppColor,
+                filled: true,
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                      color: AppColorsDarkTheme.darkBlueAppColor),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                hintText: 'Add Your Notes',
+                hintStyle: TextStyle(
+                    color: AppColorsDarkTheme.greyLessDegreeAppColor,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.sp),
+                border: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                      color: AppColorsDarkTheme.darkBlueAppColor),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                suffixIcon: const Icon(
+                  Icons.note_alt_outlined,
                   color: AppColorsDarkTheme.greyLessDegreeAppColor,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.sp),
-              border: OutlineInputBorder(
-                borderSide:
-                    const BorderSide(color: AppColorsDarkTheme.darkBlueAppColor),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              suffixIcon: const Icon(
-                Icons.note_alt_outlined,
-                color: AppColorsDarkTheme.greyLessDegreeAppColor,
+                ),
               ),
             ),
           ),
-        ),
-        PaymentSummary(
-            priceWithoutDiscount: widget.priceBeforeDiscount,
-            priceWithDiscount: widget.discountPrice),
-        const SizedBox(height: 16),
-        PaymentBottomSheet(
-          finalPrice: widget.discountPrice,
-          cartItems: widget.cartItems,
-        ),
-        const SizedBox(height: 12),
-      ],
+          PaymentSummary(
+              priceWithoutDiscount: widget.priceBeforeDiscount,
+              priceWithDiscount: widget.discountPrice),
+          const SizedBox(height: 16),
+          PaymentBottomSheet(
+            finalPrice: widget.discountPrice,
+            cartItems: widget.cartItems,
+          ),
+          const SizedBox(height: 12),
+        ],
+      ),
     );
   }
 }

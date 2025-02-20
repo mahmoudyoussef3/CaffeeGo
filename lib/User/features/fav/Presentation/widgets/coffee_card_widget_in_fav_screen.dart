@@ -1,8 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
-import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:flutter/material.dart';
-
+import '../../../../../core/utils/components/app_components.dart';
 import '../../../home/data/models/coffe_item.dart';
 
 class CoffeeCardWidgetInFavScreen extends StatelessWidget {
@@ -28,8 +27,8 @@ class CoffeeCardWidgetInFavScreen extends StatelessWidget {
                 height: 140,
                 width: double.infinity,
                 fit: BoxFit.cover,
-                placeholder: (context, url) => const Center(
-                  child: CustomLoadingProgress(),
+                placeholder: (context, url) =>  Center(
+                  child: AppComponents.customLoadingProgress()
                 ),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
@@ -58,7 +57,6 @@ class CoffeeCardWidgetInFavScreen extends StatelessWidget {
               ),
             ))
           ]),
-          // Details Section
           Container(
             decoration: const BoxDecoration(
                 color: Colors.white,
@@ -110,7 +108,6 @@ class CoffeeCardWidgetInFavScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  // Description
                   Text(
                     coffeeItem.description,
                     maxLines: 1,
@@ -121,11 +118,9 @@ class CoffeeCardWidgetInFavScreen extends StatelessWidget {
                         fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 8),
-                  // Rating and Actions
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Rating
                       Row(
                         children: [
                           const Icon(Icons.star,
@@ -142,7 +137,6 @@ class CoffeeCardWidgetInFavScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      // Add to Cart Button
                     ],
                   ),
                 ],

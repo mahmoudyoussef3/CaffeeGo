@@ -1,9 +1,9 @@
 import 'package:coffe_app/Admin/Features/Orders/Presentation/cubits/get_all_users_cubit/get_all_orders_cubit.dart';
 import 'package:coffe_app/Admin/Features/Orders/Presentation/screens/scanner.dart';
-import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/components/app_components.dart';
 import '../widgets/order_card.dart';
 import 'order-details.dart';
 
@@ -36,7 +36,7 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
               return Text('Error: ${snapshot.error}');
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CustomLoadingProgress());
+              return  Center(child: AppComponents.customLoadingProgress());
             }
             if (snapshot.hasData) {
               final state = snapshot.data;

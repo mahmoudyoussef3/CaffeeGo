@@ -1,9 +1,9 @@
 import 'package:coffe_app/Admin/Features/Dashboard/Presentation/widgets/order_state.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
-import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/utils/components/app_components.dart';
 import '../cubits/dashboard_cubit.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
@@ -34,7 +34,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       body: BlocBuilder<DashboardCubit, DashboardState>(
         builder: (context, state) {
           if (state is DashboardLoading) {
-            return const CustomLoadingProgress();
+            return  AppComponents.customLoadingProgress();
           } else if (state is DashboardError) {
             return Center(
               child: Text(

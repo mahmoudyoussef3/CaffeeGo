@@ -1,5 +1,4 @@
 class AppStrings {
-  //Admin//
   static const String manageCategories = '/ManageCategory';
   static const String addItems = '/addItems';
   static const String manageItems = '/manageItems';

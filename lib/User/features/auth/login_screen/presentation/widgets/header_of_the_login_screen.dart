@@ -18,7 +18,6 @@ class HeaderOfTheLoginScreen extends StatelessWidget {
           ),
           child: Image.asset(
             'assets/onboarding_imgs/Vector.png',
-            // height: 120,
           ),
         ),
         SizedBox(height: 20.h),

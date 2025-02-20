@@ -3,6 +3,7 @@ import 'package:coffe_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/components/app_components.dart';
 import '../../../details/presentation/screen/item_details.dart';
 import '../../../home/data/models/coffe_item.dart';
 import '../../Data/hive_manager.dart';
@@ -39,33 +40,22 @@ class _FavScreenState extends State<FavScreen> {
             ? const EmptyFavList()
             : Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 18),
                 child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        InkWell(
-                          onTap: () => Navigator.pop(context),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.0),
-                                color: AppColorsDarkTheme.greyAppColor),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child:
-                                  Image.asset('assets/icons/drawer_icon.png'),
-                            ),
-                          ),
-                        ),
+                        const Spacer(),
                         const Text(
-                          'Favorites',
+                          'Favourites',
                           style: TextStyle(
                               letterSpacing: 2,
                               fontWeight: FontWeight.w600,
-                              fontSize: 20,
+                              fontSize: 24,
                               color: AppColorsDarkTheme.whiteAppColor),
                         ),
+                        const Spacer(),
                         InkWell(
                           onTap: myFavItems.isEmpty
                               ? () {}
@@ -74,7 +64,7 @@ class _FavScreenState extends State<FavScreen> {
                                       .deleteAllItems()
                                       .then(
                                     (value) {
-                                      showToastMsg(
+                                      AppComponents.showToastMsg(
                                           'All Items deleted successfully!');
                                     },
                                   );
@@ -111,11 +101,8 @@ class _FavScreenState extends State<FavScreen> {
                                           coffeeItem: myFavItems[index]),
                                     ));
                               },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CoffeeCardWidgetInFavScreen(
-                                  coffeeItem: myFavItems[index],
-                                ),
+                              child: CoffeeCardWidgetInFavScreen(
+                                coffeeItem: myFavItems[index],
                               ),
                             );
                           },

@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../config/notification_config.dart';
+import '../config/notifications.dart/notification_config.dart';
 import '../core/utils/app_colors.dart';
 import '../firebase_options.dart';
 import 'Features/Home/Presentation/screens/admin_home_screen.dart';
@@ -27,16 +27,7 @@ Future<void> main() async {
       const Duration(seconds: 2), () => FlutterNativeSplash.remove());
 }
 
-void showToastMsg(String msg) {
-  Fluttertoast.showToast(
-    msg: msg,
-    toastLength: Toast.LENGTH_SHORT,
-    gravity: ToastGravity.BOTTOM,
-    backgroundColor: Colors.black,
-    textColor: Colors.white,
-    fontSize: 16.0,
-  );
-}
+
 
 class AdminApp extends StatelessWidget {
   const AdminApp({super.key});

@@ -1,10 +1,10 @@
 import 'package:coffe_app/Admin/main_admin.dart';
-import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/components/app_components.dart';
 import '../../../cart/Presentation/cubit/user_data_cubit.dart';
 import '../../../home/data/models/coffe_item.dart';
 
@@ -43,10 +43,10 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                 final isItemInCart = context.read<UserDataCubit>().userCart.any(
                     (item) => item.uniqueId == widget.coffeeItem.uniqueId);
                 if (isItemInCart) {
-                  showToastMsg('Item already in cart!');
+                  AppComponents.showToastMsg('Item already in cart!');
                 } else {
                   if (widget.coffeeItem.uniqueId.isEmpty) {
-                    showToastMsg('Please select size');
+                    AppComponents.showToastMsg('Please select size');
                     return;
                   } else {
                     try {
@@ -60,13 +60,13 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                         setState(() {
                           pressed = false;
                         });
-                        showToastMsg('Item added to cart successfully!');
+                        AppComponents.showToastMsg('Item added to cart successfully!');
                       });
                     } catch (e) {
                       setState(() {
                         pressed = false;
                       });
-                      showToastMsg(e.toString());
+                      AppComponents.showToastMsg(e.toString());
                     }
                   }
                 }
@@ -80,7 +80,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                         : AppColorsDarkTheme.brownAppColor),
                 child: Center(
                   child: pressed
-                      ? const CustomLoadingProgress()
+                      ?  AppComponents.customLoadingProgress()
                       : const Text(
                           'Add To Cart',
                           style: TextStyle(

@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../User/features/home/data/models/coffe_item.dart';
 import '../../../../../User/features/home/presentation/cubit/coffe_items/coffee_items_cubit.dart';
-import '../../../../../config/send_notification_srevice.dart';
+import '../../../../../config/notifications.dart/send_notification_srevice.dart';
 
 part 'admin_items_state.dart';
 
@@ -25,11 +25,6 @@ class AdminItemsCubit extends Cubit<AdminItemsState> {
           body: '${coffee.name}has been added',
           data: {}, img: coffee.image);
 
-      // await OneSignalAdmin().sendNotificationToAllUsers(
-      //   title: 'New Item',
-      //   message: "${coffee.name}has been added",
-      //   imgUrl: coffee.image,
-      // );
     } catch (e) {
       emit(AdminItemsError(errorMessage: e.toString()));
     }

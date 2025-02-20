@@ -1,4 +1,3 @@
-import 'package:coffe_app/User/bottom_van_manager.dart';
 import 'package:coffe_app/config/routes.dart';
 import 'package:coffe_app/config/themes.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
@@ -13,7 +12,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-import '../config/notification_config.dart';
+import '../config/notifications.dart/notification_config.dart';
 import '../firebase_options.dart';
 import 'features/Orders/Data/DataSource/user_orders_data_firebase.dart';
 import 'features/Orders/Data/repo/user_orders_repo.dart';
@@ -76,9 +75,6 @@ class CoffeeShopApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseMessaging.instance
-        .getToken()
-        .then((value) => print("valuefherfafris $value"));
     return ScreenUtilInit(
       minTextAdapt: true,
       splitScreenMode: true,

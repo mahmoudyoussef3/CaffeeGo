@@ -49,9 +49,7 @@ class CoffeeCardWidget extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const Spacer(
-
-                          ),
+                          const Spacer(),
                           Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 4.0.w, vertical: 4.h),

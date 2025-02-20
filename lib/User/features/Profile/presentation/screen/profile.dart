@@ -1,10 +1,11 @@
 import 'package:coffe_app/User/features/home/presentation/cubit/UserData_cubit/user_data_cubit.dart';
 import 'package:coffe_app/User/features/home/presentation/widgets/_drawer_widgets/build_logout_dialoug.dart';
 import 'package:coffe_app/core/utils/app_colors.dart';
-import 'package:coffe_app/core/utils/widgets/custom_loading_progress.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../core/utils/components/app_components.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -27,8 +28,8 @@ class _ProfileState extends State<Profile> {
         body: BlocBuilder<UserDataClassCubit, UserDataClassState>(
           builder: (context, state) {
             if (state is UserDataClassLoading) {
-              return const Center(
-                child: CustomLoadingProgress(),
+              return  Center(
+                child: AppComponents.customLoadingProgress()
               );
             } else if (state is UserDataClassError) {
               return const Center(

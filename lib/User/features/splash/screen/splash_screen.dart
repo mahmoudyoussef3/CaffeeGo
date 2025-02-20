@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       if (isUserSignedIn) {
                         if (FirebaseAuth.instance.currentUser != null) {
                           Navigator.pushReplacementNamed(
-                              context, AppStrings.managerScreen);
+                              context, AppStrings.home);
                         } else {
                           Navigator.pushReplacementNamed(
                               context, AppStrings.login);

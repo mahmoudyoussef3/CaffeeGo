@@ -1,11 +1,13 @@
-import 'package:coffe_app/config/send_notification_srevice.dart';
+import 'package:coffe_app/Admin/main_admin.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../../User/features/Orders/Data/models/order_model.dart';
 import '../../../../../User/features/home/data/models/UserData/user_data.dart';
 import '../../../../../User/features/home/data/models/coffe_item.dart';
+import '../../../../../config/notifications.dart/send_notification_srevice.dart';
 import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/components/app_components.dart';
 import '../../../AdminNotification/data/admin_notifications.dart';
 import '../../Data/data_source/get_all_orders.dart';
 
@@ -130,8 +132,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   Future<void> _updateOrderState() async {
     await GetAllOrders()
         .changeTheStateOfTHeOrder(selectedState!, widget.order.orderId);
-    Fluttertoast.showToast(
-        msg: "State updated Successfully!", backgroundColor: Colors.black);
+    AppComponents.showToastMsg('State updated Successfully!');
     Navigator.pushReplacementNamed(context, "/manageOrders");
     await GetAllOrders().changeTheStateOfTHeOrderInUserCollection(
       selectedState!,
@@ -143,7 +144,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         body: 'Your order status has changed to $selectedState',
         data: {},
         token: widget.order.userDataClass.fcmToken ?? '');
-
   }
 
   Widget _buildSectionCard(

@@ -1,3 +1,6 @@
+import 'package:coffe_app/Admin/main_admin.dart';
+import 'package:coffe_app/core/utils/app_colors.dart';
+import 'package:coffe_app/core/utils/components/app_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -41,27 +44,20 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
             if (!_navigated) {
               if (url.contains("success=true")) {
-                debugPrint('🎉 Payment Successful');
                 _navigated = true;
                 final order = widget.orderModel;
-
                 try {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text(
-                            'Don`t close this screen, Wait for order to sent successfully')),
-                  );
+                  AppComponents.showSnackBar(
+                      'Don`t close this screen, Wait for order to sent successfully',
+                      AppColorsDarkTheme.redAppColor,
+                      context);
 
                   await context.read<OrdersCubit>().updateOrderList(order);
                   await context.read<UserDataCubit>().clearCart();
                   await context
                       .read<UserDataCubit>()
                       .addOrderToOrdersAdmin(order);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        backgroundColor: Colors.white,
-                        content: Text('Order sent to admin successfully! ✅')),
-                  );
+                  AppComponents.showToastMsg('Order sent to admin successfully!');
                   debugPrint("✅ Order sent to admin successfully");
                 } catch (e) {
                   debugPrint("❌ Error updating order: $e");
@@ -82,10 +78,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 _navigated = true;
                 Future.delayed(const Duration(milliseconds: 300), () {
                   if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          content: Text('Payment failed, please try again.')),
-                    );
+                    AppComponents.showSnackBar(
+                        'Payment failed, please try again',
+                        AppColorsDarkTheme.redAppColor,
+                        context);
                   }
                 });
               }
@@ -102,100 +98,3 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 }
-
-// }
-//
-// import 'package:flutter/material.dart';
-// import 'package:webview_flutter/webview_flutter.dart';
-//
-// class PaymentScreen extends StatefulWidget {
-//   final String paymentUrl;
-//
-//   const PaymentScreen({super.key, required this.paymentUrl});
-//
-//   @override
-//   State<PaymentScreen> createState() => _PaymentScreenState();
-// }
-//
-// class _PaymentScreenState extends State<PaymentScreen> {
-//   late final WebViewController controller;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     controller = WebViewController()
-//       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-//       ..loadRequest(Uri.parse(widget.paymentUrl));
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: WebViewWidget(controller: controller),
-//     );
-//   }
-// }
-//bool _isNavigated = false; // ✅ Prevent multiple navigations
-
-// ..setNavigationDelegate(
-//   NavigationDelegate(
-//     onPageStarted: (String url) {
-//       debugPrint('Page started loading: $url');
-//     },
-//     onPageFinished: (String url) {
-//       debugPrint('Page finished loading: $url');
-//     },
-//     onNavigationRequest: (NavigationRequest request) {
-//       if (_isNavigated)
-//         return NavigationDecision.prevent; // ✅ Prevent duplicate handling
-//
-//       if (request.url.contains("success=true")) {
-//         debugPrint('Payment Successful');
-//         _isNavigated = true; // ✅ Lock navigation
-//         // Future.delayed(Duration(seconds: 2))
-//         //     .then((value) => Navigator.pushReplacement(
-//         //           context,
-//         //           MaterialPageRoute(
-//         //             builder: (context) => OrderScreen(
-//         //               qrData: "Payment successful details",
-//         //             ),
-//         //           ),
-//         //         ));
-//         return NavigationDecision.prevent;
-//       } else if (request.url.contains("payment_failure")) {
-//         debugPrint('Payment Failed');
-//         _isNavigated = true; // ✅ Lock navigation
-//         ScaffoldMessenger.of(context).showSnackBar(
-//           const SnackBar(
-//             content: Text('Payment failed, please try again.'),
-//           ),
-//         );
-//         Navigator.pop(context); // ✅ Exit PaymentScreen after failure
-//         return NavigationDecision.prevent;
-//       }
-//       return NavigationDecision.navigate;
-//     },
-//   ),
-// );
-// onNavigationRequest: (NavigationRequest request) {
-//   // if (request.url.contains("success=true")) {
-//   //   debugPrint('Payment Successful');
-//   //   Navigator.push(
-//   //     context,
-//   //     MaterialPageRoute(
-//   //       builder: (context) => OrderScreen(
-//   //           //   qrData: "Payment successful details",
-//   //           ),
-//   //     ),
-//   //   );
-//   //   return NavigationDecision.prevent;
-//   // } else if (request.url.contains("payment_failure")) {
-//   //   debugPrint('Payment Failed');
-//   //   ScaffoldMessenger.of(context).showSnackBar(
-//   //     const SnackBar(
-//   //         content: Text('Payment failed, please try again.')),
-//   //   );
-//   //   return NavigationDecision.prevent;
-//   // }
-//   return NavigationDecision.navigate;
-// },

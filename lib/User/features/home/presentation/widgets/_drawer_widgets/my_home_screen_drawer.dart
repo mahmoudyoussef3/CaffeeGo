@@ -10,19 +10,19 @@ class MyHomeScreenDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColorsDarkTheme.darkBlueAppColor,
       child: Column(
         children: [
           DrawerHeader(
               child: Row(children: [
             SizedBox(
               height: 125.h,
-              child: Image.asset('assets/images/app_img.png'),
+              child: Image.asset('assets/icons/playstore.png'),
             ),
             Text(
               'CaféGo',
               style: TextStyle(
-                color: AppColors.brownAppColor,
+                color: AppColorsDarkTheme.brownAppColor,
                 letterSpacing: 2,
                 fontWeight: FontWeight.bold,
                 fontSize: 28.sp,
