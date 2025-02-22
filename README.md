@@ -1,16 +1,66 @@
-# coffe_app
+# ☕ CAFFEGO - Coffee Shop App
 
-A new Flutter project.
+A complete coffee shop application built with **Flutter** using **Clean Architecture** and **Cubit** state management. CAFFEGO provides an intuitive experience for both **users** and **admins**, integrating real-time **order tracking, payments, notifications**, and **analytics**.
 
-## Getting Started
+## 🚀 Features
 
-This project is a starting point for a Flutter application.
+### 🔹 User Side
+- 🛍️ Browse coffee & drinks by category
+- 🛒 Add items to cart & place orders
+- 💳 Pay online or with cash
+- 📦 Track order status (pending, in progress, completed, canceled)
+- 🔔 Receive notifications for order updates & new drinks
+- ❤️ Favorite items for quick access
+- 🔐 Authentication with **Firebase & Google**
+- 🏆 Smooth animations & introduction screens
 
-A few resources to get you started if this is your first Flutter project:
+### 🔹 Admin Side
+- 📋 Manage drinks (add, edit, delete)
+- 📂 Manage categories (add, edit, delete)
+- 👥 View & manage users
+- 📦 View & update order statuses
+- 📊 Sales & order analytics with **graphs & flowcharts**
+- 🔔 Send notifications to users for **new drinks & order updates**
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🏗️ Tech Stack
+- **Flutter** with **Clean Architecture**
+- **Cubit** for state management
+- **Firebase** (Auth, Firestore, FCM for notifications)
+- **Hive & SharedPreferences** for local storage
+- **Payment Integration** (online & cash payments)
+- **QR Code Scanner** for orders
+- **HTTP** for API handling
+- **Animations & UI Enhancements**
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📸 Screenshots
+(📌 Add screenshots of your app here)
+
+## 📦 Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/mahmoudyoussef3/CaffeeGo.git
+   cd caffego
+   ```
+2. Install dependencies:
+   ```bash
+   flutter pub get
+   ```
+3. Run the app:
+   ```bash
+   flutter run
+   ```
+
+## 📌 To-Do
+- ✅ Implement all core features
+- 🚀 Add more UI enhancements & animations
+- 📱 Optimize for tablets & larger screens
+
+## 🎯 Contributing
+Feel free to contribute by opening a **Pull Request** or submitting an **Issue**!
+
+## 🔗 Connect with Me
+📧 Email: [mahmoudyousse220@gmail.com](mailto:your-email@example.com)  
+🔗 LinkedIn: [your-profile](https://www.linkedin.com/in/mahmoud-youssef-863b3b21a/)
+
+---
+✨ Developed with ❤️ by **[Mahmoud Youssef]** ✨
