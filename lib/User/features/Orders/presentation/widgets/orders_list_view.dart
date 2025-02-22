@@ -1,7 +1,8 @@
+import 'package:coffe_app/User/features/Orders/presentation/widgets/user_order_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import '../../../../../Admin/Features/Orders/Presentation/widgets/order_card.dart';
+import '../../../../../Admin/Features/Orders/Presentation/widgets/admin_order_card.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../Data/models/order_model.dart';
 
@@ -18,7 +19,7 @@ class OrdersListView extends StatelessWidget {
           final order = orders[index];
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: OrderCard(
+            child: UserOrderCard(
                 admin: false,
                 userName: "${index + 1}",
                 totalPrice: order.orderTotalPrice,

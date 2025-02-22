@@ -19,15 +19,15 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // await OneSignalAdmin().initPlatform();
   MessagingConfig.initFirebaseMessaging();
+  FirebaseMessaging.instance.getToken().then(
+        (value) => print("valueis $value"),
+      );
 
   runApp(const AdminApp());
   Future.delayed(
       const Duration(seconds: 2), () => FlutterNativeSplash.remove());
 }
-
-
 
 class AdminApp extends StatelessWidget {
   const AdminApp({super.key});

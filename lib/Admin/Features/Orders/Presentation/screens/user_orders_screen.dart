@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/components/app_components.dart';
-import '../widgets/order_card.dart';
+import '../widgets/admin_order_card.dart';
 import 'order-details.dart';
 
 class ManageOrdersScreen extends StatefulWidget {
@@ -36,7 +36,7 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
               return Text('Error: ${snapshot.error}');
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return  Center(child: AppComponents.customLoadingProgress());
+              return Center(child: AppComponents.customLoadingProgress());
             }
             if (snapshot.hasData) {
               final state = snapshot.data;
@@ -54,8 +54,8 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
                                   ))),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 16.0, horizontal: 16),
-                        child: OrderCard(
+                            vertical: 8.0, horizontal: 16),
+                        child: AdminOrderCard(
                           admin: true,
                           userName: order.userDataClass.name!,
                           totalPrice: order.orderTotalPrice,

@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 
-class OrderCard extends StatelessWidget {
+class UserOrderCard extends StatelessWidget {
   final String userName;
   final String totalPrice;
   final List<Map<String, dynamic>> items;
@@ -14,7 +14,7 @@ class OrderCard extends StatelessWidget {
   final Widget qrWidget;
   final bool admin;
 
-  const OrderCard({
+  const UserOrderCard({
     super.key,
     required this.userName,
     required this.totalPrice,
@@ -25,14 +25,14 @@ class OrderCard extends StatelessWidget {
     required this.admin,
     Widget? qrWidget,
   }) : qrWidget = qrWidget ??
-            const Text(
-              'Scan Qr',
-              style: TextStyle(
-                letterSpacing: 1,
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-              ),
-            );
+      const Text(
+        'Scan Qr',
+        style: TextStyle(
+          letterSpacing: 1,
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
+        ),
+      );
 
   Color getStatusColor() {
     switch (orderStatus) {
@@ -155,7 +155,7 @@ class OrderCard extends StatelessWidget {
                   width: 95,
                   height: 30,
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: AppColorsDarkTheme.darkBlueAppColor,
                     borderRadius: BorderRadius.circular(8),
@@ -176,7 +176,7 @@ class OrderCard extends StatelessWidget {
                     width: 95,
                     height: 30,
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: AppColors.brownAppColor,
                       borderRadius: BorderRadius.circular(8),

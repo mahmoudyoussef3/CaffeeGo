@@ -154,9 +154,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black.withValues(), blurRadius: 10, spreadRadius: 2)
+        boxShadow: const [
+          BoxShadow(color: AppColors.brownAppColor, spreadRadius: 1)
         ],
       ),
       child: Column(

@@ -30,6 +30,8 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+assets/Jsons/coffe-shop-ea8dc-d06e7088e621.json
+
 
 # Symbolication related
 app.*.symbols

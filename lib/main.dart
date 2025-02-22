@@ -3,8 +3,8 @@ import 'admin/main_admin.dart' as admin;
 import 'User/main_user.dart' as user;
 
 void main() {
-  if (Platform.isWindows) {
-    user.main();
+  if (!Platform.isWindows) {
+    admin.main();
   } else {
     admin.main();
   }

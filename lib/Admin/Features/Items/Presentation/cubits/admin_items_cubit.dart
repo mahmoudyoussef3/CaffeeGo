@@ -23,8 +23,8 @@ class AdminItemsCubit extends Cubit<AdminItemsState> {
       sendNotificationToAllUsers(
           title: 'New Drink',
           body: '${coffee.name}has been added',
-          data: {}, img: coffee.image);
-
+          data: {},
+          img: coffee.image);
     } catch (e) {
       emit(AdminItemsError(errorMessage: e.toString()));
     }
