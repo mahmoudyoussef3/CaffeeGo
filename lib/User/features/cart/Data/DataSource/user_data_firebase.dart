@@ -89,7 +89,7 @@ class UserData {
           .add({'order': order.toJson()});
       sendNotificationToAdmin(
           token:
-              'f1WleBFlRpyjCRFWKO73gs:APA91bEfoefsrWJ2TLj0vorM_cv6C1xjvVRPx_Vk8676BN7xMGxOct0DLslCjyjmJwu2wZai5Bas_dBg0CAJzd89B599NagJcTEPTaN7kQkmLKul2M-DW-w',
+              'dDb6bJUoSCWH8A4kU4fhUM:APA91bGzSyfvp434KtPjQj3g44vQ-xXH2aHTO6IGnm39mLz2gqw1Yi56TTU1qAJcj8zs32_GxHNI4Yzx9XUelk9eAQnJzPaCzZR9vbGF3oa590uAQQhfygc',
           title: "New order",
           body: '${order.userDataClass.name!} has ordered drink',
           data: {});

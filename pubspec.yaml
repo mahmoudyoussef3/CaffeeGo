@@ -87,7 +87,10 @@ flutter:
     - assets/onboarding_imgs/Frame 2.png
     - assets/icons/
     - assets/icons/playstore.png
-    - assets/Jsons/coffe-shop-ea8dc-e6980c87a6ae.json
+    - assets/Jsons/coffe-shop-ea8dc-9d9700850cc9.json
+    - screenshots/admin/
+    - screenshots/onboarding/
+    - screenshots/user/
 
   fonts:
     - family: Poppins

@@ -21,7 +21,7 @@ Future<void> main() async {
   );
   MessagingConfig.initFirebaseMessaging();
   FirebaseMessaging.instance.getToken().then(
-        (value) => print("valueis $value"),
+        (value) => print("valueis \"$value\""),
       );
 
   runApp(const AdminApp());
