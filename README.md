@@ -4,10 +4,9 @@ A complete coffee shop application built with **Flutter** using **Clean Architec
 
 ### User Screens
 <p align="center">
-  <img src="screenshots/onboarding/intro_screen.jpg" width="25%">
-  <img src="screenshots/onboarding/on_boarding2.jpg" width="25%">
-  <img src="screenshots/onboarding/onboarding_1.jpg" width="25%">
-  <img src="screenshots/onboarding/splash_screen.jpg" width="25%">
+  <img src="screenshots/onboarding/intro_screen.jpg" width="30%">
+  <img src="screenshots/onboarding/on_boarding2.jpg" width="30%">
+  <img src="screenshots/onboarding/onboarding_1.jpg" width="30%">
 
 </p>
 
