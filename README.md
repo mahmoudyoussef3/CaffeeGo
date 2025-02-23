@@ -1,9 +1,23 @@
-# ☕ CAFFEGO - Coffee Shop App
+# ☕ CAFFEGO  - Coffee Shop App
 
 A complete coffee shop application built with **Flutter** using **Clean Architecture** and **Cubit** state management. CAFFEGO provides an intuitive experience for both **users** and **admins**, integrating real-time **order tracking, payments, notifications**, and **analytics**.
 
-## 🚀 Features
+### User Screens
+<p align="center">
+  <img src="screenshots/onboarding/intro_screen.jpg" width="25%">
+  <img src="screenshots/onboarding/on_boarding2.jpg" width="25%">
+  <img src="screenshots/onboarding/onboarding_1.jpg" width="25%">
+  <img src="screenshots/onboarding/splash_screen.jpg" width="25%">
 
+</p>
+
+<p align="center">
+  <img src="screenshots/user/home_screen.jpg" width="30%">
+  <img src="screenshots/user/item_details.jpg" width="30%">
+  <img src="screenshots/user/cart.jpg" width="30%">
+</p>
+
+## 🚀 Features
 ### 🔹 User Side
 - 🛍️ Browse coffee & drinks by category
 - 🛒 Add items to cart & place orders
@@ -14,7 +28,16 @@ A complete coffee shop application built with **Flutter** using **Clean Architec
 - 🔐 Authentication with **Firebase & Google**
 - 🏆 Smooth animations & introduction screens
 
+### Admin Screens
+
+<p align="center">
+  <img src="screenshots/admin/admin_home_screen.jpg" width="30%">
+  <img src="screenshots/admin/orders.jpg" width="30%">
+  <img src="screenshots/admin/analytics.jpg" width="30%">
+</p>
+
 ### 🔹 Admin Side
+
 - 📋 Manage drinks (add, edit, delete)
 - 📂 Manage categories (add, edit, delete)
 - 👥 View & manage users
@@ -32,9 +55,6 @@ A complete coffee shop application built with **Flutter** using **Clean Architec
 - **HTTP** for API handling
 - **Animations & UI Enhancements**
 
-## 📸 Screenshots
-(📌 Add screenshots of your app here)
-
 ## 📦 Installation
 1. Clone the repository:
    ```bash
@@ -50,17 +70,9 @@ A complete coffee shop application built with **Flutter** using **Clean Architec
    flutter run
    ```
 
-## 📌 To-Do
-- ✅ Implement all core features
-- 🚀 Add more UI enhancements & animations
-- 📱 Optimize for tablets & larger screens
-
-## 🎯 Contributing
-Feel free to contribute by opening a **Pull Request** or submitting an **Issue**!
-
 ## 🔗 Connect with Me
 📧 Email: [mahmoudyousse220@gmail.com](mailto:your-email@example.com)  
-🔗 LinkedIn: [your-profile](https://www.linkedin.com/in/mahmoud-youssef-863b3b21a/)
+🔗 LinkedIn: [Mahmoud Youssef](https://www.linkedin.com/in/mahmoud-youssef-863b3b21a/)
 
 ---
-✨ Developed with ❤️ by **[Mahmoud Youssef]** ✨
+✨ Developed by **[Mahmoud Youssef]** ✨
