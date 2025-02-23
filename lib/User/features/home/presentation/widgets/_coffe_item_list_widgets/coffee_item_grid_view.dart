@@ -21,7 +21,7 @@ class CoffeeItemGridView extends StatelessWidget {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               mainAxisSpacing: 12.h,
-              childAspectRatio: 0.66,
+              childAspectRatio: 0.64,
               crossAxisSpacing: 12.w,
             ),
             itemBuilder: (context, index) {

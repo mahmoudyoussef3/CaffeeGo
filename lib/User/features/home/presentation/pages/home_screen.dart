@@ -1,3 +1,4 @@
+import 'package:coffe_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../widgets/_banner_of_home_screen_widgets/build_promo.dart';
@@ -13,6 +14,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          backgroundColor: AppColorsDarkTheme.darkBlueAppColor,
             drawer: const MyHomeScreenDrawer(),
             body: SingleChildScrollView(
               child: Column(

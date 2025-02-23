@@ -14,7 +14,7 @@ class PaymentSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 150,
+      height: 160,
       decoration: BoxDecoration(
         gradient: const LinearGradient(colors: [
           AppColorsDarkTheme.greyAppColor,

@@ -47,11 +47,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 _navigated = true;
                 final order = widget.orderModel;
                 try {
-                  AppComponents.showSnackBar(
-                      'Don`t close this screen, Wait for order to sent successfully',
-                      AppColorsDarkTheme.redAppColor,
-                      context);
-
+                  // AppComponents.showSnackBar(
+                  //     'Don`t close this screen, Wait for order to sent successfully',
+                  //     AppColorsDarkTheme.redAppColor,
+                  //     context);
                   await context.read<OrdersCubit>().updateOrderList(order);
                   await context.read<UserDataCubit>().clearCart();
                   await context

@@ -4,8 +4,8 @@ import 'User/main_user.dart' as user;
 
 void main() {
   if (!Platform.isWindows) {
-    user.main();
+    admin.main();
   } else {
-    user.main();
+    admin.main();
   }
 }

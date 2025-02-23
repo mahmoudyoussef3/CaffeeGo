@@ -18,7 +18,7 @@ class CustomOrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 140,
+      height: 150,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         gradient: const LinearGradient(colors: [

@@ -39,9 +39,10 @@ class _SplashScreenState extends State<SplashScreen> {
                   const Spacer(),
                   InkWell(
                     onTap: () async {
-                      bool? isUserSignedIn = await SharedPrefsHelper.getBool(
-                              AppStrings.introPagesViewed) ??
-                          false;
+                      bool? isUserSignedIn = false;
+                      // bool? isUserSignedIn = await SharedPrefsHelper.getBool(
+                      //         AppStrings.introPagesViewed) ??
+                      false;
                       if (isUserSignedIn) {
                         if (FirebaseAuth.instance.currentUser != null) {
                           Navigator.pushReplacementNamed(

@@ -88,8 +88,6 @@ class UserData {
           .collection('orders')
           .add({'order': order.toJson()});
       sendNotificationToAdmin(
-          token:
-              'dDb6bJUoSCWH8A4kU4fhUM:APA91bGzSyfvp434KtPjQj3g44vQ-xXH2aHTO6IGnm39mLz2gqw1Yi56TTU1qAJcj8zs32_GxHNI4Yzx9XUelk9eAQnJzPaCzZR9vbGF3oa590uAQQhfygc',
           title: "New order",
           body: '${order.userDataClass.name!} has ordered drink',
           data: {});

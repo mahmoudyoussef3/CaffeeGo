@@ -51,14 +51,6 @@ class OrdersListView extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        SizedBox(
-          width: 4,
-        ),
-        Icon(
-          Icons.qr_code,
-          color: Colors.white,
-          size: 14,
-        ),
       ],
     );
   }
