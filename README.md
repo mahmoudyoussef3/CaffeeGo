@@ -9,11 +9,22 @@ A complete coffee shop application built with **Flutter** using **Clean Architec
   <img src="screenshots/onboarding/onboarding_1.jpg" width="30%">
 
 </p>
+<p align="center">
+  <img src="screenshots/onboarding/splash_screen.jpg" width="30%">
+  <img src="screenshots/user/login.jpg" width="30%">
+  <img src="screenshots/user/profile.jpg" width="30%">
 
+</p>
 <p align="center">
   <img src="screenshots/user/home_screen.jpg" width="30%">
   <img src="screenshots/user/item_details.jpg" width="30%">
   <img src="screenshots/user/cart.jpg" width="30%">
+</p>
+
+<p align="center">
+  <img src="screenshots/user/fav_screen.jpg" width="30%">
+  <img src="screenshots/user/order_history.jpg" width="30%">
+  <img src="screenshots/user/paymob_bottom_sheet.jpg" width="30%">
 </p>
 
 ## 🚀 Features
