@@ -1,4 +1,4 @@
-# ☕ CAFFEGO - Coffee Shop App
+# ☕ CAFFEGO  - Coffee Shop App
 
 A complete coffee shop application built with **Flutter** using **Clean Architecture** and **Cubit** state management. CAFFEGO provides an intuitive experience for both **users** and **admins**, integrating real-time **order tracking, payments, notifications**, and **analytics**.
 
